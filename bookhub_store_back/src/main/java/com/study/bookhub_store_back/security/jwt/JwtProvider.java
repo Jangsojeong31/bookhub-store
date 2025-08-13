@@ -91,9 +91,9 @@ public class JwtProvider {
         return jwtParser.parseClaimsJws(token).getBody();
     }
 
-    public String getLoginIdFromJwt(String token) {
+    public String getEmailFromJwt(String token) {
         Claims claims = getClaims(token);
-        return claims.get("loginId", String.class);
+        return claims.get("email", String.class);
     }
 
     public String getRolesFromJwt(String token) {

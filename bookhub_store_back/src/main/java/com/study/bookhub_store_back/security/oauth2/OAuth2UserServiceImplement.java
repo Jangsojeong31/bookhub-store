@@ -10,7 +10,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -50,6 +49,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
         // provider별 attributes 파싱
             String email = "";
             String password = "";
+            String phoneNumber = "";
             String nickname = "";
             String profileImage = "";
 
@@ -64,6 +64,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
         return CustomOAuth2User.builder()
                 .email(email)
                 .password(password)
+                .phoneNumber(phoneNumber)
                 .nickname(nickname)
                 .profileImage(profileImage)
                 .socialId(socialId)

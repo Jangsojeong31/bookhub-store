@@ -30,6 +30,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             customerRepository.save(Customer.builder()
                     .email(oAuth2User.getEmail())
                     .password(passwordEncoder.encode(oAuth2User.getPassword()))
+                    .phoneNumber(oAuth2User.getPhoneNumber())
                     .nickname(oAuth2User.getNickname())
                     .profileImageUrl(oAuth2User.getProfileImage())
                     .role("USER")

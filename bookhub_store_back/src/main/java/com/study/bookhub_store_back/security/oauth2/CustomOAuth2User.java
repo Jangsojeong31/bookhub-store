@@ -15,6 +15,7 @@ import java.util.Map;
 public class CustomOAuth2User extends DefaultOAuth2User {
     private final String email;
     private final String password;
+    private final String phoneNumber;
     private final String nickname;
     private final String profileImage;
     private final String socialId;
@@ -22,11 +23,12 @@ public class CustomOAuth2User extends DefaultOAuth2User {
     private final boolean existed;
 
     @Builder
-    public CustomOAuth2User(String email, String password, String nickname, String profileImage, String socialId, String socialProvider
+    public CustomOAuth2User(String email, String password, String phoneNumber, String nickname, String profileImage, String socialId, String socialProvider
             , Map<String, Object> attributes, boolean existed) {
         super(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), attributes, "id");
         this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.socialId = socialId;
