@@ -7,7 +7,6 @@ import com.study.bookhub_store_back.dto.customer.request.UpdatePasswordRequestDt
 import com.study.bookhub_store_back.dto.customer.request.UpdateProfileImageRequestDto;
 import com.study.bookhub_store_back.dto.customer.response.CustomerInfoResponseDto;
 import com.study.bookhub_store_back.security.CustomUserDetails;
-import com.study.bookhub_store_back.security.oauth2.CustomOAuth2User;
 import com.study.bookhub_store_back.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

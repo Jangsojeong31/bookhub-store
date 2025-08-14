@@ -1,0 +1,2 @@
+ALTER TABLE cart_items
+MODIFY COLUMN quantity INT NOT NULL;
