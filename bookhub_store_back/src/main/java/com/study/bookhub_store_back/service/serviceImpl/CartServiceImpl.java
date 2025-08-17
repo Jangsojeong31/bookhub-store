@@ -2,7 +2,7 @@ package com.study.bookhub_store_back.service.serviceImpl;
 
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.cartItem.request.AddCartItemRequestDto;
-import com.study.bookhub_store_back.dto.cartItem.request.RemoveCartItemRequestDto;
+import com.study.bookhub_store_back.dto.cartItem.request.CartItemIdRequestDto;
 import com.study.bookhub_store_back.dto.cartItem.response.CartItemsResponseDto;
 import com.study.bookhub_store_back.entity.Cart;
 import com.study.bookhub_store_back.entity.CartItem;
@@ -14,7 +14,6 @@ import com.study.bookhub_store_back.security.CustomUserDetails;
 import com.study.bookhub_store_back.service.CartService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.persister.entity.mutation.UpdateValuesAnalysis;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +32,8 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public ResponseDto<Void> addCartItems(CustomUserDetails user, List<AddCartItemRequestDto> dto) {
-        Cart cart = cartRepository.findById(user.getCartId())
+
+        Cart cart = cartRepository.findByCustomer(user.getCustomer())
                 .orElseGet(() -> cartRepository.save(new Cart(user.getCustomer())));
 
         for (AddCartItemRequestDto request : dto) {
@@ -51,8 +51,6 @@ public class CartServiceImpl implements CartService {
             );
         }
 
-        cartRepository.save(cart);
-
         return ResponseDto.success("success", "장바구니 담기 성공");
     }
 
@@ -61,7 +59,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public ResponseDto<List<CartItemsResponseDto>> getCartItems(CustomUserDetails user) {
-        Cart cart = cartRepository.findById(user.getCartId())
+        Cart cart = cartRepository.findByCustomer(user.getCustomer())
                 .orElseThrow(EntityNotFoundException::new);
 
         List<CartItem> items = cart.getItems();
@@ -73,7 +71,7 @@ public class CartServiceImpl implements CartService {
                     return CartItemsResponseDto.builder()
                             .title(book.getBookTitle())
                             .price(book.getBookPrice())
-                            .coverImageUrl(book.getCoverImage().getFilePath())
+                            .coverImageUrl(book.getCoverImage() == null ? null : book.getCoverImage().getFilePath())
                             .quantity(item.getQuantity())
                             .totalPrice(item.getQuantity() * book.getBookPrice())
                             .build();
@@ -104,31 +102,28 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public ResponseDto<Void> removeCartItems(CustomUserDetails user, List<RemoveCartItemRequestDto> dto) {
+    public ResponseDto<Void> removeCartItems(CustomUserDetails user, List<CartItemIdRequestDto> dto) {
         Cart cart = cartRepository.findById(user.getCartId())
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
 
         List<Long> cartItemIds = dto.stream()
-                .map(RemoveCartItemRequestDto::getCartItemId)
+                .map(CartItemIdRequestDto::getCartItemId)
                 .toList();
 
         List<CartItem> items = cartItemRepository.findAllById(cartItemIds);
 
-        for (CartItem item : items) {
-            cart.removeItem(item);
-        }
+        for (CartItem item : items) cart.removeItem(item);
 
-        cartItemRepository.deleteAllInBatch(items);
 
         return ResponseDto.success("success", "장바구니 상품 삭제 완료");
     }
 
     @Override
     @Transactional
-    public ResponseDto<List<CartItemsResponseDto>> getCartItemsToOrder(CustomUserDetails user, List<RemoveCartItemRequestDto> dto) {
+    public ResponseDto<List<CartItemsResponseDto>> getCartItemsToOrder(CustomUserDetails user, List<CartItemIdRequestDto> dto) {
 
         List<Long> cartItemIds = dto.stream()
-                .map(RemoveCartItemRequestDto::getCartItemId)
+                .map(CartItemIdRequestDto::getCartItemId)
                 .toList();
 
         List<CartItem> items = cartItemRepository.findAllById(cartItemIds);
@@ -140,7 +135,7 @@ public class CartServiceImpl implements CartService {
                     return CartItemsResponseDto.builder()
                             .title(book.getBookTitle())
                             .price(book.getBookPrice())
-                            .coverImageUrl(book.getCoverImage().getFilePath())
+                            .coverImageUrl(book.getCoverImage() == null ? null : book.getCoverImage().getFilePath())
                             .quantity(item.getQuantity())
                             .totalPrice(item.getQuantity() * book.getBookPrice())
                             .build();

@@ -5,4 +5,6 @@ SELECT * FROM authors;
 SELECT * FROM publishers;
 SELECT * FROM discount_policies;
 SELECT * FROM upload_files;
+SELECT * FROM carts;
+SELECT * FROM cart_items;
 

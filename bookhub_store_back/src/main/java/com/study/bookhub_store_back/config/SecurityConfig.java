@@ -29,7 +29,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/",
                                 "/login/**",
-                                "/api/v1/customer/books/**"
+                                "/api/v1/customer/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

@@ -2,7 +2,7 @@ package com.study.bookhub_store_back.controller;
 
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.cartItem.request.AddCartItemRequestDto;
-import com.study.bookhub_store_back.dto.cartItem.request.RemoveCartItemRequestDto;
+import com.study.bookhub_store_back.dto.cartItem.request.CartItemIdRequestDto;
 import com.study.bookhub_store_back.dto.cartItem.response.CartItemsResponseDto;
 import com.study.bookhub_store_back.security.CustomUserDetails;
 import com.study.bookhub_store_back.service.CartService;
@@ -42,7 +42,7 @@ public class CartController {
     @GetMapping("/cart/ordering-items")
     public ResponseEntity<ResponseDto<List<CartItemsResponseDto>>> getCartItemsToOrder(
             @AuthenticationPrincipal CustomUserDetails user,
-            @RequestBody List<RemoveCartItemRequestDto> dto
+            @RequestBody List<CartItemIdRequestDto> dto
     ) {
         ResponseDto<List<CartItemsResponseDto>> responseDto = cartService.getCartItemsToOrder(user, dto);
         return ResponseEntity.ok(responseDto);
@@ -71,7 +71,7 @@ public class CartController {
     @DeleteMapping("/cart/items")
     public ResponseEntity<ResponseDto<Void>> removeCartItems(
             @AuthenticationPrincipal CustomUserDetails user,
-            @RequestBody List<RemoveCartItemRequestDto> dto
+            @RequestBody List<CartItemIdRequestDto> dto
     ) {
         ResponseDto<Void> responseDto = cartService.removeCartItems(user, dto);
         return ResponseEntity.ok(responseDto);

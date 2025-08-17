@@ -2,7 +2,7 @@ package com.study.bookhub_store_back.service;
 
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.cartItem.request.AddCartItemRequestDto;
-import com.study.bookhub_store_back.dto.cartItem.request.RemoveCartItemRequestDto;
+import com.study.bookhub_store_back.dto.cartItem.request.CartItemIdRequestDto;
 import com.study.bookhub_store_back.dto.cartItem.response.CartItemsResponseDto;
 import com.study.bookhub_store_back.security.CustomUserDetails;
 import org.w3c.dom.stylesheets.LinkStyle;
@@ -16,7 +16,7 @@ public interface CartService {
 
     ResponseDto<Void> changeQuantity(CustomUserDetails user, Long cartItemId, int i);
 
-    ResponseDto<Void> removeCartItems(CustomUserDetails user, List<RemoveCartItemRequestDto> dto);
+    ResponseDto<Void> removeCartItems(CustomUserDetails user, List<CartItemIdRequestDto> dto);
 
-    ResponseDto<List<CartItemsResponseDto>> getCartItemsToOrder(CustomUserDetails user, List<RemoveCartItemRequestDto> dto);
+    ResponseDto<List<CartItemsResponseDto>> getCartItemsToOrder(CustomUserDetails user, List<CartItemIdRequestDto> dto);
 }
