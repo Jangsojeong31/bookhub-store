@@ -30,6 +30,9 @@ public class Customer extends BaseTimeEntity {
     private String role;
 //    private DeliveryAddress defaultAddress;
 
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
+
     private String socialProvider;
     private String socialId;
 }

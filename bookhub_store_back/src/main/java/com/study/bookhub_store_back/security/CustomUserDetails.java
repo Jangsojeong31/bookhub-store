@@ -38,4 +38,8 @@ public class CustomUserDetails implements UserDetails {
     public String getPhoneNumber() {
         return this.customer.getPhoneNumber();
     }
+
+    public Long getCartId() {
+        return this.customer.getCart().getCartId();
+    }
 }
