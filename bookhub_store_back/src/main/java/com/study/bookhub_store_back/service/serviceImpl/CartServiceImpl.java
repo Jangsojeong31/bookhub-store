@@ -69,6 +69,7 @@ public class CartServiceImpl implements CartService {
                     Book book = item.getBook();
 
                     return CartItemsResponseDto.builder()
+                            .id(item.getCartItemId())
                             .title(book.getBookTitle())
                             .price(book.getBookPrice())
                             .coverImageUrl(book.getCoverImage() == null ? null : book.getCoverImage().getFilePath())
@@ -133,6 +134,7 @@ public class CartServiceImpl implements CartService {
                     Book book = item.getBook();
 
                     return CartItemsResponseDto.builder()
+                            .id(item.getCartItemId())
                             .title(book.getBookTitle())
                             .price(book.getBookPrice())
                             .coverImageUrl(book.getCoverImage() == null ? null : book.getCoverImage().getFilePath())

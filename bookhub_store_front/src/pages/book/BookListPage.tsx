@@ -6,11 +6,12 @@ import { useLocation } from "react-router-dom";
 function BookListPage() {
   const [query, setQuery] = useState("");
 
-  const params = new URLSearchParams(useLocation().search);
-  
+const location = useLocation();
+
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
     setQuery(params.get("query") || "");
-  }, [params])
+  }, [location.search])
 
   return (
     <Layout>

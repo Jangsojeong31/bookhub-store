@@ -20,9 +20,9 @@ public class BookController {
     // 도서 통합 검색
     @GetMapping("/books")
     public ResponseEntity<ResponseDto<List<BookSearchResponseDto>>> searchBook(
-            @RequestParam String keyword
+            @RequestParam String query
     ) {
-        ResponseDto<List<BookSearchResponseDto>> response = bookService.searchBook(keyword);
+        ResponseDto<List<BookSearchResponseDto>> response = bookService.searchBook(query);
         return ResponseEntity.ok(response);
     }
 

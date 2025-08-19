@@ -8,6 +8,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class CartItemsResponseDto {
+    private Long id;
     private String title;
     private String coverImageUrl;
     private Long price;

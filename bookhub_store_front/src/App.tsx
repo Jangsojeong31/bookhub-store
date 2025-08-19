@@ -9,6 +9,7 @@ import UpdateProfileImage from './pages/myPage/UpdateProfileImage'
 import UpdateMyInfo from './pages/myPage/UpdateMyInfo'
 import BookListPage from './pages/book/BookListPage'
 import CartItemsListPage from './pages/cart/CartItemsListPage'
+import BookDetail from './pages/book/BookDetail'
 
 function App() {
   
@@ -26,6 +27,7 @@ function App() {
         <Route path='/mypage/profile-image' element={<UpdateProfileImage />} />
 
         <Route path='/search-books' element={<BookListPage />} />
+        <Route path='/books/details' element={<BookDetail />} />
 
         <Route path='/cart' element={<CartItemsListPage />} />
       </Routes>
