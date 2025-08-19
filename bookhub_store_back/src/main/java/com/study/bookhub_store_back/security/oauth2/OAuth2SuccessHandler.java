@@ -52,6 +52,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         System.out.println(payload);
         System.out.println("sns 로그인 성공");
 
-//        response.sendRedirect("http://localhost:3000/sns-success?accessToken=" + token + "&expiration=" + expiration);
+        response.sendRedirect("http://localhost:5173/login/success?accessToken=" + token + "&expiration=" + expiration);
     }
 }
