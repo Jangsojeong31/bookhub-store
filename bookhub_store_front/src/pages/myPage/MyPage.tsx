@@ -14,17 +14,7 @@ function MyPage() {
 
   return (
     <Layout>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ProfileCard nickname={nickname} profileImageUrl={profileImageUrl} />
-      </div>
+      <ProfileCard nickname={nickname} profileImageUrl={profileImageUrl} />
     </Layout>
   );
 }

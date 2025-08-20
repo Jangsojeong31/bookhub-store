@@ -2,55 +2,82 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Layout from "../../components/layouts/Layout";
+import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
+import useToken from "../../hooks/useToken";
+import { getCustomerInfo, updateCustomerInfo } from "../../apis/customer";
 
 function UpdateMyInfo() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [cookies] = useCookies(["accessToken"]);
+  const token = useToken();
 
   useEffect(() => {
     const fetchMyInfo = async () => {
-      const token = cookies.accessToken;
-      
-      const res = await axios.get(
-        "http://localhost:8080/api/v1/customer/me/info",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await getCustomerInfo(token);
 
-      const data = res.data.data;
-      console.log({ ...data });
-      const { email, phoneNumber } = data;
-      setEmail(email);
-      setPhoneNumber(phoneNumber);
+      const { code, message, data } = res;
+
+      if (code == "success" && data) {
+        setEmail(data.email);
+        setPhoneNumber(data.phoneNumber);
+      } else {
+        alert("회원정보 불러오기 실패");
+      }
     };
 
     fetchMyInfo();
   }, []);
 
+  const onUpdateMyInfo = async () => {
+    const dto = { email, phoneNumber };
+    const res = await updateCustomerInfo(dto, token);
+    const { code, message } = res;
+    if (code != "success") {
+      alert("실패");
+    } else {
+      alert("성공");
+    }
+  };
+
   return (
     <Layout>
-      <h2>회원 정보 변경 페이지</h2>
-      <p>이름 : </p>
-      <p>이메일 : {email}</p>
-      <input
-        type="text"
-        value={email}
-        placeholder="변경할 이메일을 입력해주세요"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button>저장</button>
-      <p>전화번호 : {phoneNumber}</p>
-      <input
-        type="text"
-        value={phoneNumber}
-        placeholder="변경할 이메일을 입력해주세요"
-        onChange={(e) => setPhoneNumber(e.target.value)}
-      />
-      <button>저장</button>
+      <ProfileCardFrame>
+        <div
+          style={{
+            marginBottom: "auto",
+            marginTop: "auto",
+
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 20,
+          }}
+        >
+          <div>
+            <p>이름 : </p>
+          </div>
+          <div>
+            <p>이메일 : </p>
+            <input
+              type="text"
+              value={email}
+              placeholder="변경할 이메일을 입력해주세요"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <p>전화번호 : </p>
+            <input
+              type="text"
+              value={phoneNumber}
+              placeholder="변경할 이메일을 입력해주세요"
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+          </div>
+        </div>
+        <button onClick={onUpdateMyInfo}>저장</button>
+      </ProfileCardFrame>
     </Layout>
   );
 }

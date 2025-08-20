@@ -18,8 +18,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     <div
       style={{
         width: 500,
-        height: "70%",
-        // border: "1px solid #ccc",
+        height: 600,
         boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
         borderRadius: "30px",
         padding: "20px 20px",

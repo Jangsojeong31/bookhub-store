@@ -5,10 +5,12 @@ import styles from "./Layout.module.css";
 
 function Layout(props: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className={styles.layout}>
       <Header />
 
-      <main className={styles.main}>{props.children}</main>
+      <main>
+        <div className={styles.container}>{props.children}</div>
+      </main>
 
       <Footer />
     </div>

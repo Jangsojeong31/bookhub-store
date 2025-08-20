@@ -10,6 +10,9 @@ import UpdateMyInfo from './pages/myPage/UpdateMyInfo'
 import BookListPage from './pages/book/BookListPage'
 import CartItemsListPage from './pages/cart/CartItemsListPage'
 import BookDetail from './pages/book/BookDetail'
+import OrderCheckPage from './pages/order/OrderCheckPage'
+import OrderListPage from './pages/order/OrderListPage'
+import OrderDetail from './pages/order/OrderDetail'
 
 function App() {
   
@@ -30,6 +33,11 @@ function App() {
         <Route path='/books/details' element={<BookDetail />} />
 
         <Route path='/cart' element={<CartItemsListPage />} />
+
+        <Route path='/order-check' element={<OrderCheckPage />} />
+        <Route path='/mypage/order-list' element={<OrderListPage />} />
+        <Route path='/mypage/order-list/detail' element={<OrderDetail/>} />
+
       </Routes>
     </>
   )

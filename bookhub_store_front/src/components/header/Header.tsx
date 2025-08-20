@@ -2,11 +2,11 @@ import React from 'react'
 import Logo from './Logo'
 import Nav from './Nav'
 import Search from './Search'
-import styles from './Header.module.css'
+import styles from '../layouts/Layout.module.css'
 
 function Header() {
   return (
-    <header className={styles.header}>
+    <header>
       <div className={styles.contents}>
       <Logo />
       <Search />
