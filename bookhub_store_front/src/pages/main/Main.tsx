@@ -9,10 +9,10 @@ function Main() {
   
 
   return (
-    <Layout>
+    
       <div>메인 화면 입니다.</div>
      
-    </Layout>
+    
   );
 }
 

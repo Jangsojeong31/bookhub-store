@@ -6,6 +6,8 @@ import com.study.bookhub_store_back.dto.customer.request.UpdateNicknameRequestDt
 import com.study.bookhub_store_back.dto.customer.request.UpdatePasswordRequestDto;
 import com.study.bookhub_store_back.dto.customer.request.UpdateProfileImageRequestDto;
 import com.study.bookhub_store_back.dto.customer.response.CustomerInfoResponseDto;
+import com.study.bookhub_store_back.dto.customer.response.GetNicknameResponseDto;
+import com.study.bookhub_store_back.dto.customer.response.GetProfileImageResponseDto;
 import com.study.bookhub_store_back.security.CustomUserDetails;
 import com.study.bookhub_store_back.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,24 @@ public class CustomerController {
             @AuthenticationPrincipal CustomUserDetails user
     ) {
         ResponseDto<CustomerInfoResponseDto> responseDto = customerService.getCustomerInfo(user);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 닉네임 불러오기
+    @GetMapping("/me/nickname")
+    public ResponseEntity<ResponseDto<GetNicknameResponseDto>> getMyNickname(
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        ResponseDto<GetNicknameResponseDto> responseDto = customerService.getMyNickname(user);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 프로필 이미지 불러오기
+    @GetMapping("/me/profile-image")
+    public ResponseEntity<ResponseDto<GetProfileImageResponseDto>> getMyProfileImage(
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        ResponseDto<GetProfileImageResponseDto> responseDto = customerService.getMyProfileImage(user);
         return ResponseEntity.ok(responseDto);
     }
 

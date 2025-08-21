@@ -5,6 +5,7 @@ import Layout from "../../components/layouts/Layout";
 import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
 import useToken from "../../hooks/useToken";
 import { getCustomerInfo, updateCustomerInfo } from "../../apis/customer";
+import "./MyPage.css";
 
 function UpdateMyInfo() {
   const [email, setEmail] = useState("");
@@ -41,7 +42,7 @@ function UpdateMyInfo() {
   };
 
   return (
-    <Layout>
+    
       <ProfileCardFrame>
         <div
           style={{
@@ -78,7 +79,7 @@ function UpdateMyInfo() {
         </div>
         <button onClick={onUpdateMyInfo}>저장</button>
       </ProfileCardFrame>
-    </Layout>
+    
   );
 }
 

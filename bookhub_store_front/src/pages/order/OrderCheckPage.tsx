@@ -17,7 +17,7 @@ function OrderCheckPage() {
   }
 
   return (
-    <Layout>
+    
       <TitleBar title="주문 / 결제">
         <div
           style={{
@@ -56,7 +56,7 @@ function OrderCheckPage() {
             } />
         </div>
       </TitleBar>
-    </Layout>
+    
   );
 }
 

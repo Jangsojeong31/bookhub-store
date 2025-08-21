@@ -41,6 +41,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //                return;
 //            }
 
+            String path = request.getRequestURI();
+            if (path.startsWith("/files")) {
+                filterChain.doFilter(request,response);
+                return;
+            }
+
             String authorizationHeader = request.getHeader("Authorization");
 
             String token = (authorizationHeader != null &&  authorizationHeader.startsWith("Bearer "))

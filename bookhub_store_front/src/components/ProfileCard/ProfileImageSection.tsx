@@ -9,6 +9,8 @@ const ProfileImageSection: React.FC<ProfileImgeSectionProps> = ({
   nickname,
   profileImageUrl,
 }) => {
+    const BASE_URL = import.meta.env.VITE_API_DOMAIN;
+
   return (
     <div
       style={{
@@ -20,7 +22,7 @@ const ProfileImageSection: React.FC<ProfileImgeSectionProps> = ({
       }}
     >
       <img
-        src={profileImageUrl || defaultImage}
+        src={`${BASE_URL}${encodeURI(profileImageUrl!)}` || defaultImage}
         alt="프로필 이미지"
         style={{
           width: 100,

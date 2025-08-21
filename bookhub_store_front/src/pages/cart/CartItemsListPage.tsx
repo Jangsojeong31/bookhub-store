@@ -64,7 +64,7 @@ function CartItemsListPage() {
   }, []);
 
   return (
-    <Layout>
+    
       <TitleBar title="장바구니">
         <div
           style={{
@@ -114,7 +114,6 @@ function CartItemsListPage() {
           />
         </div>
       </TitleBar>
-    </Layout>
   );
 }
 

@@ -5,11 +5,11 @@ import OrderList from "./OrderList";
 
 function OrderListPage() {
   return (
-    <Layout>
+    
       <TitleBar title="주문 내역">
         <OrderList />
       </TitleBar>
-    </Layout>
+    
   );
 }
 

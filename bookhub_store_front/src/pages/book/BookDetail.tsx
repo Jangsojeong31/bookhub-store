@@ -43,7 +43,7 @@ function BookDetail() {
   }, [location.search]);
 
   return (
-    <Layout>
+    
       <div
         style={{
           display: "flex",
@@ -107,8 +107,14 @@ function BookDetail() {
               <p>랭킹</p>
               <p>{bookDetail?.price}원</p>
             </div>
-            <div style={{display: "flex",
-              flexDirection: "column", alignItems: "center", marginBottom: 20}}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            >
               <div>
                 <button onClick={onDecreaseQuantity}>-</button>
                 <input
@@ -126,7 +132,7 @@ function BookDetail() {
           </div>
         </div>
       </div>
-    </Layout>
+    
   );
 }
 

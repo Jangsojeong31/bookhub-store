@@ -55,7 +55,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/",
                                 "/login/**",
-                                "/api/v1/customer/**"
+                                "/api/v1/customer/**",
+                                "/files/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

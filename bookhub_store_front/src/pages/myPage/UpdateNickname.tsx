@@ -1,49 +1,55 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
-import { updateNickname } from "../../apis/customer";
+import { getMyNickname, updateNickname } from "../../apis/customer";
 import { useCookies } from "react-cookie";
+import useToken from "../../hooks/useToken";
 
 function UpdateNickname() {
   const [nickname, setNickname] = useState("");
-    const [cookies] = useCookies(["accessToken"]);
-  
+  const token = useToken();
 
   useEffect(() => {
-    const fetchNickname = async () => {};
+    const fetchNickname = async () => {
+      const res = await getMyNickname(token);
+      const { code, message, data } = res;
+
+      if (code == "success" && data) {
+        setNickname(data.nickname);
+      } else {
+        return;
+      }
+    };
 
     fetchNickname();
   }, []);
 
   const onUpdateNickname = async () => {
-        const token = cookies.accessToken;
-        const dto = {nickname};
+    const dto = { nickname };
 
     const res = await updateNickname(dto, token);
-    const {code, message, data} = res;
+    const { code, message } = res;
 
-    if(code != "success") {
+    if (code != "success") {
       return;
     } else {
-      alert("성공")
+      alert("성공");
     }
   };
 
   return (
-    <Layout>
-      <ProfileCardFrame>
-        <div style={{marginBottom: "auto", marginTop: "auto"}}>
-          닉네임 :
-          <input
-            type="text"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            placeholder="변경할 닉네임을 입력해주세요"
-          ></input>
-        </div>
-        <button onClick={onUpdateNickname}>저장</button>
-      </ProfileCardFrame>
-    </Layout>
+    <ProfileCardFrame>
+      <div style={{ marginBottom: "auto", marginTop: "auto" }}>
+        닉네임 :
+        <input
+          type="text"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+          placeholder="변경할 닉네임을 입력해주세요"
+        ></input>
+      </div>
+      <button onClick={onUpdateNickname}>저장</button>
+    </ProfileCardFrame>
   );
 }
 

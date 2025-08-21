@@ -10,7 +10,7 @@ function Login() {
   };
 
   return (
-    <Layout>
+    
       <div
         style={{
           display: "flex",
@@ -56,7 +56,7 @@ function Login() {
         </div>
         <button>회원가입 버튼</button>
       </div>
-    </Layout>
+    
   );
 }
 

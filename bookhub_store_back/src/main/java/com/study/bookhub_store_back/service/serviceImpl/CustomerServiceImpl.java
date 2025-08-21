@@ -6,6 +6,8 @@ import com.study.bookhub_store_back.dto.customer.request.UpdateNicknameRequestDt
 import com.study.bookhub_store_back.dto.customer.request.UpdatePasswordRequestDto;
 import com.study.bookhub_store_back.dto.customer.request.UpdateProfileImageRequestDto;
 import com.study.bookhub_store_back.dto.customer.response.CustomerInfoResponseDto;
+import com.study.bookhub_store_back.dto.customer.response.GetNicknameResponseDto;
+import com.study.bookhub_store_back.dto.customer.response.GetProfileImageResponseDto;
 import com.study.bookhub_store_back.entity.Customer;
 import com.study.bookhub_store_back.repository.CustomerRepository;
 import com.study.bookhub_store_back.security.CustomUserDetails;
@@ -85,5 +87,23 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.save(customer);
 
         return ResponseDto.success("success", "success");
+    }
+
+    @Override
+    public ResponseDto<GetNicknameResponseDto> getMyNickname(CustomUserDetails user) {
+        String nickname = user.getCustomer().getNickname();
+
+        GetNicknameResponseDto responseDto = GetNicknameResponseDto.builder().nickname(nickname).build();
+
+        return ResponseDto.success("success", "success", responseDto);
+    }
+
+    @Override
+    public ResponseDto<GetProfileImageResponseDto> getMyProfileImage(CustomUserDetails user) {
+        String profileImage = user.getCustomer().getProfileImageUrl();
+
+        GetProfileImageResponseDto responseDto = GetProfileImageResponseDto.builder().profileImage(profileImage).build();
+
+        return ResponseDto.success("success", "success", responseDto);
     }
 }
