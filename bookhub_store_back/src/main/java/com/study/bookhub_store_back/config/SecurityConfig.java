@@ -56,7 +56,8 @@ public class SecurityConfig {
                                 "/",
                                 "/login/**",
                                 "/api/v1/customer/**",
-                                "/files/**"
+                                "/files/**",
+                                "/api/v1/payments/confirm"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

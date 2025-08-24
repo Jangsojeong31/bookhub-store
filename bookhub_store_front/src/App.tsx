@@ -14,6 +14,7 @@ import OrderCheckPage from "./pages/order/OrderCheckPage";
 import OrderListPage from "./pages/order/OrderListPage";
 import OrderDetail from "./pages/order/OrderDetail";
 import Layout from "./components/layouts/Layout";
+import Success from "./pages/payment/Success";
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
           <Route path="/order-check" element={<OrderCheckPage />} />
           <Route path="/mypage/order-list" element={<OrderListPage />} />
           <Route path="/mypage/order-list/detail" element={<OrderDetail />} />
+
+          <Route path="/payment/success" element={<Success />} />
         </Routes>
       </Layout>
     </>
