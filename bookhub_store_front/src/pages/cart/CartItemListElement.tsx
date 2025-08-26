@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import type { CartItemsResponseDto } from "../../dtos/cart/CartItemsResponse.dto";
-import { decreaseQuantity, increaseQuantity } from "../../apis/cart";
+import { decreaseQuantity, increaseQuantity, removeCartItems } from "../../apis/cart";
 import { useCookies } from "react-cookie";
 import useToken from "../../hooks/useToken";
+import type { RemoveCartItemRequestDto } from "../../dtos/cart/RemoveCartItemRequest.dto";
 
 interface ElementProps {
   cartItemList: CartItemsResponseDto[];
   selectedItems: CartItemsResponseDto[];
   onSelectionChange: (selected: CartItemsResponseDto[]) => void;
+  onRemoveItem: (id: number) => void;
 }
 
 function CartItemListElement({
   cartItemList,
   selectedItems,
   onSelectionChange,
+  onRemoveItem
 }: ElementProps) {
   const token = useToken();
 
@@ -35,6 +38,12 @@ function CartItemListElement({
     }
     onSelectionChange(updated);
   };
+
+  const handleRemoveCartItem = async(id: number) => {
+    const dto: RemoveCartItemRequestDto = { cartItemIds: [id] }
+    await removeCartItems(dto, token);
+    onRemoveItem(id);
+  }
 
   const cartItemListResult = cartItemList.map((item) => {
     return (
@@ -78,7 +87,7 @@ function CartItemListElement({
           <button onClick={() => onIncreaseQuantity(item.id)}>+</button>
         </div>
         <div style={{ marginBottom: "auto" }}>
-          <button>삭제</button>
+          <button onClick={() => handleRemoveCartItem(item.id)}>삭제</button>
         </div>
       </div>
     );

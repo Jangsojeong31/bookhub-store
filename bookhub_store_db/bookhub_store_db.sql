@@ -99,7 +99,6 @@ CREATE TABLE IF NOT EXISTS `payments` (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
-    CONSTRAINT chk_payment_status CHECK (status IN ('REQUESTED', 'SUCCESS', 'FAILED')),
     CONSTRAINT fk_payments_orders FOREIGN KEY (order_id)
     REFERENCES orders(order_id)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

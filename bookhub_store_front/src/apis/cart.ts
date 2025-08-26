@@ -5,6 +5,7 @@ import { axiosInstance, BASE_API, bearerAuthorization, responseSuccessHandler, r
 import type { AddCartItemRequestDto } from "../dtos/cart/AddCartItemRequest.dto";
 import type { CartItemsResponseDto } from "../dtos/cart/CartItemsResponse.dto";
 import type { CartItemIdRequestDto } from "../dtos/cart/CartItemIdRequest.dto";
+import type { RemoveCartItemRequestDto } from "../dtos/cart/RemoveCartItemRequest.dto";
 
 // 장바구니 담기
 export const addCartItems = async (dto: AddCartItemRequestDto[], accessToken: string): Promise<ResponseDto<void>> => {
@@ -76,15 +77,15 @@ export const decreaseQuantity = async (cartItemId: number, accessToken: string):
 }
 
 // 장바구니 아이템 삭제 (개별 삭제 || 주문 시 장바구니 비우기)
-// export const removeCartItems = async (dto: CartItemIdRequestDto[], accessToken: string): Promise<ResponseDto<void>> => {
-//   try {
-//     const response = await axiosInstance.delete(
-//       `${BASE_API}/cart/items`,
-//       dto,
-//       bearerAuthorization(accessToken)
-//     );
-//     return responseSuccessHandler(response);
-//   } catch (error) {
-//     return responseErrorHandler(error as AxiosError<ResponseDto>);
-//   }
-// }
+export const removeCartItems = async (dto: RemoveCartItemRequestDto, accessToken: string): Promise<ResponseDto<void>> => {
+  try {
+    const response = await axiosInstance.post(
+      `${BASE_API}/cart/remove`,
+      dto,
+      bearerAuthorization(accessToken)
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+}

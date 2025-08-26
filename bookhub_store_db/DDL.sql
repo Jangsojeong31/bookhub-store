@@ -5,3 +5,5 @@ ALTER TABLE orders MODIFY COLUMN order_number VARCHAR(50) NOT NULL UNIQUE;
 ALTER TABLE payments MODIFY COLUMN order_number VARCHAR(50) NOT NULL UNIQUE;
 ALTER TABLE payments MODIFY COLUMN payment_method VARCHAR(255);
 ALTER TABLE payments MODIFY COLUMN approved_at DATETIME;
+
+ALTER TABLE payments DROP CHECK chk_payment_status;

@@ -69,6 +69,8 @@ function RequestPayment({
     // 주문 내역(요청중) 생성
     const res = await createOrder(dto, token);
 
+    const itemIds = orderingItems.map(item => item.id).join(",");
+
     // 결제 요청
     try {
       await widgets?.requestPayment({
@@ -78,8 +80,8 @@ function RequestPayment({
         // customerName: "김토스",
         // customerEmail: "customer123@gmail.com",
 
-        successUrl:
-          window.location.origin + "/payment/success" + window.location.search,
+        successUrl
+        : `${window.location.origin}/payment/success?itemIds=${itemIds}`,
         failUrl:
           window.location.origin + "/payment/fail" + window.location.search,
       });

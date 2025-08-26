@@ -3,6 +3,7 @@ package com.study.bookhub_store_back.controller;
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.cartItem.request.AddCartItemRequestDto;
 import com.study.bookhub_store_back.dto.cartItem.request.CartItemIdRequestDto;
+import com.study.bookhub_store_back.dto.cartItem.request.RemoveCartItemRequestDto;
 import com.study.bookhub_store_back.dto.cartItem.response.CartItemsResponseDto;
 import com.study.bookhub_store_back.security.CustomUserDetails;
 import com.study.bookhub_store_back.service.CartService;
@@ -47,6 +48,7 @@ public class CartController {
         ResponseDto<List<CartItemsResponseDto>> responseDto = cartService.getCartItemsToOrder(user, dto);
         return ResponseEntity.ok(responseDto);
     }
+
     // 장바구니 수량 변경 - 증가
     @PutMapping("/cart/items/{cartItemId}/increase")
     public ResponseEntity<ResponseDto<Void>> increaseQuantity(
@@ -68,10 +70,10 @@ public class CartController {
     }
 
     // 장바구니 아이템 삭제 (개별 삭제 / 주문 시 장바구니 비우기)
-    @DeleteMapping("/cart/items")
+    @PostMapping("/cart/remove")
     public ResponseEntity<ResponseDto<Void>> removeCartItems(
             @AuthenticationPrincipal CustomUserDetails user,
-            @RequestBody List<CartItemIdRequestDto> dto
+            @RequestBody RemoveCartItemRequestDto dto
     ) {
         ResponseDto<Void> responseDto = cartService.removeCartItems(user, dto);
         return ResponseEntity.ok(responseDto);

@@ -11,4 +11,11 @@ SELECT * FROM orders;
 SELECT * FROM order_details;
 SELECT * FROM payments;
 
+SHOW VARIABLES LIKE 'character_set%';
+SHOW VARIABLES LIKE 'collation%';
+SHOW CREATE TABLE payments;
+SELECT payment_method FROM payments;
+
+
+
 

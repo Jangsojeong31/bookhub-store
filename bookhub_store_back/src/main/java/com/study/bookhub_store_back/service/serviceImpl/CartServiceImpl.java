@@ -3,6 +3,7 @@ package com.study.bookhub_store_back.service.serviceImpl;
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.cartItem.request.AddCartItemRequestDto;
 import com.study.bookhub_store_back.dto.cartItem.request.CartItemIdRequestDto;
+import com.study.bookhub_store_back.dto.cartItem.request.RemoveCartItemRequestDto;
 import com.study.bookhub_store_back.dto.cartItem.response.CartItemsResponseDto;
 import com.study.bookhub_store_back.entity.Cart;
 import com.study.bookhub_store_back.entity.CartItem;
@@ -104,18 +105,18 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public ResponseDto<Void> removeCartItems(CustomUserDetails user, List<CartItemIdRequestDto> dto) {
+    public ResponseDto<Void> removeCartItems(CustomUserDetails user, RemoveCartItemRequestDto dto) {
         Cart cart = cartRepository.findById(user.getCartId())
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
 
-        List<Long> cartItemIds = dto.stream()
-                .map(CartItemIdRequestDto::getCartItemId)
+        List<Long> cartItemIds = dto.getCartItemIds();
+
+        List<CartItem> items = cartItemRepository.findAllById(cartItemIds)
+                .stream()
+                .filter(item -> item.getCart().getCartId().equals(cart.getCartId()))
                 .toList();
 
-        List<CartItem> items = cartItemRepository.findAllById(cartItemIds);
-
         for (CartItem item : items) cart.removeItem(item);
-
 
         return ResponseDto.success("success", "장바구니 상품 삭제 완료");
     }

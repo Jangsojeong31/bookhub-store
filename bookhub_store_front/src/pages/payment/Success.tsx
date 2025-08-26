@@ -4,10 +4,13 @@ import "./Checkout.css";
 import useToken from '../../hooks/useToken';
 import type { ConfirmPaymentRequestDto } from '../../dtos/payment/ConfirmPaymentRequest.dto';
 import { confirmPayment } from '../../apis/payment';
+import { removeCartItems } from '../../apis/cart';
+import type { RemoveCartItemRequestDto } from '../../dtos/cart/RemoveCartItemRequest.dto';
 
 function Success() {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [searchParams] = useSearchParams();
+  const itemIdsParam = searchParams.get("itemIds");
   const paymentKey = searchParams.get("paymentKey");
   const orderId = searchParams.get("orderId");
   const amount = searchParams.get("amount");
@@ -30,6 +33,16 @@ function Success() {
       alert("결제 성공")
       setOrderName(data.orderName);
       setIsConfirmed(true);
+
+      const itemIds = itemIdsParam ? itemIdsParam.split(",").map(id => parseInt(id)) : [];
+
+      const dto: RemoveCartItemRequestDto = {
+        cartItemIds: itemIds
+      };
+
+      if (itemIds.length > 0)
+      await removeCartItems(dto, token);
+    
     } else {
       alert("결제 실패. 다시 시도해주세요")
       return;

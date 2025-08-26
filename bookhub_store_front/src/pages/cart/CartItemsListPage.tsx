@@ -41,7 +41,7 @@ function CartItemsListPage() {
       },
     });
   };
-  
+
   const fetchCartList = async () => {
     const res = await getCartItems(token);
 
@@ -65,56 +65,59 @@ function CartItemsListPage() {
   }, []);
 
   return (
-    
-      <TitleBar title="장바구니">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "90%",
-            padding: "30px 30px",
-            gap: 20,
-          }}
-        >
-          <div>
-            <div
-              style={{
-                display: "flex",
-                backgroundColor: "rgba(0, 0, 0, 0.05)",
-                width: 1100,
-                padding: "10px 10px",
-                margin: 10,
-                gap: 12,
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={selectedItems.length === cartItemList.length}
-                onChange={toggleSelectAll}
-              />
-              <div>전체 선택</div>
-            </div>
-            <CartItemListElement
-              cartItemList={cartItemList}
-              onSelectionChange={setSelectedItems}
-              selectedItems={selectedItems}
+    <TitleBar title="장바구니">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "90%",
+          padding: "30px 30px",
+          gap: 20,
+        }}
+      >
+        <div>
+          <div
+            style={{
+              display: "flex",
+              backgroundColor: "rgba(0, 0, 0, 0.05)",
+              width: 1100,
+              padding: "10px 10px",
+              margin: 10,
+              gap: 12,
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={selectedItems.length === cartItemList.length}
+              onChange={toggleSelectAll}
             />
+            <div>전체 선택</div>
           </div>
-          <StickyCartOverview
-            totalPrice={totalPrice}
-            discount={discount}
-            finalPrice={finalPrice}
-            button={
-              <button
-                disabled={selectedItems.length === 0}
-                onClick={handleOrderPageNavi}
-              >
-                주문하기
-              </button>
-            }
+          <CartItemListElement
+            cartItemList={cartItemList}
+            onSelectionChange={setSelectedItems}
+            selectedItems={selectedItems}
+            onRemoveItem={(id) => {
+              setCartItemList((prev) => prev.filter((item) => item.id !== id));
+              setSelectedItems((prev) => prev.filter((item) => item.id !== id));
+            }}
           />
         </div>
-      </TitleBar>
+        <StickyCartOverview
+          totalPrice={totalPrice}
+          discount={discount}
+          finalPrice={finalPrice}
+          button={
+            <button
+              disabled={selectedItems.length === 0}
+              onClick={handleOrderPageNavi}
+            >
+              주문하기
+            </button>
+          }
+        />
+      </div>
+    </TitleBar>
   );
 }
 
