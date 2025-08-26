@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom';
 import "./Checkout.css";
 import { axiosInstance } from '../../apis/axiosConfig';
+import useToken from '../../hooks/useToken';
+import type { ConfirmPaymentRequestDto } from '../../dtos/payment/ConfirmPaymentRequest.dto';
+import { confirmPayment } from '../../apis/payment';
 
 function Success() {
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -9,23 +12,27 @@ function Success() {
   const paymentKey = searchParams.get("paymentKey");
   const orderId = searchParams.get("orderId");
   const amount = searchParams.get("amount");
+  const [orderName, setOrderName] = useState("");
+  const token = useToken();
 
-  const confirmPayment = async() => {
-    const res = await fetch("http://localhost:8080/api/v1/payments/confirm", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        paymentKey,
-        orderId,
-        amount
-      })
-    });
+  const handleConfirmPayment = async() => {
+    const dto: ConfirmPaymentRequestDto = {
+      paymentKey: paymentKey!,
+      orderId: orderId!,
+      amount: amount!
+    }
 
-    if (res.ok) {
+    const res = await confirmPayment(dto, token);
+
+    const { code, message, data } = res;
+
+    if (code == "SU" && data) {
       alert("결제 성공")
+      setOrderName(data.orderName);
       setIsConfirmed(true);
+    } else {
+      alert("결제 실패. 다시 시도해주세요")
+      return;
     }
   
   }
@@ -46,21 +53,21 @@ function Success() {
           <h2 className="title">결제를 완료했어요</h2>
           <div className="response-section w-100">
             <div className="flex justify-between">
-              <span className="response-label">결제 금액</span>
-              <span id="amount" className="response-text">
-                {amount}
-              </span>
-            </div>
-            <div className="flex justify-between">
               <span className="response-label">주문번호</span>
               <span id="orderId" className="response-text">
                 {orderId}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="response-label">paymentKey</span>
-              <span id="paymentKey" className="response-text">
-                {paymentKey}
+              <span className="response-label">주문 내용</span>
+              <span id="orderName" className="response-text">
+                {orderName}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="response-label">결제 금액</span>
+              <span id="amount" className="response-text">
+                {amount}
               </span>
             </div>
           </div>
@@ -97,7 +104,7 @@ function Success() {
             <h4 className="text-center description">결제 승인하고 완료해보세요.</h4>
           </div>
           <div className="w-100">
-            <button className="btn primary w-100" onClick={confirmPayment}>
+            <button className="btn primary w-100" onClick={handleConfirmPayment}>
             결제 승인하기
           </button>
           </div>

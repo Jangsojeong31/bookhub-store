@@ -22,7 +22,6 @@ public class Payment extends BaseTimeEntity {
 
     @Column(nullable = false, unique = true)
     private String paymentKey;
-    @Column(nullable = false)
     private String paymentMethod;
     @Column(nullable = false)
     private Long amount;
@@ -34,10 +33,9 @@ public class Payment extends BaseTimeEntity {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
     @Column(nullable = false)
-    private Long orderNumber;
+    private String orderNumber;
 
     @Column(nullable = false)
     private LocalDateTime requestedAt;
-    @Column(nullable = false)
     private LocalDateTime approvedAt;
 }

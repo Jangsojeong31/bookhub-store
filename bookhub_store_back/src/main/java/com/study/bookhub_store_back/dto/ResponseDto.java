@@ -18,4 +18,8 @@ public class ResponseDto<T> {
     public static <T> ResponseDto<T> success(String code, String message) {
         return new ResponseDto<>(code, message, null);
     }
+
+    public static <T> ResponseDto<T> fail(String code, String message) {
+        return new ResponseDto<>(code, message, null);
+    }
 }

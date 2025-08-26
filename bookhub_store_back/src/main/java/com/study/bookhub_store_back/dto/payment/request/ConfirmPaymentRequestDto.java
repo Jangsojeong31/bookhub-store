@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ConfirmRequestDto {
+public class ConfirmPaymentRequestDto {
     private String paymentKey;
     private String orderId;
     private String amount;

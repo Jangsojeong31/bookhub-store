@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `cart_items` (
 
 CREATE TABLE IF NOT EXISTS `orders` (
 	order_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-	order_number VARCHAR(255) NOT NULL UNIQUE, -- 주문 번호
+	order_number VARCHAR(50) NOT NULL UNIQUE, -- 주문 번호
     order_name VARCHAR(255) NOT NULL, 
     customer_id BIGINT NOT NULL,
     delivery_address_id BIGINT NOT NULL,
@@ -89,12 +89,12 @@ CREATE TABLE IF NOT EXISTS `payments` (
 	payment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     payment_key VARCHAR(255) NOT NULL,
     order_id BIGINT NOT NULL,
-    order_number BIGINT NOT NULL,
-    payment_method VARCHAR(255) NOT NULL,
+    order_number VARCHAR(50) NOT NULL,
+    payment_method VARCHAR(255),
     amount BIGINT NOT NULL,
     status VARCHAR(255) NOT NULL, -- 결제 승인 상태
     requested_at DATETIME NOT NULL,
-    approved_at DATEtIME NOT NULL,
+    approved_at DATETIME,
     
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
