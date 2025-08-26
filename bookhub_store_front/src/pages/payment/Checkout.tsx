@@ -1,38 +1,51 @@
-import React, { useEffect, useState } from 'react'
-import { loadTossPayments, type TossPaymentsWidgets } from "@tosspayments/tosspayments-sdk";
-import { nanoid } from 'nanoid';
+import React, { useEffect, useState } from "react";
+import {
+  loadTossPayments,
+  type TossPaymentsWidgets,
+} from "@tosspayments/tosspayments-sdk";
+import { customAlphabet, nanoid } from "nanoid";
 import "./Checkout.css";
+import { createOrder } from "../../apis/order";
+import useToken from "../../hooks/useToken";
+import type { CartItemsResponseDto } from "../../dtos/cart/CartItemsResponse.dto";
+import type { OrderItems } from "../../dtos/order/request/CreateOrderRequest.dto";
+import RequestPayment from "../order/RequestPayment";
 
-function Checkout() {
+function Checkout(props: {
+  orderingItems: CartItemsResponseDto[];
+  totalAmount: number;
+}) {
+  const orderingItems = props.orderingItems;
+  const totalAmount = props.totalAmount;
+
   const [ready, setReady] = useState(false);
   const [widgets, setWidgets] = useState<TossPaymentsWidgets | null>(null);
-  const [amount, setAmount] = useState({
-    currency: "KRW",
-    value: 1000,
-  })
-
+  
   const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
 
   useEffect(() => {
-    const fetchPaymentWidget = async() => {
+    const fetchPaymentWidget = async () => {
       const tosspayments = await loadTossPayments(clientKey);
-    
+
       const customerKey = nanoid(15);
-      const widgets = tosspayments.widgets({customerKey});
+      const widgets = tosspayments.widgets({ customerKey });
       setWidgets(widgets);
-    }
+    };
 
     fetchPaymentWidget();
   }, [clientKey]);
 
   useEffect(() => {
-    const renderPaymentWidgets = async() => {
+    const renderPaymentWidgets = async () => {
       if (widgets == null) {
         return;
       }
 
       // 결제금액 설정하기
-      widgets.setAmount(amount);
+      widgets.setAmount({
+        currency: "KRW",
+        value: totalAmount,
+      });
 
       // 결제창 렌더링
       await Promise.all([
@@ -48,42 +61,29 @@ function Checkout() {
       ]);
 
       setReady(true);
-    }
+    };
 
     renderPaymentWidgets();
   }, [widgets]);
 
-  
   return (
     <div>
       <div className="wrapper w-100">
-      <div className="max-w-540 w-100">
-        <div id="payment-method" className="w-100" />
-        <div id="agreement" className="w-100" />
-        <div className="btn-wrapper w-100">
-          <button
-            className="btn primary w-100"
-            onClick={async () => {
-              try {
-                await widgets?.requestPayment({
-                  orderId: nanoid(),
-                  orderName: "토스 티셔츠 외 2건",
-                  customerName: "김토스",
-                  customerEmail: "customer123@gmail.com",
-                  successUrl: window.location.origin + "/payment/success" + window.location.search,
-                  failUrl: window.location.origin + "/payment/fail" + window.location.search
-                });
-              } catch (error) {
-              }
-            }}
-          >
-            결제하기
-          </button>
+        <div className="max-w-540 w-100">
+          <div id="payment-method" className="w-100" />
+          <div id="agreement" className="w-100" />
+          <div className="btn-wrapper w-100">
+            <RequestPayment
+              totalAmount={totalAmount}
+              address="당리푸르지오"
+              orderingItems={orderingItems}
+              widgets={widgets !== null ? widgets : null}
+            />
+          </div>
         </div>
       </div>
     </div>
-    </div>
-  )
+  );
 }
 
-export default Checkout
+export default Checkout;

@@ -39,7 +39,7 @@ function OrderCheckPage() {
           >
             <DeliveryAddressInfo />
             <OrderingItemList selectedItems={selectedItems}/>
-            <SelectPayment />
+            <SelectPayment selectedItems={selectedItems} finalPrice={finalPrice}/>
           </div>
 
           <StickyCartOverview

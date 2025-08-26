@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CartItemsResponseDto {
     private Long id;
+    private String isbn;
     private String title;
     private String coverImageUrl;
     private Long price;

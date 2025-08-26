@@ -50,3 +50,57 @@ CREATE TABLE IF NOT EXISTS `cart_items` (
     CONSTRAINT fk_isbn FOREIGN KEY (isbn)
     REFERENCES books(book_isbn)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `orders` (
+	order_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	order_number VARCHAR(255) NOT NULL UNIQUE, -- 주문 번호
+    order_name VARCHAR(255) NOT NULL, 
+    customer_id BIGINT NOT NULL,
+    delivery_address_id BIGINT NOT NULL,
+    total_amount BIGINT NOT NULL, -- 총 금액
+    order_date DATETIME NOT NULL,
+    status VARCHAR(255) NOT NULL, -- 결제 상태
+    
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    CONSTRAINT fk_orders_customers FOREIGN KEY (customer_id)
+    REFERENCES customers(customer_id),
+    -- CONSTRAINT fk_orders_delivery_addresses FOREIGN KEY (default_address_id)
+-- REFERENCES delivery_addresses(delivery_address_id)
+	CONSTRAINT chk_order_status CHECK (status IN ('PENDING', 'PAID', 'FAILED'))
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `order_details` (
+	order_detail_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    order_id BIGINT NOT NULL,
+    isbn VARCHAR(255) NOT NULL,
+    book_price BIGINT NOT NULL,
+    quantity BIGINT NOT NULL,
+    total_price BIGINT NOT NULL, -- book_price * quantity
+    
+    CONSTRAINT fk_order_details_orders FOREIGN KEY (order_id)
+    REFERENCES orders(order_id),
+    CONSTRAINT fk_order_details_books FOREIGN KEY (isbn)
+    REFERENCES books(book_isbn)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `payments` (
+	payment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    payment_key VARCHAR(255) NOT NULL,
+    order_id BIGINT NOT NULL,
+    order_number BIGINT NOT NULL,
+    payment_method VARCHAR(255) NOT NULL,
+    amount BIGINT NOT NULL,
+    status VARCHAR(255) NOT NULL, -- 결제 승인 상태
+    requested_at DATETIME NOT NULL,
+    approved_at DATEtIME NOT NULL,
+    
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    CONSTRAINT chk_payment_status CHECK (status IN ('REQUESTED', 'SUCCESS', 'FAILED')),
+    CONSTRAINT fk_payments_orders FOREIGN KEY (order_id)
+    REFERENCES orders(order_id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+

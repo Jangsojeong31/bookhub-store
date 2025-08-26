@@ -7,4 +7,7 @@ SELECT * FROM discount_policies;
 SELECT * FROM upload_files;
 SELECT * FROM carts;
 SELECT * FROM cart_items;
+SELECT * FROM orders;
+SELECT * FROM order_details;
+
 

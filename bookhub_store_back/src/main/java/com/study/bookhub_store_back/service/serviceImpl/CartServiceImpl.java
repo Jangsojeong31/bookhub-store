@@ -70,6 +70,7 @@ public class CartServiceImpl implements CartService {
 
                     return CartItemsResponseDto.builder()
                             .id(item.getCartItemId())
+                            .isbn(book.getBookIsbn())
                             .title(book.getBookTitle())
                             .price(book.getBookPrice())
                             .coverImageUrl(book.getCoverImage() == null ? null : book.getCoverImage().getFilePath())
