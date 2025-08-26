@@ -35,6 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Value("${tossPayments_SECRET_KEY}")
     private String secretKey;
 
+    private final RestTemplate restTemplate;
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
 
@@ -52,7 +53,7 @@ public class PaymentServiceImpl implements PaymentService {
             Payment payment = Payment.builder()
                     .paymentKey(request.getPaymentKey())
                     .amount(Long.valueOf(request.getAmount()))
-                    .status(PaymentStatus.REQUESTED)
+                    .status("REQUESTED")
                     .order(order)
                     .orderNumber(request.getOrderId())
                     .requestedAt(LocalDateTime.now())
@@ -74,7 +75,6 @@ public class PaymentServiceImpl implements PaymentService {
 
             HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
-            RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.postForEntity(
                     "https://api.tosspayments.com/v1/payments/confirm",
                     entity,
@@ -88,16 +88,19 @@ public class PaymentServiceImpl implements PaymentService {
 
                 // 실패 시
                 if (jsonNode.has("code")) {
-                    payment.setStatus(PaymentStatus.FAILED);
+                    payment.setStatus("FAILED");
                     order.setStatus(OrderStatus.FAILED);
                     return ResponseDto.fail(jsonNode.get("code").asText(), jsonNode.get("message").asText());
                 }
 
                 // 성공 시
-                payment.setStatus(PaymentStatus.SUCCESS);
+                String status = jsonNode.get("status").asText();
+                String paymentMethod = jsonNode.get("method").asText();
                 String approvedAt = jsonNode.get("approvedAt").asText();
+
+                payment.setStatus(status);
+                payment.setPaymentMethod(paymentMethod);
                 payment.setApprovedAt(LocalDateTime.parse(approvedAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-                payment.setPaymentMethod(jsonNode.get("method").asText());
 
                 order.setStatus(OrderStatus.PAID);
 
@@ -117,7 +120,7 @@ public class PaymentServiceImpl implements PaymentService {
                 return ResponseDto.success("SU", "success", responseDto);
 
             } catch (Exception e){
-                payment.setStatus(PaymentStatus.FAILED);
+                payment.setStatus("FAILED");
                 order.setStatus(OrderStatus.FAILED);
                 throw new RuntimeException("결제 승인 처리 중 오류", e);
             }

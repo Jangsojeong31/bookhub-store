@@ -25,9 +25,8 @@ public class Payment extends BaseTimeEntity {
     private String paymentMethod;
     @Column(nullable = false)
     private Long amount;
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PaymentStatus status;
+    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)

@@ -3,13 +3,14 @@ package com.study.bookhub_store_back.service;
 import com.study.bookhub_store_back.common.enums.OrderStatus;
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.order.request.CreateOrderRequestDto;
+import com.study.bookhub_store_back.dto.order.response.OrderDetailResponseDto;
+import com.study.bookhub_store_back.dto.order.response.OrderListResponseDto;
 import com.study.bookhub_store_back.entity.Customer;
 import com.study.bookhub_store_back.entity.Order;
 import com.study.bookhub_store_back.entity.OrderDetail;
+import com.study.bookhub_store_back.entity.Payment;
 import com.study.bookhub_store_back.entity.product.Book;
-import com.study.bookhub_store_back.repository.BookRepository;
-import com.study.bookhub_store_back.repository.CustomerRepository;
-import com.study.bookhub_store_back.repository.OrderRepository;
+import com.study.bookhub_store_back.repository.*;
 import com.study.bookhub_store_back.security.CustomUserDetails;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,8 @@ public class OrderServiceImpl implements OrderService{
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final BookRepository bookRepository;
+    private final OrderDetailRepository orderDetailRepository;
+    private final PaymentRepository paymentRepository;
 
     // 요청 주문건 생성 (status = PENDING)
     @Override
@@ -64,5 +67,50 @@ public class OrderServiceImpl implements OrderService{
 
         orderRepository.save(newOrder);
         return null;
+    }
+
+    // 주문 내역 목록
+    @Override
+    public ResponseDto<List<OrderListResponseDto>> getOrders(CustomUserDetails user) {
+        Customer customer = customerRepository.findById(user.getCustomer().getCustomerId())
+                .orElseThrow(EntityNotFoundException::new);
+
+        List<Order> orders = orderRepository.findByCustomer_CustomerIdOrderByOrderDateDesc(customer.getCustomerId());
+        List<OrderListResponseDto> responseDtos = new ArrayList<>();
+
+        for (Order order : orders) {
+            List<OrderDetail> orderDetails = orderDetailRepository.findAllByOrder_OrderId(order.getOrderId());
+            Payment payment = paymentRepository.findByOrderNumber(order.getOrderNumber());
+
+            List<OrderDetailResponseDto> detailResponseDtos = orderDetails.stream()
+                            .map(detail -> OrderDetailResponseDto.builder()
+                                    .orderDetailId(detail.getOrderDetailId())
+                                    .bookTitle(detail.getBook().getBookTitle())
+                                    .coverUrl(detail.getBook().getCoverImage() != null ? detail.getBook().getCoverImage().getFilePath() : null)
+                                    .bookPrice(detail.getBookPrice())
+                                    .quantity(detail.getQuantity())
+                                    .totalPrice(detail.getTotalPrice())
+                                    .build())
+                            .toList();
+
+            responseDtos.add(
+                    OrderListResponseDto.builder()
+                            .orderId(order.getOrderId())
+                            .orderNumber(order.getOrderNumber())
+                            .orderName(order.getOrderName())
+                            .orderDate(order.getOrderDate())
+                            .orderDetails(detailResponseDtos)
+                            .paymentMethod(payment == null
+                                    ? null
+                                    : payment.getPaymentMethod() == null ? null : payment.getPaymentMethod())
+                            .customerEmail(customer.getEmail())
+                            .address(order.getAddress().toString())
+                            .status(order.getStatus())
+                            .totalAmount(order.getTotalAmount())
+                            .build()
+            );
+        }
+
+        return ResponseDto.success("SU", "success", responseDtos);
     }
 }

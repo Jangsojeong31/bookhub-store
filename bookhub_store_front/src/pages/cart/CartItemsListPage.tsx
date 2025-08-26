@@ -41,6 +41,7 @@ function CartItemsListPage() {
       },
     });
   };
+  
   const fetchCartList = async () => {
     const res = await getCartItems(token);
 

@@ -32,32 +32,8 @@ function Fail() {
         </div>
 
         <div className="w-100 button-group">
-          <a
-            className="btn"
-            href="https://developers.tosspayments.com/sandbox"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            다시 테스트하기
-          </a>
-          <div className="flex" style={{ gap: "16px" }}>
-            <a
-              className="btn w-100"
-              href="https://docs.tosspayments.com/reference/error-codes"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              에러코드 문서보기
-            </a>
-            <a
-              className="btn w-100"
-              href="https://techchat.tosspayments.com"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              실시간 문의하기
-            </a>
-          </div>
+          <button>장바구니로 돌아가기</button>
+          <button>주문 화면으로 돌아가기</button>
         </div>
       </div>
     </div>

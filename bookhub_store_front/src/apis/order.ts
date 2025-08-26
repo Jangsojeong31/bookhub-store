@@ -8,6 +8,7 @@ import {
   responseErrorHandler,
 } from "./axiosConfig";
 import type { CreateOrderRequestDto } from "../dtos/order/request/CreateOrderRequest.dto";
+import type { OrderListResponseDto } from "../dtos/order/OrderListResponse.dto";
 
 export const createOrder = async (
   dto: CreateOrderRequestDto,
@@ -24,3 +25,18 @@ export const createOrder = async (
     return responseErrorHandler(error as AxiosError<ResponseDto>);
   }
 };
+
+export const getMyOrders = async (
+  accessToken: string
+): Promise<ResponseDto<OrderListResponseDto[]>> => {
+  try {
+    const response = await axiosInstance.get(
+      `${BASE_API}/orders`,
+      bearerAuthorization(accessToken)
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+};
+

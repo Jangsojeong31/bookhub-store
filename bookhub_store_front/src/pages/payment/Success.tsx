@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom';
 import "./Checkout.css";
-import { axiosInstance } from '../../apis/axiosConfig';
 import useToken from '../../hooks/useToken';
 import type { ConfirmPaymentRequestDto } from '../../dtos/payment/ConfirmPaymentRequest.dto';
 import { confirmPayment } from '../../apis/payment';
@@ -13,6 +12,7 @@ function Success() {
   const orderId = searchParams.get("orderId");
   const amount = searchParams.get("amount");
   const [orderName, setOrderName] = useState("");
+  
   const token = useToken();
 
   const handleConfirmPayment = async() => {
@@ -73,22 +73,9 @@ function Success() {
           </div>
 
           <div className="w-100 button-group">
-            
             <div className="flex" style={{ gap: "16px" }}>
-              <a
-                className="btn w-100"
-                href="https://developers.tosspayments.com/sandbox"
-              >
-                다시 테스트하기
-              </a>
-              <a
-                className="btn w-100"
-                href="https://docs.tosspayments.com/guides/v2/payment-widget/integration"
-                target="_blank"
-                rel="noopner noreferer"
-              >
-                결제 연동 문서가기
-              </a>
+              <button>메인 화면으로 가기</button>
+              <button>장바구니로 돌아가기</button>
             </div>
           </div>
         </div>
@@ -101,7 +88,6 @@ function Success() {
               height="120"
             />
             <h2 className="title text-center">결제 요청까지 성공했어요.</h2>
-            <h4 className="text-center description">결제 승인하고 완료해보세요.</h4>
           </div>
           <div className="w-100">
             <button className="btn primary w-100" onClick={handleConfirmPayment}>

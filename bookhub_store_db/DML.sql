@@ -9,5 +9,6 @@ SELECT * FROM carts;
 SELECT * FROM cart_items;
 SELECT * FROM orders;
 SELECT * FROM order_details;
+SELECT * FROM payments;
 
 

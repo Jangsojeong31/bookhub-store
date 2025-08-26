@@ -12,9 +12,9 @@ import CartItemsListPage from "./pages/cart/CartItemsListPage";
 import BookDetail from "./pages/book/BookDetail";
 import OrderCheckPage from "./pages/order/OrderCheckPage";
 import OrderListPage from "./pages/order/OrderListPage";
-import OrderDetail from "./pages/order/OrderDetail";
 import Layout from "./components/layouts/Layout";
 import Success from "./pages/payment/Success";
+import OrderDetail from "./pages/order/OrderDetail";
 
 function App() {
   return (

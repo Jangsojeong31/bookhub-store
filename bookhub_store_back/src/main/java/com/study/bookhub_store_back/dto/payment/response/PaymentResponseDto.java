@@ -16,7 +16,7 @@ public class PaymentResponseDto {
     private String paymentKey;
     private String paymentMethod;
     private Long amount;
-    private PaymentStatus status;
+    private String status;
     private String orderNumber;
     private String orderName;
     private LocalDateTime requestedAt;

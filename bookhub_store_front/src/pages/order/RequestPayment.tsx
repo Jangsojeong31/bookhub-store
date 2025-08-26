@@ -75,8 +75,8 @@ function RequestPayment({
         orderId: orderNumber, // 주문번호
         orderName,
 
-        customerName: "김토스",
-        customerEmail: "customer123@gmail.com",
+        // customerName: "김토스",
+        // customerEmail: "customer123@gmail.com",
 
         successUrl:
           window.location.origin + "/payment/success" + window.location.search,

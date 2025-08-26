@@ -2,6 +2,7 @@ package com.study.bookhub_store_back.controller;
 
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.order.request.CreateOrderRequestDto;
+import com.study.bookhub_store_back.dto.order.response.OrderListResponseDto;
 import com.study.bookhub_store_back.security.CustomUserDetails;
 import com.study.bookhub_store_back.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +28,14 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-//    // 주문 내역 조회
-//    @GetMapping
-//    public ResponseEntity<ResponseDto<List<OrderResponseDto>>> getOrders(
-//            @AuthenticationPrincipal CustomUserDetails user
-//    ) {
-//        ResponseDto<List<OrderResponseDto>> response = orderService.getOrders(user);
-//        return ResponseEntity.ok(response);
-//    }
+    // 주문 내역 조회
+    @GetMapping
+    public ResponseEntity<ResponseDto<List<OrderListResponseDto>>> getOrders(
+            @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        ResponseDto<List<OrderListResponseDto>> response = orderService.getOrders(user);
+        return ResponseEntity.ok(response);
+    }
 //
 //    // 주문 상세 조회
 //    @GetMapping("/{orderId}/detail")
