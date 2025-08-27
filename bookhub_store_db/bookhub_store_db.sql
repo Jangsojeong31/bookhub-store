@@ -17,10 +17,10 @@ CREATE TABLE IF NOT EXISTS `customers` (
     social_id VARCHAR(100) NULL,
     
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
-    -- CONSTRAINT fk_default_address FOREIGN KEY (default_address_id)
--- REFERENCES delivery_addresses(delivery_address_id) ON DELETE SET NULL
+	CONSTRAINT fk_default_address FOREIGN KEY (default_address_id)
+	REFERENCES delivery_addresses(delivery_address_id) ON DELETE SET NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CREATE UNIQUE INDEX idx_social ON customers(social_provider, social_id);
@@ -56,7 +56,14 @@ CREATE TABLE IF NOT EXISTS `orders` (
 	order_number VARCHAR(50) NOT NULL UNIQUE, -- 주문 번호
     order_name VARCHAR(255) NOT NULL, 
     customer_id BIGINT NOT NULL,
-    delivery_address_id BIGINT NOT NULL,
+    
+    delivery_address_id BIGINT NULL,
+    recipient_name VARCHAR(50) NOT NULL,
+	phone_number VARCHAR(50) NOT NULL,
+    postal_code VARCHAR(50) NOT NULL, -- 우편 주소
+    full_address VARCHAR(255) NOT NULL, -- 도로명 주소 | 지번 주소
+    address_detail VARCHAR(255), -- 상세 주소
+    
     total_amount BIGINT NOT NULL, -- 총 금액
     order_date DATETIME NOT NULL,
     status VARCHAR(255) NOT NULL, -- 결제 상태
@@ -66,8 +73,8 @@ CREATE TABLE IF NOT EXISTS `orders` (
     
     CONSTRAINT fk_orders_customers FOREIGN KEY (customer_id)
     REFERENCES customers(customer_id),
-    -- CONSTRAINT fk_orders_delivery_addresses FOREIGN KEY (default_address_id)
--- REFERENCES delivery_addresses(delivery_address_id)
+    CONSTRAINT fk_orders_delivery_addresses FOREIGN KEY (delivery_address_id)
+	REFERENCES delivery_addresses(delivery_address_id),
 	CONSTRAINT chk_order_status CHECK (status IN ('PENDING', 'PAID', 'FAILED'))
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -103,3 +110,19 @@ CREATE TABLE IF NOT EXISTS `payments` (
     REFERENCES orders(order_id)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `delivery_addresses` (
+	delivery_address_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	customer_id BIGINT NOT NULL,
+    recipient_name VARCHAR(50) NOT NULL,
+    phone_number VARCHAR(50) NOT NULL,
+    postal_code VARCHAR(50) NOT NULL, -- 우편 주소
+    full_address VARCHAR(255) NOT NULL, -- 도로명 주소 | 지번 주소
+    address_detail VARCHAR(255), -- 상세 주소
+    is_default BOOLEAN NOT NULL DEFAULT FALSE, -- 기본 배송지
+    
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    CONSTRAINT fk_addresses_customers FOREIGN KEY (customer_id)
+    REFERENCES customers(customer_id)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

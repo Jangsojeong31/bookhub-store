@@ -15,8 +15,12 @@ public class OrderListResponseDto {
     private Long orderId;
     private String orderNumber;
     private String orderName;
-    private String customerEmail;
-    private String address;
+
+    private String recipientName;
+    private String phoneNumber;
+    private String fullAddress;
+    private String addressDetail;
+
     private Long totalAmount;
     private String paymentMethod;
     private LocalDateTime orderDate;

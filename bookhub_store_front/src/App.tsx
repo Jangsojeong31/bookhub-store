@@ -15,6 +15,9 @@ import OrderListPage from "./pages/order/OrderListPage";
 import Layout from "./components/layouts/Layout";
 import Success from "./pages/payment/Success";
 import OrderDetail from "./pages/order/OrderDetail";
+import AddressForm from "./pages/address/AddressForm";
+import AddressListPage from "./pages/address/AddressListPage";
+import MyPageAddressList from "./pages/address/MyPageAddressList";
 
 function App() {
   return (
@@ -44,6 +47,9 @@ function App() {
           <Route path="/mypage/order-list/detail" element={<OrderDetail />} />
 
           <Route path="/payment/success" element={<Success />} />
+
+          <Route path="/address-form" element={<AddressForm />} />
+          <Route path="/mypage/address-list" element={<MyPageAddressList />} />
         </Routes>
       </Layout>
     </>

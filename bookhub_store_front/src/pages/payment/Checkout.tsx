@@ -14,9 +14,11 @@ import RequestPayment from "../order/RequestPayment";
 function Checkout(props: {
   orderingItems: CartItemsResponseDto[];
   totalAmount: number;
+  addressId: number;
 }) {
   const orderingItems = props.orderingItems;
   const totalAmount = props.totalAmount;
+  const addressId = props.addressId;
 
   const [ready, setReady] = useState(false);
   const [widgets, setWidgets] = useState<TossPaymentsWidgets | null>(null);
@@ -77,6 +79,7 @@ function Checkout(props: {
               totalAmount={totalAmount}
               address="당리푸르지오"
               orderingItems={orderingItems}
+              addressId={addressId}
               widgets={widgets !== null ? widgets : null}
             />
           </div>

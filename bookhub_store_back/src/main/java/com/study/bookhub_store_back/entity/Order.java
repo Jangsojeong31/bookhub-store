@@ -32,9 +32,18 @@ public class Order extends BaseTimeEntity {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-//    private DeliveryAddress deliveryAddress;
-    @Column(name = "delivery_address_id", nullable = false)
-    private Long address;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_address_id")
+    private DeliveryAddress deliveryAddress;
+    @Column(nullable = false)
+    private String recipientName;
+    @Column(nullable = false)
+    private String phoneNumber;
+    @Column(nullable = false)
+    private String postalCode;
+    @Column(nullable = false)
+    private String fullAddress;
+    private String addressDetail;
 
     @Column(nullable = false)
     private Long totalAmount;

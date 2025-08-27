@@ -25,7 +25,7 @@ function ProfileMenuList() {
           주문 내역
           </Link>
           </li>
-        <li>배송지 목록</li>
+        <li><Link to="/mypage/address-list">배송지 목록</Link></li>
       </ul>
     </div>
   );

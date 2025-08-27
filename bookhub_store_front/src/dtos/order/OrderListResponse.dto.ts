@@ -2,8 +2,12 @@ export interface OrderListResponseDto {
   orderId: number;
   orderNumber: string;
   orderName: string;
-  customerEmail: string;
-  address: string;
+
+  recipientName: string;
+  phoneNumber: string;
+  fullAddress: string;
+  addressDetail: string;
+
   totalAmount: number;
   paymentMethod: string;
   orderDate: string;

@@ -10,7 +10,7 @@ public class CreateOrderRequestDto {
     private String orderNumber;
     private String orderName;
     private Long totalAmount;
-    private String address;
+    private Long addressId;
 
     private List<OrderItems> items;
 

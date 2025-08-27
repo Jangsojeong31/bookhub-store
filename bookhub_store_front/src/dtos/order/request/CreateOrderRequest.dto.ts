@@ -2,7 +2,7 @@ export interface CreateOrderRequestDto {
   orderNumber: string;
   orderName: string;
   totalAmount: number;
-  address: string;
+  addressId: number;
   
   items: OrderItems[];
 }

@@ -28,9 +28,10 @@ function OrderDetail() {
             marginBottom: 20,
           }}
         >
-          <h4>주문자 정보 (이름, 배송지, 전화번호)</h4>
-          <p>주문자 이메일 : {order.customerEmail}</p>
-          <p>배송지 : {order.address}</p>
+          <h4>주문자 정보</h4>
+          <p>수령인 : {order.recipientName}</p>
+          <p>전화번호 : {order.phoneNumber}</p>
+          <p>배송지 : {order.fullAddress}{order.addressDetail}</p>
         </div>
         <div
           style={{

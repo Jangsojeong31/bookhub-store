@@ -1,17 +1,15 @@
-package com.study.bookhub_store_back.service;
+package com.study.bookhub_store_back.service.serviceImpl;
 
 import com.study.bookhub_store_back.common.enums.OrderStatus;
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.order.request.CreateOrderRequestDto;
 import com.study.bookhub_store_back.dto.order.response.OrderDetailResponseDto;
 import com.study.bookhub_store_back.dto.order.response.OrderListResponseDto;
-import com.study.bookhub_store_back.entity.Customer;
-import com.study.bookhub_store_back.entity.Order;
-import com.study.bookhub_store_back.entity.OrderDetail;
-import com.study.bookhub_store_back.entity.Payment;
+import com.study.bookhub_store_back.entity.*;
 import com.study.bookhub_store_back.entity.product.Book;
 import com.study.bookhub_store_back.repository.*;
 import com.study.bookhub_store_back.security.CustomUserDetails;
+import com.study.bookhub_store_back.service.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,18 +21,22 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final BookRepository bookRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final PaymentRepository paymentRepository;
+    private final AddressRepository addressRepository;
 
     // 요청 주문건 생성 (status = PENDING)
     @Override
     @Transactional
     public ResponseDto<Void> createOrder(CustomUserDetails user, CreateOrderRequestDto dto) {
         Customer customer = customerRepository.findById(user.getCustomer().getCustomerId())
+                .orElseThrow(EntityNotFoundException::new);
+
+        DeliveryAddress address = addressRepository.findById(dto.getAddressId())
                 .orElseThrow(EntityNotFoundException::new);
 
         List<OrderDetail> orderDetails = new ArrayList<>();
@@ -44,7 +46,12 @@ public class OrderServiceImpl implements OrderService{
                 .orderName(dto.getOrderName())
                 .orderDetails(orderDetails)
                 .customer(customer)
-                .address(0L)
+                .deliveryAddress(address)
+                .recipientName(address.getRecipientName())
+                .phoneNumber(address.getPhoneNumber())
+                .postalCode(address.getPostalCode())
+                .fullAddress(address.getFullAddress())
+                .addressDetail(address.getAddressDetail())
                 .totalAmount(dto.getTotalAmount())
                 .orderDate(LocalDateTime.now())
                 .status(OrderStatus.PENDING)
@@ -103,8 +110,10 @@ public class OrderServiceImpl implements OrderService{
                             .paymentMethod(payment == null
                                     ? null
                                     : payment.getPaymentMethod() == null ? null : payment.getPaymentMethod())
-                            .customerEmail(customer.getEmail())
-                            .address(order.getAddress().toString())
+                            .recipientName(order.getRecipientName())
+                            .phoneNumber(order.getPhoneNumber())
+                            .fullAddress(order.getFullAddress())
+                            .addressDetail(order.getAddressDetail())
                             .status(order.getStatus())
                             .totalAmount(order.getTotalAmount())
                             .build()

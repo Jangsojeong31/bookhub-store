@@ -14,13 +14,14 @@ interface props {
   address: string;
   orderingItems: CartItemsResponseDto[];
   widgets?: TossPaymentsWidgets | null;
+  addressId: number;
 }
 
 function RequestPayment({
   totalAmount,
-  address,
   orderingItems,
   widgets,
+  addressId
 }: props) {
   const token = useToken();
 
@@ -51,6 +52,11 @@ function RequestPayment({
   const orderName = generateOrderName(orderingItems);
 
   const handlePayment = async () => {
+    if (addressId == null) {
+      alert("배송지를 선택해주세요")
+      return;
+    }
+
     const orderingItemList: OrderItems[] = orderingItems.map((item) => ({
       isbn: item.isbn,
       bookPrice: item.price,
@@ -62,7 +68,7 @@ function RequestPayment({
       orderNumber,
       orderName,
       totalAmount,
-      address,
+      addressId,
       items: orderingItemList,
     };
 
