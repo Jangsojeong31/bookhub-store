@@ -1,5 +1,6 @@
 package com.study.bookhub_store_back.security.oauth2;
 
+import com.study.bookhub_store_back.security.AuthenticatedUser;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-public class CustomOAuth2User extends DefaultOAuth2User {
+public class CustomOAuth2User extends DefaultOAuth2User implements AuthenticatedUser {
     private final String email;
     private final String password;
     private final String phoneNumber;
@@ -49,4 +50,7 @@ public class CustomOAuth2User extends DefaultOAuth2User {
     public boolean isExisted() {
         return existed;
     }
+
+    @Override
+    public String getEmail() { return email; }
 }

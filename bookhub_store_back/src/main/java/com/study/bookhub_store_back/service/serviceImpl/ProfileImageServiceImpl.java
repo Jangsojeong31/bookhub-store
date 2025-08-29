@@ -40,6 +40,7 @@ public class ProfileImageServiceImpl implements ProfileImageService {
         }
 
         try {
+            // 파일 저장 + Url로 변환
             String originalFilename = file.getOriginalFilename();
             String newFilename = UUID.randomUUID() + "_" + originalFilename;
 
@@ -53,6 +54,7 @@ public class ProfileImageServiceImpl implements ProfileImageService {
 
             String imageUrl = "/files/" + newFilename;
 
+            // 프로필 이미지 업데이트 (Url 형태로)
             Customer customer = customerRepository.findById(user.getCustomer().getCustomerId())
                     .orElseThrow(() -> new EntityNotFoundException("회원 없음"));
             customer.setProfileImageUrl(imageUrl);

@@ -105,12 +105,7 @@ export const uploadProfileImage = async (
     const response = await axiosInstance.post(
       `${BASE_API}/me/profile-image/upload`,
       formData,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "mulipart/form-data",
-        },
-      }
+      bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);
   } catch (error) {

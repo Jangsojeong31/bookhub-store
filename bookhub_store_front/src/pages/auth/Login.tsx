@@ -1,62 +1,98 @@
-import React from "react";
-import { Link, Navigate } from "react-router-dom";
-import Layout from "../../components/layouts/Layout";
-import logo from "../../assets/images/북허브_로고_배경제거2.png";
+import React, { useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Logo from "../../components/header/Logo";
+import SnsLogin from "./SnsLogin";
+import { login } from "../../apis/auth";
+import { useCookies } from "react-cookie";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 function Login() {
-  const handleSnsLogin = (provider: string) => {
-    window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [, setCookie] = useCookies(["accessToken", "tokenExpriresAt"]);
+  const navigate = useNavigate();
+  const setAuth = useAuthStore((state) => state.setAuth);
+
+  const handleNaviSignUp = () => {
+    navigate("/sign-up");
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const res = await login(formData);
+
+    const { code, message, data } = res;
+
+    if (code == "SU" && data) {
+      const token = data.token;
+      const exprTime = data.exprTime;
+      const user = data.user;
+
+      setAuth(token, exprTime, user);
+
+      const exprDate = new Date(Date.now() + Number(exprTime));
+
+      setCookie("accessToken", token, {
+        path: "/",
+        expires: exprDate,
+        sameSite: "strict",
+      });
+
+      setCookie("tokenExpriresAt", exprDate.toISOString(), {
+        path: "/",
+        sameSite: "strict",
+      });
+
+      alert("로그인 성공");
+      navigate("/");
+    } else {
+      alert("로그인 실패");
+    }
   };
 
   return (
-    
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: 20,
-        }}
-      >
-        <div style={{ marginLeft: "auto", marginRight: "auto", height: 200}}>
-          <Logo />
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <input type="text" placeholder="이메일" />
-          <input type="text" placeholder="비밀번호" />
-        </div>
-        <button>로그인 버튼</button>
-        <div
-          style={{
-            border: "1px solid #ccc",
-            borderRadius: 20,
-            textAlign: "center",
-            width: 500,
-            height: 150,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 20,
-          }}
-        >
-          간편 로그인
-          <div style={{ display: "flex", gap: 20 }}>
-            <button onClick={() => handleSnsLogin("kakao")}>
-              kakao 로그인
-            </button>
-            <button onClick={() => handleSnsLogin("goole")}>
-              goole 로그인
-            </button>
-            <button onClick={() => handleSnsLogin("naver")}>
-              naver 로그인
-            </button>
-          </div>
-        </div>
-        <button>회원가입 버튼</button>
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        gap: 20,
+      }}
+    >
+      <div style={{ margin: "0 auto", height: 200 }}>
+        <Logo />
       </div>
-    
+
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <input
+          type="text"
+          name="email"
+          value={formData.email}
+          placeholder="이메일"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="password"
+          value={formData.password}
+          placeholder="비밀번호"
+          onChange={handleChange}
+        />
+      </div>
+      <button type="submit">로그인</button>
+
+      <SnsLogin />
+
+      <button onClick={handleNaviSignUp}>회원가입</button>
+    </form>
   );
 }
 

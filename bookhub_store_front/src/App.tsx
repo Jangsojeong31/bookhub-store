@@ -18,6 +18,7 @@ import OrderDetail from "./pages/order/OrderDetail";
 import AddressForm from "./pages/address/AddressForm";
 import AddressListPage from "./pages/address/AddressListPage";
 import MyPageAddressList from "./pages/address/MyPageAddressList";
+import SignUp from "./pages/auth/SignUp";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<Navigate to="/main" />} />
           <Route path="/main" element={<Main />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
           <Route path="/login/success" element={<SnsLoginSuccess />} />
 
           <Route path="/mypage" element={<MyPage />} />

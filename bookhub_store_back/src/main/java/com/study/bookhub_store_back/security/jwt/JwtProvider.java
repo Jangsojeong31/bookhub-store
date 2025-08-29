@@ -1,5 +1,6 @@
 package com.study.bookhub_store_back.security.jwt;
 
+import com.study.bookhub_store_back.security.AuthenticatedUser;
 import com.study.bookhub_store_back.security.oauth2.CustomOAuth2User;
 import com.sun.security.auth.UserPrincipal;
 import io.jsonwebtoken.Claims;
@@ -34,13 +35,11 @@ public class JwtProvider {
     }
 
     public String generateJwtToken(Authentication authentication) {
-        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+        AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
 
         return Jwts.builder()
-                .claim("email", oAuth2User.getEmail())
-                .claim("nickname", oAuth2User.getNickname())
-                .claim("profile_image", oAuth2User.getProfileImage())
-                .claim("role", oAuth2User.getAuthorities())
+                .setSubject(user.getEmail())
+//                .claim("role", user.getAuthorities())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(key, SignatureAlgorithm.HS256)

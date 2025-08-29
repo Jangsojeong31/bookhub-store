@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Getter
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, AuthenticatedUser {
     private final Customer customer;
     private final Collection<? extends GrantedAuthority> authorities;
 
@@ -27,7 +27,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return this.customer.getPassword();
     }
 
     @Override
@@ -41,5 +41,15 @@ public class CustomUserDetails implements UserDetails {
 
     public Long getCartId() {
         return this.customer.getCart().getCartId();
+    }
+
+    @Override
+    public String getEmail() {
+        return this.customer.getEmail();
+    }
+
+    @Override
+    public String getName() {
+        return "";
     }
 }

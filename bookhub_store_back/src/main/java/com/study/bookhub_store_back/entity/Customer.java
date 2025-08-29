@@ -18,17 +18,21 @@ public class Customer extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
     private String password;
     @Column(nullable = false)
+    private String name;
     private String nickname;
+    @Column(unique = true, nullable = false)
     private String phoneNumber;
     private String profileImageUrl;
 
     @Column(nullable = false)
     private String role;
-//    private DeliveryAddress defaultAddress;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "default_address_id")
+    private DeliveryAddress defaultAddress;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;

@@ -1,0 +1,106 @@
+package com.study.bookhub_store_back.service.serviceImpl;
+
+import com.study.bookhub_store_back.dto.ResponseDto;
+import com.study.bookhub_store_back.dto.auth.request.LoginRequestDto;
+import com.study.bookhub_store_back.dto.auth.request.SignUpRequestDto;
+import com.study.bookhub_store_back.dto.auth.response.CustomerResponseDto;
+import com.study.bookhub_store_back.dto.auth.response.LoginResponseDto;
+import com.study.bookhub_store_back.entity.Customer;
+import com.study.bookhub_store_back.repository.CustomerRepository;
+import com.study.bookhub_store_back.security.CustomUserDetails;
+import com.study.bookhub_store_back.security.jwt.JwtProvider;
+import com.study.bookhub_store_back.service.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements AuthService {
+    private final CustomerRepository customerRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
+
+    // 회원가입
+    @Override
+    public ResponseDto<Void> signUp(SignUpRequestDto dto) {
+        customerRepository.findByEmailOrPhoneNumber(dto.getEmail(), dto.getPhone())
+                .ifPresent(customer -> {
+                    throw new IllegalArgumentException("이미 존재하는 회원입니다.");
+                });
+
+        Customer newCustomer = Customer.builder()
+                .email(dto.getEmail())
+                .password(passwordEncoder.encode(dto.getPassword()))
+                .name(dto.getName())
+                .phoneNumber(dto.getPhone())
+                .role("ROLE_USER")
+                .build();
+
+        customerRepository.save(newCustomer);
+
+        return ResponseDto.success("SU", "success");
+    }
+
+    // 로그인
+    @Override
+    public ResponseDto<LoginResponseDto> login(LoginRequestDto dto) {
+        String email = dto.getEmail();
+        String password = dto.getPassword();
+        System.out.println(password);
+
+        Authentication authentication;
+
+        try {
+            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        } catch (AuthenticationException e) {
+            throw new RuntimeException(e);
+        }
+
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        Customer user = customerRepository.findByEmail(userDetails.getUsername());
+
+        String token = jwtProvider.generateJwtToken(authentication);
+        int exprTime = jwtProvider.getExpiration();
+
+        CustomerResponseDto userDto = CustomerResponseDto.builder()
+                .id(user.getCustomerId())
+                .email(user.getEmail())
+                .name(user.getName())
+                .nickname(user.getNickname())
+                .phoneNumber(user.getPhoneNumber())
+                .profileImageUrl(user.getProfileImageUrl())
+                .socialProvider(user.getSocialProvider())
+                .build();
+
+        LoginResponseDto responseDto = LoginResponseDto.builder()
+                .token(token)
+                .exprTime(exprTime)
+                .user(userDto)
+                .build();
+
+        return ResponseDto.success("SU", "success", responseDto);
+    }
+
+    // 로그아웃
+    @Override
+    public ResponseDto<Void> logout(HttpServletResponse response) {
+        ResponseCookie accessTokenCookie = ResponseCookie.from("accessToken", "")
+                .path("/")
+                .maxAge(0)
+                .build();
+
+        response.addHeader("Set-Cookie", accessTokenCookie.toString());
+
+        return ResponseDto.success("SU", "success");
+    }
+}

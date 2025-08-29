@@ -1,0 +1,45 @@
+import type { AxiosError } from "axios";
+import type { BookSearchResponseDto } from "../dtos/book/BookSearchResponse.dto";
+import type ResponseDto from "../dtos/Response.dto";
+import { axiosInstance, BASE_API, bearerAuthorization, responseSuccessHandler, responseErrorHandler } from "./axiosConfig";
+import type { SignUpRequestDto } from "../dtos/auth/SignUpRequest.dto";
+import type { LoginResponseDto } from "../dtos/auth/LoginResponse.dto";
+import type { LoginRequestDto } from "../dtos/auth/LoginRequest.dto";
+
+export const signUp = async (dto: SignUpRequestDto): Promise<ResponseDto<void>> => {
+try {
+    const response = await axiosInstance.post(
+      `${BASE_API}/auth/sign-up`,
+      dto
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+}
+
+export const login = async (dto: LoginRequestDto): Promise<ResponseDto<LoginResponseDto>> => {
+try {
+    const response = await axiosInstance.post(
+      `${BASE_API}/auth/login`,
+      dto
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+}
+
+export const logout = async (): Promise<ResponseDto<void>> => {
+try {
+    const response = await axiosInstance.post(
+      `${BASE_API}/auth/logout`,
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+}
+
+
+
