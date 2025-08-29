@@ -16,6 +16,21 @@ import type { UpdateProfileImageRequestDto } from "../dtos/customer/UpdateProfil
 import type { GetNicknameResponseDto } from "../dtos/customer/response/GetNicknameResponse.dto";
 import type { GetProfileImageResponseDto } from "../dtos/customer/response/GetProfileImageResponse.dto";
 import type { UploadProfileImageResponseDto } from "../dtos/customer/response/UploadProfileImageResponse.dto";
+import type { CustomerResponseDto } from "../dtos/auth/LoginResponse.dto";
+
+// Id로 회원 정보 불러오기
+export const getUserInfoById = async (
+  userId: number,
+): Promise<ResponseDto<CustomerResponseDto>> => {
+  try {
+    const response = await axiosInstance.get(
+      `${BASE_API}/${userId}`,
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+};
 
 // 회원 정보 불러오기 (이메일, 전화번호)
 export const getCustomerInfo = async (

@@ -2,6 +2,7 @@ package com.study.bookhub_store_back.security.oauth2;
 
 import com.study.bookhub_store_back.entity.Customer;
 import com.study.bookhub_store_back.repository.CustomerRepository;
+import com.study.bookhub_store_back.security.UserPrincipal;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -20,14 +21,12 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser (OAuth2UserRequest request) throws OAuth2AuthenticationException {
-        String accessToken = request.getAccessToken().getTokenValue();
-        System.out.println("Access Token: " + accessToken);
-
         OAuth2User oAuth2User = super.loadUser(request);
 
         String provider = request.getClientRegistration().getClientName().toLowerCase();
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String socialId = getSocialId(oAuth2User, provider);
+
         System.out.println("✅ Provider: " + provider);
         System.out.println("✅ SocialId: " + socialId);
         System.out.println("✅ Attributes: " + oAuth2User.getAttributes());
@@ -35,21 +34,12 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
         Customer user = customerRepository.findBySocialIdAndSocialProvider(socialId, provider);
 
         if (user != null) {
-            return CustomOAuth2User.builder()
-                    .email(user.getEmail())
-                    .password(user.getPassword())
-                    .nickname(user.getNickname())
-                    .profileImage(user.getProfileImageUrl())
-                    .socialId(user.getSocialId())
-                    .socialProvider(user.getSocialProvider())
-                    .attributes(attributes)
-                    .existed(true)
-                    .build();
+            return UserPrincipal.create(user, attributes);
         } else {
         // provider별 attributes 파싱
             String email = "";
-            String password = "";
             String phoneNumber = "";
+            String name = "";
             String nickname = "";
             String profileImage = "";
 
@@ -61,17 +51,20 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
             profileImage = (String) profile.get("profile_image_url");
         }
 
-        return CustomOAuth2User.builder()
+        Customer customer = Customer.builder()
                 .email(email)
-                .password(password)
-                .phoneNumber(phoneNumber)
+                .name(name)
                 .nickname(nickname)
-                .profileImage(profileImage)
-                .socialId(socialId)
+                .profileImageUrl(profileImage)
+                .phoneNumber(phoneNumber)
                 .socialProvider(provider)
-                .attributes(attributes)
-                .existed(false)
+                .socialId(socialId)
                 .build();
+
+        customerRepository.save(customer);
+
+        return UserPrincipal.create(customer, attributes, true);
+
         }
     }
 
@@ -81,4 +74,5 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
             return ((Map<String, String>) oAuth2User.getAttributes().get("response")).get("id");
         return null;
     }
+
 }

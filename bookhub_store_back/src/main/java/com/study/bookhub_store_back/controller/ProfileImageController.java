@@ -2,7 +2,7 @@ package com.study.bookhub_store_back.controller;
 
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.profileImage.response.UploadProfileImageResponseDto;
-import com.study.bookhub_store_back.security.CustomUserDetails;
+import com.study.bookhub_store_back.security.UserPrincipal;
 import com.study.bookhub_store_back.service.ProfileImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class ProfileImageController {
     @PostMapping("/me/profile-image/upload")
     public ResponseEntity<ResponseDto<UploadProfileImageResponseDto>> uploadProfileImage(
             @RequestParam("file") MultipartFile file,
-            @AuthenticationPrincipal CustomUserDetails user
+            @AuthenticationPrincipal UserPrincipal user
     ) {
         ResponseDto<UploadProfileImageResponseDto> response = profileImageService.uploadProfileImage(file, user);
         return ResponseEntity.ok(response);

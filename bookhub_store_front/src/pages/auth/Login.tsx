@@ -11,7 +11,7 @@ function Login() {
     email: "",
     password: "",
   });
-  const [, setCookie] = useCookies(["accessToken", "tokenExpriresAt"]);
+  const [, setCookie] = useCookies(["accessToken", "tokenExpiresAt"]);
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
 
@@ -45,7 +45,7 @@ function Login() {
         sameSite: "strict",
       });
 
-      setCookie("tokenExpriresAt", exprDate.toISOString(), {
+      setCookie("tokenExpiresAt", exprDate.toISOString(), {
         path: "/",
         sameSite: "strict",
       });

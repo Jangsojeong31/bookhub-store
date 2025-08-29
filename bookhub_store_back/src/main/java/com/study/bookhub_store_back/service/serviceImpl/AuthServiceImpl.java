@@ -3,13 +3,15 @@ package com.study.bookhub_store_back.service.serviceImpl;
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.auth.request.LoginRequestDto;
 import com.study.bookhub_store_back.dto.auth.request.SignUpRequestDto;
+import com.study.bookhub_store_back.dto.auth.request.SnsSignUpRequestDto;
 import com.study.bookhub_store_back.dto.auth.response.CustomerResponseDto;
 import com.study.bookhub_store_back.dto.auth.response.LoginResponseDto;
 import com.study.bookhub_store_back.entity.Customer;
 import com.study.bookhub_store_back.repository.CustomerRepository;
-import com.study.bookhub_store_back.security.CustomUserDetails;
+import com.study.bookhub_store_back.security.UserPrincipal;
 import com.study.bookhub_store_back.security.jwt.JwtProvider;
 import com.study.bookhub_store_back.service.AuthService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
@@ -65,7 +67,7 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException(e);
         }
 
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        UserPrincipal userDetails = (UserPrincipal) authentication.getPrincipal();
 
         Customer user = customerRepository.findByEmail(userDetails.getUsername());
 
@@ -80,6 +82,7 @@ public class AuthServiceImpl implements AuthService {
                 .phoneNumber(user.getPhoneNumber())
                 .profileImageUrl(user.getProfileImageUrl())
                 .socialProvider(user.getSocialProvider())
+                .socialId(user.getSocialId())
                 .build();
 
         LoginResponseDto responseDto = LoginResponseDto.builder()
@@ -102,5 +105,65 @@ public class AuthServiceImpl implements AuthService {
         response.addHeader("Set-Cookie", accessTokenCookie.toString());
 
         return ResponseDto.success("SU", "success");
+    }
+
+    @Override
+    public ResponseDto<LoginResponseDto> snsSignUp(Long userId, SnsSignUpRequestDto dto) {
+        Customer customer = customerRepository.findById(userId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        customer.setEmail(dto.getEmail());
+        customer.setPhoneNumber(dto.getPhone());
+        customer.setName(dto.getName());
+
+        customerRepository.save(customer);
+
+        UserPrincipal userPrincipal = UserPrincipal.create(customer);
+
+        LoginResponseDto responseDto = generateTokenForSnsLogin(userPrincipal, customer);
+
+        return ResponseDto.success("SU", "success", responseDto);
+    }
+
+    @Override
+    public ResponseDto<LoginResponseDto> snsLoginSuccess(Long userId) {
+        Customer customer = customerRepository.findById(userId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        UserPrincipal userPrincipal = UserPrincipal.create(customer);
+
+        LoginResponseDto responseDto = generateTokenForSnsLogin(userPrincipal, customer);
+
+        return ResponseDto.success("SU", "success", responseDto);
+    }
+
+    public LoginResponseDto generateTokenForSnsLogin(UserPrincipal userPrincipal, Customer customer) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                userPrincipal,
+                null,
+                userPrincipal.getAuthorities()
+        );
+
+        String token = jwtProvider.generateJwtToken(authentication);
+        int exprTime = jwtProvider.getExpiration();
+
+        CustomerResponseDto userDto = CustomerResponseDto.builder()
+                .id(customer.getCustomerId())
+                .email(customer.getEmail())
+                .name(customer.getName())
+                .nickname(customer.getNickname())
+                .phoneNumber(customer.getPhoneNumber())
+                .profileImageUrl(customer.getProfileImageUrl())
+                .socialProvider(customer.getSocialProvider())
+                .socialId(customer.getSocialId())
+                .build();
+
+        LoginResponseDto responseDto = LoginResponseDto.builder()
+                .token(token)
+                .exprTime(exprTime)
+                .user(userDto)
+                .build();
+
+        return responseDto;
     }
 }

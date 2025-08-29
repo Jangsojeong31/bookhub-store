@@ -3,16 +3,21 @@ import { useAuthStore } from '../../stores/useAuthStore'
 import { Link, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../apis/axiosConfig';
 import { logout } from '../../apis/auth';
+import { useCookies } from 'react-cookie';
 
 function AuthButton() {
   const user = useAuthStore((state) => state.user);
   const clearAuth = useAuthStore((state) => state.clearAuth);
   const navigate = useNavigate();
+  const [, , removeCookie] = useCookies();
 
   const handleLogout = async () => {
     const res = await logout();
 
     if (res.code == "SU") {
+      removeCookie("accessToken", { path: "/"})
+      removeCookie("tokenExpiresAt", { path: "/"})
+      
       clearAuth();
       navigate("/");
     } else {

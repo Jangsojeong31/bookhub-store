@@ -3,15 +3,13 @@ package com.study.bookhub_store_back.controller;
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.auth.request.LoginRequestDto;
 import com.study.bookhub_store_back.dto.auth.request.SignUpRequestDto;
+import com.study.bookhub_store_back.dto.auth.request.SnsSignUpRequestDto;
 import com.study.bookhub_store_back.dto.auth.response.LoginResponseDto;
 import com.study.bookhub_store_back.service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/customer/auth")
@@ -26,6 +24,24 @@ public class AuthController {
         ResponseDto<Void> responseDto = authService.signUp(dto);
         return ResponseEntity.ok(responseDto);
     }
+
+    @PutMapping("/{userId}/sns-sign-up")
+    public ResponseEntity<ResponseDto<LoginResponseDto>> snsSignUp(
+            @PathVariable Long userId,
+            @RequestBody SnsSignUpRequestDto dto
+    ) {
+        ResponseDto<LoginResponseDto> responseDto = authService.snsSignUp(userId, dto);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @PostMapping("/{userId}/sns-login")
+    public ResponseEntity<ResponseDto<LoginResponseDto>> snsLogin(
+            @PathVariable Long userId
+    ){
+        ResponseDto<LoginResponseDto> responseDto = authService.snsLoginSuccess(userId);
+        return ResponseEntity.ok((responseDto));
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<ResponseDto<LoginResponseDto>> login(

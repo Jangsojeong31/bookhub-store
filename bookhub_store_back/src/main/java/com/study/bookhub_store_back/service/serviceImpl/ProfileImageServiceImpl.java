@@ -4,7 +4,7 @@ import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.profileImage.response.UploadProfileImageResponseDto;
 import com.study.bookhub_store_back.entity.Customer;
 import com.study.bookhub_store_back.repository.CustomerRepository;
-import com.study.bookhub_store_back.security.CustomUserDetails;
+import com.study.bookhub_store_back.security.UserPrincipal;
 import com.study.bookhub_store_back.service.ProfileImageService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class ProfileImageServiceImpl implements ProfileImageService {
     private String uploadDir;
 
     @Override
-    public ResponseDto<UploadProfileImageResponseDto> uploadProfileImage(MultipartFile file, CustomUserDetails user) {
+    public ResponseDto<UploadProfileImageResponseDto> uploadProfileImage(MultipartFile file, UserPrincipal user) {
         if(file.isEmpty()) {
             throw new IllegalStateException("파일이 비어 있습니다.");
         }

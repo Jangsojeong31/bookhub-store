@@ -1,9 +1,7 @@
 package com.study.bookhub_store_back.security.jwt;
 
-import com.study.bookhub_store_back.security.CustomUserDetails;
 import com.study.bookhub_store_back.security.UserDetailsServiceImpl;
-import com.study.bookhub_store_back.security.oauth2.CustomOAuth2User;
-import com.study.bookhub_store_back.security.oauth2.OAuth2UserServiceImplement;
+import com.study.bookhub_store_back.security.UserPrincipal;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,9 +58,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             String email = jwtProvider.getEmailFromJwt(token);
-            CustomUserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            UserPrincipal userPrincipal = userDetailsService.loadUserByUsername(email);
 
-            setAuthenticationContext(request, userDetails);
+            setAuthenticationContext(request, userPrincipal);
             System.out.println(SecurityContextHolder.getContext().getAuthentication());
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,9 +68,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void setAuthenticationContext(HttpServletRequest request, CustomUserDetails userDetails) {
+    private void setAuthenticationContext(HttpServletRequest request, UserPrincipal userPrincipal) {
         AbstractAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

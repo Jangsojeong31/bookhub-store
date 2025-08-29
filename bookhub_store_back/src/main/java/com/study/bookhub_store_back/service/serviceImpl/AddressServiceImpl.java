@@ -7,7 +7,7 @@ import com.study.bookhub_store_back.entity.Customer;
 import com.study.bookhub_store_back.entity.DeliveryAddress;
 import com.study.bookhub_store_back.repository.AddressRepository;
 import com.study.bookhub_store_back.repository.CustomerRepository;
-import com.study.bookhub_store_back.security.CustomUserDetails;
+import com.study.bookhub_store_back.security.UserPrincipal;
 import com.study.bookhub_store_back.service.AddressService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class AddressServiceImpl implements AddressService {
 
     // 배송지 등록
     @Override
-    public ResponseDto<Void> createDeliveryAddress(CustomUserDetails user, CreateAddressRequestDto dto) {
+    public ResponseDto<Void> createDeliveryAddress(UserPrincipal user, CreateAddressRequestDto dto) {
         Customer customer = customerRepository.findById(user.getCustomer().getCustomerId())
                 .orElseThrow(EntityNotFoundException::new);
 
@@ -44,7 +44,7 @@ public class AddressServiceImpl implements AddressService {
 
     // 배송지 목록 조회
     @Override
-    public ResponseDto<List<AddressListResponseDto>> getAllAddresses(CustomUserDetails user) {
+    public ResponseDto<List<AddressListResponseDto>> getAllAddresses(UserPrincipal user) {
         Customer customer = customerRepository.findById(user.getCustomer().getCustomerId())
                 .orElseThrow(EntityNotFoundException::new);
 

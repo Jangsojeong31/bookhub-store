@@ -16,4 +16,5 @@ public class CustomerResponseDto {
     private String phoneNumber;
     private String profileImageUrl;
     private String socialProvider;
+    private String socialId;
 }

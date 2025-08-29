@@ -11,7 +11,7 @@ import com.study.bookhub_store_back.entity.product.Book;
 import com.study.bookhub_store_back.repository.BookRepository;
 import com.study.bookhub_store_back.repository.CartItemRepository;
 import com.study.bookhub_store_back.repository.CartRepository;
-import com.study.bookhub_store_back.security.CustomUserDetails;
+import com.study.bookhub_store_back.security.UserPrincipal;
 import com.study.bookhub_store_back.service.CartService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public ResponseDto<Void> addCartItems(CustomUserDetails user, List<AddCartItemRequestDto> dto) {
+    public ResponseDto<Void> addCartItems(UserPrincipal user, List<AddCartItemRequestDto> dto) {
 
         Cart cart = cartRepository.findByCustomer(user.getCustomer())
                 .orElseGet(() -> cartRepository.save(new Cart(user.getCustomer())));
@@ -59,7 +59,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public ResponseDto<List<CartItemsResponseDto>> getCartItems(CustomUserDetails user) {
+    public ResponseDto<List<CartItemsResponseDto>> getCartItems(UserPrincipal user) {
         Cart cart = cartRepository.findByCustomer(user.getCustomer())
                 .orElseThrow(EntityNotFoundException::new);
 
@@ -86,7 +86,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public ResponseDto<Void> changeQuantity(CustomUserDetails user, Long cartItemId, int i) {
+    public ResponseDto<Void> changeQuantity(UserPrincipal user, Long cartItemId, int i) {
 
         Cart cart = cartRepository.findById(user.getCartId())
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
@@ -105,7 +105,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public ResponseDto<Void> removeCartItems(CustomUserDetails user, RemoveCartItemRequestDto dto) {
+    public ResponseDto<Void> removeCartItems(UserPrincipal user, RemoveCartItemRequestDto dto) {
         Cart cart = cartRepository.findById(user.getCartId())
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
 
@@ -123,7 +123,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public ResponseDto<List<CartItemsResponseDto>> getCartItemsToOrder(CustomUserDetails user, List<CartItemIdRequestDto> dto) {
+    public ResponseDto<List<CartItemsResponseDto>> getCartItemsToOrder(UserPrincipal user, List<CartItemIdRequestDto> dto) {
 
         List<Long> cartItemIds = dto.stream()
                 .map(CartItemIdRequestDto::getCartItemId)

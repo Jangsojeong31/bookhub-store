@@ -5,12 +5,36 @@ import { axiosInstance, BASE_API, bearerAuthorization, responseSuccessHandler, r
 import type { SignUpRequestDto } from "../dtos/auth/SignUpRequest.dto";
 import type { LoginResponseDto } from "../dtos/auth/LoginResponse.dto";
 import type { LoginRequestDto } from "../dtos/auth/LoginRequest.dto";
+import type { SnsSignUpRequestDto } from "../dtos/auth/SnsSignUpRequest.dto";
 
 export const signUp = async (dto: SignUpRequestDto): Promise<ResponseDto<void>> => {
 try {
     const response = await axiosInstance.post(
       `${BASE_API}/auth/sign-up`,
       dto
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+}
+
+export const snsSignUp = async (userId: number, dto: SnsSignUpRequestDto): Promise<ResponseDto<LoginResponseDto>> => {
+try {
+    const response = await axiosInstance.put(
+      `${BASE_API}/auth/${userId}/sns-sign-up`,
+      dto
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+}
+
+export const snsLogin = async (userId: number): Promise<ResponseDto<LoginResponseDto>> => {
+try {
+    const response = await axiosInstance.post(
+      `${BASE_API}/auth/${userId}/sns-login`,
     );
     return responseSuccessHandler(response);
   } catch (error) {

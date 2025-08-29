@@ -8,7 +8,7 @@ import com.study.bookhub_store_back.dto.order.response.OrderListResponseDto;
 import com.study.bookhub_store_back.entity.*;
 import com.study.bookhub_store_back.entity.product.Book;
 import com.study.bookhub_store_back.repository.*;
-import com.study.bookhub_store_back.security.CustomUserDetails;
+import com.study.bookhub_store_back.security.UserPrincipal;
 import com.study.bookhub_store_back.service.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     // 요청 주문건 생성 (status = PENDING)
     @Override
     @Transactional
-    public ResponseDto<Void> createOrder(CustomUserDetails user, CreateOrderRequestDto dto) {
+    public ResponseDto<Void> createOrder(UserPrincipal user, CreateOrderRequestDto dto) {
         Customer customer = customerRepository.findById(user.getCustomer().getCustomerId())
                 .orElseThrow(EntityNotFoundException::new);
 
@@ -78,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
 
     // 주문 내역 목록
     @Override
-    public ResponseDto<List<OrderListResponseDto>> getOrders(CustomUserDetails user) {
+    public ResponseDto<List<OrderListResponseDto>> getOrders(UserPrincipal user) {
         Customer customer = customerRepository.findById(user.getCustomer().getCustomerId())
                 .orElseThrow(EntityNotFoundException::new);
 
