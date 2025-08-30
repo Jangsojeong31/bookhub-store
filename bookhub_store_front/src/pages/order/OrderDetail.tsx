@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TitleBar from "../../components/TitleBar";
 import type {
   OrderDetailResponseDto,
 } from "../../dtos/order/OrderListResponse.dto";
 import { useLocation } from "react-router-dom";
+import useToken from "../../hooks/useToken";
+import { getPaymentByOrderId } from "../../apis/payment";
 
 function OrderDetail() {
   const location = useLocation();
   const { order } = location.state || {};
+  const orderId = order.orderId;
   const [datePart] = order.orderDate.split("T");
+  const token = useToken();
+
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [totalAmount, setTotalAmount] = useState<number | null>(null);
+  
+  useEffect(() => {
+    const fetchPayment = async () => {
+
+      const res = await getPaymentByOrderId(orderId, token);
+      const { code, message, data } = res;
+
+      if (code == "SU" && data) {
+        setPaymentMethod(data.paymentMethod);
+        setPaymentStatus(data.status);
+        setTotalAmount(data.amount);
+      } else {
+        return;
+      }
+
+      
+    }
+  })
 
   return (
     <TitleBar title="주문 상세">
@@ -89,9 +115,9 @@ function OrderDetail() {
           }}
         >
           <h4>결제 정보</h4>
-          <p>결제 수단 : {order.paymentMethod}</p>
-          <p>결제 상태 : {order.status}</p>
-          <p>결제 금액 : {order.totalAmount}</p>
+          <p>결제 수단 : {paymentMethod}</p>
+          <p>결제 상태 : {paymentStatus}</p>
+          <p>결제 금액 : {totalAmount}</p>
         </div>
       </div>
     </TitleBar>

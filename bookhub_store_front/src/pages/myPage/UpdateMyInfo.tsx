@@ -6,38 +6,32 @@ import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
 import useToken from "../../hooks/useToken";
 import { getCustomerInfo, updateCustomerInfo } from "../../apis/customer";
 import "./MyPage.css";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 function UpdateMyInfo() {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [cookies] = useCookies(["accessToken"]);
   const token = useToken();
+  const { user } = useAuthStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMyInfo = async () => {
-      const res = await getCustomerInfo(token);
-
-      const { code, message, data } = res;
-
-      if (code == "success" && data) {
-        setEmail(data.email);
-        setPhoneNumber(data.phoneNumber);
-      } else {
-        alert("회원정보 불러오기 실패");
-      }
-    };
-
-    fetchMyInfo();
+    setEmail(user?.email ?? "");
+    setName(user?.name ?? "");
+    setPhoneNumber(user?.phoneNumber ?? "");
   }, []);
 
   const onUpdateMyInfo = async () => {
-    const dto = { email, phoneNumber };
+    const dto = { email, name, phoneNumber };
     const res = await updateCustomerInfo(dto, token);
     const { code, message } = res;
     if (code != "success") {
       alert("실패");
     } else {
       alert("성공");
+      navigate(-1);
     }
   };
 
@@ -57,6 +51,12 @@ function UpdateMyInfo() {
         >
           <div>
             <p>이름 : </p>
+            <input
+              type="text"
+              value={name}
+              placeholder="변경할 이름을 입력해주세요"
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div>
             <p>이메일 : </p>
@@ -72,7 +72,7 @@ function UpdateMyInfo() {
             <input
               type="text"
               value={phoneNumber}
-              placeholder="변경할 이메일을 입력해주세요"
+              placeholder="변경할 전화번호을 입력해주세요"
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
           </div>

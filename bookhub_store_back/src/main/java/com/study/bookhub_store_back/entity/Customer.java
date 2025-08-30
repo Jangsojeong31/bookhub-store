@@ -18,13 +18,11 @@ public class Customer extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
     private String password;
-    @Column(nullable = false)
     private String name;
     private String nickname;
-    @Column(unique = true, nullable = false)
     private String phoneNumber;
     private String profileImageUrl;
 

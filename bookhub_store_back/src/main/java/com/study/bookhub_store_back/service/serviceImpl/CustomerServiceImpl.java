@@ -26,12 +26,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public ResponseDto<CustomerInfoResponseDto> getCustomerInfo(UserPrincipal user) {
-        String email = user.getUsername();
-        String phoneNumber = user.getPhoneNumber();
-
         CustomerInfoResponseDto responseDto = CustomerInfoResponseDto.builder()
-                .email(email)
-                .phoneNumber(phoneNumber)
+                .email(user.getUsername())
+                .name(user.getName())
+                .phoneNumber(user.getPhoneNumber())
                 .build();
 
         return ResponseDto.success("SU", "success", responseDto);
@@ -42,6 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findByEmail(user.getUsername());
 
         String email = requestDto.getEmail();
+        String name = requestDto.getName();
         String phoneNumber = requestDto.getPhoneNumber();
 
         customer.setEmail(email);

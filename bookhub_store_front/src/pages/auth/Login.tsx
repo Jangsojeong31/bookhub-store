@@ -13,7 +13,7 @@ function Login() {
   });
   const [, setCookie] = useCookies(["accessToken", "tokenExpiresAt"]);
   const navigate = useNavigate();
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const { login: setLogin } = useAuthStore();
 
   const handleNaviSignUp = () => {
     navigate("/sign-up");
@@ -35,7 +35,7 @@ function Login() {
       const exprTime = data.exprTime;
       const user = data.user;
 
-      setAuth(token, exprTime, user);
+      setLogin(token, exprTime, user);
 
       const exprDate = new Date(Date.now() + Number(exprTime));
 

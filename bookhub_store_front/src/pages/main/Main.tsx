@@ -2,17 +2,14 @@ import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import GetMyInfo from "../myPage/MyPage";
 import Layout from "../../components/layouts/Layout";
+import BestSeller from "./BestSeller";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 function Main() {
-  
-
-  
-
   return (
-    
-      <div>메인 화면 입니다.</div>
-     
-    
+    <div>
+      <BestSeller />
+    </div>
   );
 }
 

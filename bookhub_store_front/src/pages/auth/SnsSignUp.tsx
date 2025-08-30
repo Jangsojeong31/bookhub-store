@@ -26,7 +26,7 @@ function SnsSignUp() {
   const userId = searchParams.get("userId");
 
   const [, setCookie] = useCookies(["accessToken", "tokenExpiresAt"]);
-    const setAuth = useAuthStore((state) => state.setAuth);
+  const { login: setLogin } = useAuthStore();
 
   const fetchUserInfo = async () => {
     const res = await getUserInfoById(Number(userId));
@@ -52,14 +52,18 @@ function SnsSignUp() {
   const onSubmit: SubmitHandler<SnsSignUpFormInputs> = async (data) => {
     console.log("회원가입 정보: ", data);
 
-    const { code, message, data: result } = await snsSignUp(Number(userId), data);
+    const {
+      code,
+      message,
+      data: result,
+    } = await snsSignUp(Number(userId), data);
 
     if (code == "SU" && result) {
       const token = result.token;
       const exprTime = result.exprTime;
       const user = result.user;
 
-      setAuth(token, exprTime, user);
+      setLogin(token, exprTime, user);
 
       const exprDate = new Date(Date.now() + Number(exprTime));
 

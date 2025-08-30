@@ -4,24 +4,17 @@ import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
 import { getMyNickname, updateNickname } from "../../apis/customer";
 import { useCookies } from "react-cookie";
 import useToken from "../../hooks/useToken";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 function UpdateNickname() {
   const [nickname, setNickname] = useState("");
   const token = useToken();
+  const { user } = useAuthStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchNickname = async () => {
-      const res = await getMyNickname(token);
-      const { code, message, data } = res;
-
-      if (code == "success" && data) {
-        setNickname(data.nickname);
-      } else {
-        return;
-      }
-    };
-
-    fetchNickname();
+    setNickname(user?.nickname ?? "user");
   }, []);
 
   const onUpdateNickname = async () => {
@@ -33,7 +26,8 @@ function UpdateNickname() {
     if (code != "success") {
       return;
     } else {
-      alert("성공");
+      alert("닉네임이 변경되었습니다.");
+      navigate(-1);
     }
   };
 

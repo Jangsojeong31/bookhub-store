@@ -26,4 +26,12 @@ public class PaymentController {
         ResponseDto<PaymentResponseDto> response = paymentService.confirmPayment(request);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/{orderId}")
+    public ResponseEntity<ResponseDto<PaymentResponseDto>> confirmPayment(
+            @RequestBody ConfirmPaymentRequestDto request
+    ) throws Exception{
+        ResponseDto<PaymentResponseDto> response = paymentService.confirmPayment(request);
+        return ResponseEntity.ok(response);
+    }
 }

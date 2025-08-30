@@ -10,6 +10,8 @@ import {
 } from "../../apis/customer";
 import defaultProfileImage from "../../assets/images/기본_프로필_이미지.png";
 import { BASE_API } from "../../apis/axiosConfig";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 function UpdateProfileImage() {
   const [profileImage, setProfileImage] = useState("");
@@ -17,21 +19,13 @@ function UpdateProfileImage() {
   const [file, setFile] = useState<File | null>(null);
 
   const token = useToken();
+  const {user} = useAuthStore();
+  const navigate = useNavigate();
 
   const BASE_URL = import.meta.env.VITE_API_DOMAIN;
 
   useEffect(() => {
-    const fetchProfileImage = async () => {
-      const res = await getMyProfileImage(token);
-      const { code, message, data } = res;
-
-      if (code == "success" && data) {
-        setProfileImage(data.profileImage);
-      } else {
-        return;
-      }
-    };
-    fetchProfileImage();
+    setProfileImage(user?.profileImageUrl ?? "");
   }, []);
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +56,8 @@ function UpdateProfileImage() {
     setProfileImage(imageUrl);
     setPreview(null);
     setFile(null);
+    
+    navigate(-1);
   };
 
   return (

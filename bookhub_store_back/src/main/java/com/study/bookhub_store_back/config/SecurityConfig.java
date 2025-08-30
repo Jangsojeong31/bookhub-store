@@ -63,6 +63,9 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
+//                .formLogin(form -> form
+//                        .loginPage("/api/v1/customer/auth/login")
+//                        .permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .redirectionEndpoint(c -> c.baseUri("/oauth2/callback/*"))
                         .userInfoEndpoint(c -> c.userService(oAuth2Service))

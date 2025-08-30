@@ -37,33 +37,63 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
             return UserPrincipal.create(user, attributes);
         } else {
         // provider별 attributes 파싱
-            String email = "";
-            String phoneNumber = "";
-            String name = "";
-            String nickname = "";
-            String profileImage = "";
+            String email = null;
+            String phoneNumber = null;
+            String name = null;
+            String nickname = null;
+            String profileImage = null;
 
-        if (provider.equals("kakao")) {
-            Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-            Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+            switch (provider) {
+                case "kakao" -> {
+                    Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+                    Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
 
-            nickname = (String) profile.get("nickname");
-            profileImage = (String) profile.get("profile_image_url");
-        }
+                    nickname = (String) profile.get("nickname");
+                    profileImage = (String) profile.get("profile_image_url");
+                    break;
+                }
 
-        Customer customer = Customer.builder()
-                .email(email)
-                .name(name)
-                .nickname(nickname)
-                .profileImageUrl(profileImage)
-                .phoneNumber(phoneNumber)
-                .socialProvider(provider)
-                .socialId(socialId)
-                .build();
+                case "naver" -> {
+                    System.out.println("네이버 로그인 중...");
+                    Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+                    nickname = (String) response.get("nickname");
+                    profileImage = (String) response.get("profile_image");
+                    email = (String) response.get("email");
+                    phoneNumber = (String) response.get("mobile");
+                    name = (String) response.get("name");
+                    break;
+                }
 
-        customerRepository.save(customer);
+                case "google" -> {
+                    System.out.println("구글 로그인 중...");
+                    email = (String) attributes.get("email");
+                    name = (String) attributes.get("name");
+                    profileImage = (String) attributes.get("picture");
+                    break;
+                }
+            }
 
-        return UserPrincipal.create(customer, attributes, true);
+            // 이메일 중복 체크
+            Customer existingEmailUser = customerRepository.findByEmail(email);
+
+            if (existingEmailUser != null) {
+                return UserPrincipal.create(existingEmailUser, attributes, false, true);
+            }
+
+            Customer customer = Customer.builder()
+                    .email(email)
+                    .name(name)
+                    .nickname(nickname)
+                    .profileImageUrl(profileImage)
+                    .phoneNumber(phoneNumber)
+                    .role("ROLE_USER")
+                    .socialProvider(provider)
+                    .socialId(socialId)
+                    .build();
+
+            customerRepository.save(customer);
+
+            return UserPrincipal.create(customer, attributes, true, false);
 
         }
     }
@@ -72,6 +102,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
         if (provider.equals("kakao")) return oAuth2User.getName();
         if (provider.equals("naver"))
             return ((Map<String, String>) oAuth2User.getAttributes().get("response")).get("id");
+        if (provider.equals("google")) return (String) oAuth2User.getAttributes().get("sub");
         return null;
     }
 

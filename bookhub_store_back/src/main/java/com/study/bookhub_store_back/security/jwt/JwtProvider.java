@@ -1,6 +1,5 @@
 package com.study.bookhub_store_back.security.jwt;
 
-import com.study.bookhub_store_back.security.AuthenticatedUser;
 import com.study.bookhub_store_back.security.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;

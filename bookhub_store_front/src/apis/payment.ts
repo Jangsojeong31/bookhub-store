@@ -19,3 +19,18 @@ export const confirmPayment = async (
     return responseErrorHandler(error as AxiosError<ResponseDto>);
   }
 };
+
+export const getPaymentByOrderId = async (
+  orderId: number,
+  accessToken: string
+): Promise<ResponseDto<PaymentResponseDto>> => {
+  try {
+    const response = await axiosInstance.get(
+      `${BASE_API}/payments/${orderId}`,
+      bearerAuthorization(accessToken)
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+};

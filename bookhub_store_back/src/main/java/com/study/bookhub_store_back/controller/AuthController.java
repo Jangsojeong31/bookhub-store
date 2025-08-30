@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthService authService;
 
+    // 일반 회원가입
     @PostMapping("/sign-up")
     public ResponseEntity<ResponseDto<Void>> signUp(
         @RequestBody SignUpRequestDto dto
@@ -25,6 +26,16 @@ public class AuthController {
         return ResponseEntity.ok(responseDto);
     }
 
+    // 일반 로그인
+    @PostMapping("/login")
+    public ResponseEntity<ResponseDto<LoginResponseDto>> login(
+            @RequestBody LoginRequestDto dto
+    ){
+        ResponseDto<LoginResponseDto> responseDto = authService.login(dto);
+        return ResponseEntity.ok((responseDto));
+    }
+
+    // Sns 신규 가입
     @PutMapping("/{userId}/sns-sign-up")
     public ResponseEntity<ResponseDto<LoginResponseDto>> snsSignUp(
             @PathVariable Long userId,
@@ -34,6 +45,7 @@ public class AuthController {
         return ResponseEntity.ok(responseDto);
     }
 
+    // Sns 로그인
     @PostMapping("/{userId}/sns-login")
     public ResponseEntity<ResponseDto<LoginResponseDto>> snsLogin(
             @PathVariable Long userId
@@ -42,15 +54,7 @@ public class AuthController {
         return ResponseEntity.ok((responseDto));
     }
 
-
-    @PostMapping("/login")
-    public ResponseEntity<ResponseDto<LoginResponseDto>> login(
-            @RequestBody LoginRequestDto dto
-    ){
-        ResponseDto<LoginResponseDto> responseDto = authService.login(dto);
-        return ResponseEntity.ok((responseDto));
-    }
-
+    // 로그아웃
     @PostMapping("/logout")
     public ResponseEntity<ResponseDto<Void>> logout (HttpServletResponse response) {
         ResponseDto<Void> responseDto = authService.logout(response);

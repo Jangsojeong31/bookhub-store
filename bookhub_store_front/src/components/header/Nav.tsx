@@ -9,7 +9,7 @@ function Nav() {
 
   return (
     <div className={style.navigation}>
-      <AuthButton />
+      <p>{user?.nickname ?? "user"}님</p>
       <Link to="/mypage">
         <div
           style={{
@@ -35,6 +35,7 @@ function Nav() {
           Cart
         </div>
       </Link>
+      <AuthButton />
     </div>
   );
 }

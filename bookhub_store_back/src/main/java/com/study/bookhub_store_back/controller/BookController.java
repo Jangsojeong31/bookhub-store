@@ -1,8 +1,10 @@
 package com.study.bookhub_store_back.controller;
 
 import com.study.bookhub_store_back.dto.ResponseDto;
+import com.study.bookhub_store_back.dto.bestSeller.response.BestSellerDto;
 import com.study.bookhub_store_back.dto.book.response.BookDetailResponseDto;
 import com.study.bookhub_store_back.dto.book.response.BookSearchResponseDto;
+import com.study.bookhub_store_back.service.BestSellerService;
 import com.study.bookhub_store_back.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
+    private final BestSellerService bestSellerService;
 
     // 도서 통합 검색
     @GetMapping("/books")
@@ -33,5 +36,14 @@ public class BookController {
     ) {
         ResponseDto<BookDetailResponseDto> response = bookService.getBookDetails(isbn);
         return ResponseEntity.ok(response);
+    }
+
+    // 베스트셀러
+    @GetMapping("/books/best-seller/{categoryType}")
+    public ResponseEntity<ResponseDto<List<BestSellerDto>>> getBestSellersByCategory(
+            @PathVariable Long categoryType
+    ) {
+        ResponseDto<List<BestSellerDto>> response = bestSellerService.getBestSellersByCategory(categoryType);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

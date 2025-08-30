@@ -15,7 +15,9 @@ function OrderList(props: { orderList: OrderListResponseDto[] }) {
     });
   }
 
-  const orderListResult = orderList.map((item) => {
+  const orderListResult = orderList
+  .filter(i => i.status != "PENDING")
+  .map((item) => {
       const [datePart] = item.orderDate.split("T");
     return (
       <div
@@ -34,7 +36,7 @@ function OrderList(props: { orderList: OrderListResponseDto[] }) {
       >
         <div style={{ flex: 2 }}>
           <span><strong>{datePart}</strong></span>
-          <span>{item.status}</span>
+          <span>{item.status == "PAID" ? "결제 완료" : "결제 실패"}</span>
           <p>{item.orderName}</p>
           <p>총 금액 : {item.totalAmount}</p>
           <div>

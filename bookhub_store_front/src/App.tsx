@@ -16,10 +16,10 @@ import Layout from "./components/layouts/Layout";
 import Success from "./pages/payment/Success";
 import OrderDetail from "./pages/order/OrderDetail";
 import AddressForm from "./pages/address/AddressForm";
-import AddressListPage from "./pages/address/AddressListPage";
 import MyPageAddressList from "./pages/address/MyPageAddressList";
 import SignUp from "./pages/auth/SignUp";
 import SnsSignUp from "./pages/auth/SnsSignUp";
+import ExistingEmail from "./pages/auth/ExistingEmail";
 
 function App() {
   return (
@@ -32,6 +32,8 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sns-sign-up" element={<SnsSignUp />} />
           <Route path="/login/success" element={<SnsLoginSuccess />} />
+          <Route path="/sns-login/existing" element={<ExistingEmail />} />
+
 
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/info" element={<UpdateMyInfo />} />

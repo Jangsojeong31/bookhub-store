@@ -29,12 +29,16 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         String userId = userPrincipal.getUserId().toString();
+        Customer customer = userPrincipal.getCustomer();
 
         if (userPrincipal.isNewUser()) {
             // 회원가입 추가 정보 입력 페이지로 이동
             response.sendRedirect("http://localhost:5173/sns-sign-up?userId=" + userId);
 
-        } else {
+        } else if (userPrincipal.isExistingEmail()){
+            response.sendRedirect("http://localhost:5173/sns-login/existing?email=" + customer.getEmail() + "&provider=" + customer.getSocialProvider());
+
+        }else {
             // 로그인
             response.sendRedirect("http://localhost:5173/login/success?userId=" + userId);
             System.out.println("sns 로그인 성공");

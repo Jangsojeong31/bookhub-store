@@ -17,35 +17,30 @@ public class UserPrincipal implements UserDetails, OAuth2User {
     private final Customer customer;
     private final Collection<? extends GrantedAuthority> authorities;
     private final Map<String, Object> oauthUserAttributes;
+    private final boolean existingEmail;
     private final boolean isNewUser;
 
-    public UserPrincipal(Customer customer, Map<String, Object> oauthUserAttributes) {
-        this.customer = customer;
-        String role = "ROLE_" + customer.getRole().toUpperCase();
-        this.authorities = Collections.singleton(new SimpleGrantedAuthority(role));
-        this.oauthUserAttributes = oauthUserAttributes;
-        this.isNewUser = false;
-    }
-
-    public UserPrincipal(Customer customer, Map<String, Object> oauthUserAttributes, boolean isNewUser) {
+    public UserPrincipal(Customer customer, Map<String, Object> oauthUserAttributes, boolean isNewUser, boolean existingEmail) {
         this.customer = customer;
         String role = "ROLE_" + customer.getRole().toUpperCase();
         this.authorities = Collections.singleton(new SimpleGrantedAuthority(role));
         this.oauthUserAttributes = oauthUserAttributes;
         this.isNewUser = isNewUser;
+        this.existingEmail = existingEmail;
     }
 
     public static UserPrincipal create(Customer customer){
-        return new UserPrincipal(customer, new HashMap<>());
+        return new UserPrincipal(customer, new HashMap<>(), false, false);
     }
 
     public static UserPrincipal create(Customer customer, Map<String, Object> oauthUserAttributes) {
-        return new UserPrincipal(customer, oauthUserAttributes);
+        return new UserPrincipal(customer, oauthUserAttributes, false, false);
     }
 
-    public static UserPrincipal create(Customer customer, Map<String, Object> oauthUserAttributes, boolean isNewUser) {
-        return new UserPrincipal(customer, oauthUserAttributes, isNewUser);
+    public static UserPrincipal create(Customer customer, Map<String, Object> oauthUserAttributes, boolean isNewUser, boolean existingEmail) {
+        return new UserPrincipal(customer, oauthUserAttributes, isNewUser, existingEmail);
     }
+
 
     @Override
     public String getName() {

@@ -23,7 +23,7 @@ function SnsLogin() {
       간편 로그인
       <div style={{ display: "flex", gap: 20 }}>
         <button onClick={() => handleSnsLogin("kakao")}>kakao 로그인</button>
-        <button onClick={() => handleSnsLogin("goole")}>goole 로그인</button>
+        <button onClick={() => handleSnsLogin("google")}>goole 로그인</button>
         <button onClick={() => handleSnsLogin("naver")}>naver 로그인</button>
       </div>
     </div>

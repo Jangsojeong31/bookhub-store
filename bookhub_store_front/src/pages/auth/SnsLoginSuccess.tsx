@@ -8,13 +8,11 @@ function SnsLoginSuccess() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("userId");
-  
+
   const [, setCookie] = useCookies(["accessToken", "tokenExpriresAt"]);
-  const setAuth = useAuthStore((state) => state.setAuth);
-
+  const setLogIn= useAuthStore((state) => state.login);
+  
   useEffect(() => {
-
-
     const handleSnsLogin = async () => {
       const res = await snsLogin(Number(userId));
 
@@ -25,7 +23,7 @@ function SnsLoginSuccess() {
         const exprTime = data.exprTime;
         const user = data.user;
 
-      setAuth(token, exprTime, user);
+        setLogIn(token, exprTime, user);
 
         const exprDate = new Date(Date.now() + Number(exprTime));
 
@@ -49,7 +47,6 @@ function SnsLoginSuccess() {
     };
 
     handleSnsLogin();
-
   }, [navigate, userId]);
 
   return <div>로그인 처리중...</div>;
