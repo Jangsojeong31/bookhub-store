@@ -37,11 +37,14 @@ function AddressListPage({ onSelect }: Props) {
       <div
         key={a.id}
         style={{
-          border: "1px solid black",
+          backgroundColor: "#cccccc5b",
           borderRadius: 5,
-          padding: 15,
-          margin: 10,
-          width: 500,
+          marginBottom: 10,
+          padding: 10,
+
+          display: "flex",
+          gap: 20,
+
         }}
       >
         <input
@@ -51,11 +54,15 @@ function AddressListPage({ onSelect }: Props) {
           checked={selectedAddressId === a.id}
           onChange={() => setSelectedAddressId(a.id)}
         />
-        <p>{a.recipientName}</p>
+        <div>
+
+        <p><strong>{a.recipientName}</strong></p>
+        <span style={{ marginRight: "10px"}}>{a.postalCode}</span>
         <span>{a.fullAddress}</span>
         <span>{a.detailAddress}</span>
         <p>{a.phoneNumber}</p>
-        <p>{a.defaultAddress == true ? "기본 배송지" : ""}</p>
+        </div>
+        {/* <p>{a.defaultAddress == true ? "기본 배송지" : ""}</p> */}
       </div>
     );
   });
@@ -68,16 +75,14 @@ function AddressListPage({ onSelect }: Props) {
 
   return (
     <div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 15, padding: 30, width: 500, margin: "0px auto"}}>
         <div
           style={{
-            marginLeft: "auto",
-            backgroundColor: "aquamarine",
-            borderRadius: 5,
-            padding: 10,
+            marginRight: "auto",
+            color: "#106641ce",
           }}
         >
-          <Link to="/address-form">배송지 추가</Link>
+          <Link to="/address-form" style={{ color: "#106641ce"}}>배송지 추가</Link>
         </div>
 
         <div>{addressList}</div>

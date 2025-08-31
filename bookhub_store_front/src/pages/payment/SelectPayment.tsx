@@ -8,8 +8,8 @@ function SelectPayment(props: { selectedItems: CartItemsResponseDto[], finalPric
   const addressId = props.addressId;
 
   return (
-    <div style={{ border: "1px solid #ccc", borderRadius: 15 }}>
-      <h3 style={{margin: 20}}><Checkout orderingItems={orderingItems} totalAmount={totalAmount} addressId={addressId}/></h3>
+    <div style={{ border: "1px solid #ccc", borderRadius: 15, padding: 0, }}>
+      <Checkout orderingItems={orderingItems} totalAmount={totalAmount} addressId={addressId}/>
     </div>
   )
 }

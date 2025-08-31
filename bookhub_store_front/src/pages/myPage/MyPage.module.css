@@ -1,0 +1,54 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+
+  width: 80%;
+  height: 90%;
+}
+
+.formElement {
+  display: flex;
+  gap: 20px;
+}
+
+.formElement p{
+  font-weight: bold;
+  width: 70px;
+}
+
+.formElement input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.formContainer button {
+  outline: none;
+  margin-top: auto;
+  background-color: #10664121;
+}
+
+.formContainer button:hover {
+  background-color: #10664177;
+  color: white;
+  border: 1px solid #106641d0
+}
+
+.profileImageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.profileImageContainer img {
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  height: 200px;
+}
+
+

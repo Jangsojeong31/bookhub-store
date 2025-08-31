@@ -52,7 +52,7 @@ public class CartServiceImpl implements CartService {
             );
         }
 
-        return ResponseDto.success("success", "장바구니 담기 성공");
+        return ResponseDto.success("SU", "장바구니 담기 성공");
     }
 
 

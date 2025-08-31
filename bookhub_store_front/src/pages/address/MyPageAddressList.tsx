@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAllAddresses } from "../../apis/address";
 import type { AddressListResponseDto } from "../../dtos/address/AddressListResponse.dto";
 import useToken from "../../hooks/useToken";
+import DeleteAddress from "./DeleteAddress";
 
 function MyPageAddressList() {
   const token = useToken();
@@ -10,21 +11,20 @@ function MyPageAddressList() {
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(
     null
   );
-  const navigate = useNavigate();
+
+  const fetchAddresses = async () => {
+    const res = await getAllAddresses(token);
+
+    const { code, message, data } = res;
+
+    if (code == "SU" && data) {
+      setAddresses(data);
+    } else {
+      return;
+    }
+  };
 
   useEffect(() => {
-    const fetchAddresses = async () => {
-      const res = await getAllAddresses(token);
-
-      const { code, message, data } = res;
-
-      if (code == "SU" && data) {
-        setAddresses(data);
-      } else {
-        return;
-      }
-    };
-
     fetchAddresses();
   }, []);
 
@@ -44,11 +44,8 @@ function MyPageAddressList() {
         <span>{a.fullAddress}</span>
         <span>{a.detailAddress}</span>
         <p>{a.phoneNumber}</p>
-        <p>{a.defaultAddress == true ? "기본 배송지" : ""}</p>
-        <input 
-        type="radio"
-
-        />
+        {/* <p>{a.defaultAddress == true ? "기본 배송지" : ""}</p> */}
+        <DeleteAddress addressId={a.id} onDelete={() => fetchAddresses()} />
       </div>
     );
   });

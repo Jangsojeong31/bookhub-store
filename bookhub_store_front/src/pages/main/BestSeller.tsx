@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import useToken from '../../hooks/useToken';
-import { getBestSellerByCategory } from '../../apis/book';
-import type { BestSellerDto } from '../../dtos/book/BestSeller.dto';
+import React, { useEffect, useState } from "react";
+import useToken from "../../hooks/useToken";
+import { getBestSellerByCategory } from "../../apis/book";
+import type { BestSellerDto } from "../../dtos/book/BestSeller.dto";
+import { useNavigate } from "react-router-dom";
+import "./BestSeller.css";
 
 function BestSeller() {
-   const token = useToken();
+  const token = useToken();
+  const navigate = useNavigate();
   const [categoryType, setCategoryType] = useState<number>(1);
   const [bestSeller, setBestSeller] = useState<BestSellerDto[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  
+
   const fetchBestSeller = async () => {
     const res = await getBestSellerByCategory(categoryType, token);
     const { code, message, data } = res;
@@ -17,58 +20,88 @@ function BestSeller() {
       setBestSeller(data);
       setCurrentIndex(0);
     }
-  }
+  };
 
   useEffect(() => {
     if (categoryType !== null) {
       fetchBestSeller();
     }
-  }, [categoryType])
+  }, [categoryType]);
 
   const prevBook = () => {
     setCurrentIndex((prev) => (prev === 0 ? bestSeller.length - 1 : prev - 1));
-  }
+  };
 
   const nextBook = () => {
     setCurrentIndex((prev) => (prev === bestSeller.length - 1 ? 0 : prev + 1));
-  }
+  };
 
   const currentBook = bestSeller[currentIndex];
 
+  const goDetail = (isbn: string) => {
+    navigate(`/books/details?isbn=${isbn}`);
+  };
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <h2 style={{ marginRight: "auto", marginBottom: 50}}>이달의 베스트셀러</h2>
-      <div style={{ display: "flex",}}>
+    <div className="best-seller-container">
+      <h2 className="best-seller-title">이 달의 베스트셀러</h2>
 
-      <div style={{ marginBottom: 10, display: "flex", flexDirection: "column" }}>
-        <button onClick={() => setCategoryType(1)} style={{ background: "none", borderBottom: "1px solid pink", borderRadius: 0}}>국내도서</button>
-        <button onClick={() => setCategoryType(2)} style={{ background: "none", borderBottom: "1px solid pink", borderRadius: 0}}>해외도서</button>
-      </div>
-
-      {currentBook && (
-        <div style={{ display: "flex", alignItems: "center", gap: 20, border: "2px solid pink", padding: 20 }}>
-          <button onClick={prevBook} style={{ fontSize: 24, background: "none", color: "pink" }}>◀</button>
-          
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            <span style={{ fontWeight: 'bold', marginBottom: "auto" }}>{currentIndex + 1}위</span>
-            <div style={{ border: "1px solid black", aspectRatio: "3.5/5", marginBottom: 5 , height: 400}}>
-              <img src={currentBook.coverUrl} alt={currentBook.bookTitle} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, width: 400 }}>
-              <div>{currentBook.bookTitle}</div>
-              <div>{currentBook.authorName}</div>
-              <div>{currentBook.publisherName}</div>
-              <div>{currentBook.categoryName}</div>
-              <div>판매량: {currentBook.totalSales}</div>
-            </div>
-          </div>
-          
-          <button onClick={nextBook} style={{ fontSize: 24, background: "none", color: "pink" }}>▶</button>
+      <div className="best-seller-content">
+        <div className="category-buttons">
+          <button
+            onClick={() => setCategoryType(1)}
+            className={categoryType === 1 ? "active" : ""}
+          >
+            국내도서
+          </button>
+          <button
+            onClick={() => setCategoryType(2)}
+            className={categoryType === 2 ? "active" : ""}
+          >
+            해외도서
+          </button>
         </div>
-      )}
+
+        <div className="book-carousel-container">
+          {currentBook && (
+            <div className="book-carousel">
+              <button onClick={prevBook} className="carousel-btn">
+                ◀
+              </button>
+
+              <div className="book-info-wrapper">
+                <div className="book-rank">
+                  <span className="rank-badge">{currentIndex + 1}위</span>
+                  <div>{currentBook.totalSales}권 판매</div>
+                </div>
+
+                  <div className="book-cover">
+                    <img
+                      src={currentBook.coverUrl}
+                      alt={currentBook.bookTitle}
+                    />
+                  </div>
+
+                <div
+                  className="book-meta"
+                  onClick={() => goDetail(currentBook.bookIsbn)}
+                >
+                  <div className="book-title">{currentBook.bookTitle}</div>
+                  <div>{currentBook.authorName}</div>
+                  <div>{currentBook.categoryName}</div>
+                  <div>{currentBook.publisherName}</div>
+                </div>
+              </div>
+
+              <button onClick={nextBook} className="carousel-btn">
+                ▶
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default BestSeller
+export default BestSeller;

@@ -1,31 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styles from "./ProfileCard.module.css";
 
 function ProfileMenuList() {
   return (
-    <div style={{ flex: "3" }}>
-      <ul
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: 20,
-          listStyle: "none",
-          textAlign: "left",
-        }}
-      >
+    <div className={styles.profileMenuListContainter}>
+      <ul>
         <li>
           <Link to="/mypage/info">
-          <span>회원 정보 수정</span>
-          <span>이름, 생년월일, 휴대폰번호, 이메일</span>
+            <span>회원 정보 수정</span>
+            <span
+              style={{ fontSize: 13, marginLeft: 15, color: "#838383ff" }}
+            >
+              이름, 전화번호, 이메일
+            </span>
           </Link>
         </li>
         <li>
           <Link to="/mypage/order-list">
-          주문 내역
+            <span>주문 내역</span>
           </Link>
-          </li>
-        <li><Link to="/mypage/address-list">배송지 목록</Link></li>
+        </li>
+        <li>
+          <Link to="/mypage/address-list">
+            <span>배송지 목록</span>
+          </Link>
+        </li>
       </ul>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import type { AddressListResponseDto } from "../../dtos/address/AddressListResponse.dto";
+import styles from "../order/OrderCheckPage.module.css";
 
 interface Props {
   address: AddressListResponseDto | null;
@@ -18,21 +19,32 @@ function DeliveryAddressInfo({ address, onOpenAddressList }: Props) {
     >
       <h3 style={{ margin: 20 }}>배송지 정보</h3>
       {address ? (
-        <div>
-          <p>{address.recipientName}</p>
-          <p>{address.phoneNumber}</p>
-          <p>{address.postalCode}</p>
+        <div
+          style={{
+            margin: 10,
+          }}
+        >
           <p>
+            <strong>{address.recipientName}</strong>
+          </p>
+          <span style={{ marginRight: "10px" }}>{address.postalCode}</span>
+          <span>
             {address.fullAddress}
             {address.detailAddress}
-          </p>
+          </span>
+          <p>{address.phoneNumber}</p>
         </div>
       ) : (
-        "배송지 선택"
+        <p style={{ color: "#818181ff" }}>배송지를 선택해주세요</p>
       )}
 
-      <div style={{ marginLeft: "auto", marginRight: 10 }}>
-        <button onClick={onOpenAddressList}>배송지 선택</button>
+      <div style={{ marginLeft: "auto", marginRight: 20 }}>
+        <button
+          onClick={onOpenAddressList}
+          className={styles.selectAddressButton}
+        >
+          배송지 선택
+        </button>
       </div>
     </div>
   );

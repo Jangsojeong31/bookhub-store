@@ -1,4 +1,6 @@
 import React from "react";
+import styles from "../pages/cart/Cart.module.css";
+
 interface OverviewProps {
   totalPrice: number;
   discount: number;
@@ -14,34 +16,14 @@ function StickyCartOverview({
 }: OverviewProps) {
   return (
     <div
-      style={{
-        top: 100,
-        border: "2px solid rgba(51, 19, 19, 0.15)",
-        borderRadius: 20,
-        height: 500,
-        width: 350,
-        margin: 10,
-        position: "sticky",
-        padding: 10,
-
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignContent: "center",
-      }}
+      className={styles.cartOverview}
     >
       <div
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: 12,
-        }}
+        className={styles.cartOverviewContent}
       >
-        <div>상품 금액 : {totalPrice}원</div>
-        <div>할인 : {discount}원</div>
-        <div>결제 금액 : {finalPrice}원</div>
+        <div><strong>상품 금액</strong>{totalPrice}원</div>
+        <div><strong>할인</strong>{discount}원</div>
+        <div><strong>결제 금액</strong>{finalPrice}원</div>
       </div>
       {button}
     </div>

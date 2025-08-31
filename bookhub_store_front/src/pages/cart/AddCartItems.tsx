@@ -5,8 +5,9 @@ import { addCartItems } from "../../apis/cart";
 interface AddCartItemsProps {
   isbn: string;
   quantity? : number;
+  resetQuantity: () => void;
 }
-function AddCartItems({ isbn, quantity }: AddCartItemsProps) {
+function AddCartItems({ isbn, quantity, resetQuantity }: AddCartItemsProps) {
   const [cookies] = useCookies(["accessToken"]);
 
   const onAddCartItems = async () => {
@@ -15,10 +16,11 @@ function AddCartItems({ isbn, quantity }: AddCartItemsProps) {
     const res = await addCartItems(dto, token);
     const { code, message} = res;
 
-    if (code != "success") {
-      return;
-    } else {
+    if (code == "SU") {
       alert("장바구니 담기 성공!");
+      resetQuantity();
+    } else {
+      return;
     }
   };
 

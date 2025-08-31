@@ -1,0 +1,87 @@
+.orderListElementContainer {
+  display: flex;
+  flex-direction: column;
+
+  width: 1000px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  gap: 12px;
+}
+
+.orderListElement1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderListElement1 button {
+  height: 50px;
+  background: none;
+  color: #106641e5;
+}
+
+.orderListElement1 span {
+  margin-right: 20px;
+  font-size: 20px;
+}
+
+.orderListElement2 {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  background-color: #1066410c;
+  padding: 20px;
+}
+
+.bookCover {
+  border: 1px solid #ccc;
+  height: 100px;
+  aspect-ratio: 3.5/5;
+}
+
+.content {
+  
+}
+
+.content p {
+  font-weight: bold;
+}
+
+.content span {
+  margin-right: 20px;
+}
+
+.totalPrice {
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+
+/* OrderDetail */
+
+.orderDetailElement {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.orderDetailElement strong {
+  margin-right: 15px;
+}
+
+.orderDetailElement h3 {
+  color: #106641ab;
+}
+
+.orderDetailProductContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  background-color: #1066410c;
+  width: 800px;
+  padding: 20px;
+  margin: 20px;
+}
+

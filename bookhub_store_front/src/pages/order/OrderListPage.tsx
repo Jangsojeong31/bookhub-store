@@ -11,7 +11,6 @@ function OrderListPage() {
   const token = useToken();
 
   const fetchOrderList = async () => {
-
     const res = await getMyOrders(token);
 
     const { code, message, data } = res;
@@ -21,18 +20,16 @@ function OrderListPage() {
     } else {
       return;
     }
-  }
+  };
 
   useEffect(() => {
     fetchOrderList();
-  }, [])
+  }, []);
 
   return (
-    
-      <TitleBar title="주문 내역">
-        <OrderList orderList={orderList}/>
-      </TitleBar>
-    
+    <TitleBar title="주문 내역">
+      <OrderList orderList={orderList} />
+    </TitleBar>
   );
 }
 

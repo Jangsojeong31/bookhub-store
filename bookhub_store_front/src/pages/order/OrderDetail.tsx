@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import TitleBar from "../../components/TitleBar";
-import type {
-  OrderDetailResponseDto,
-} from "../../dtos/order/OrderListResponse.dto";
+import type { OrderDetailResponseDto } from "../../dtos/order/OrderListResponse.dto";
 import { useLocation } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 import { getPaymentByOrderId } from "../../apis/payment";
+import styles from "./Order.module.css";
 
 function OrderDetail() {
   const location = useLocation();
@@ -17,10 +16,9 @@ function OrderDetail() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");
   const [totalAmount, setTotalAmount] = useState<number | null>(null);
-  
+
   useEffect(() => {
     const fetchPayment = async () => {
-
       const res = await getPaymentByOrderId(orderId, token);
       const { code, message, data } = res;
 
@@ -31,93 +29,65 @@ function OrderDetail() {
       } else {
         return;
       }
+    };
 
-      
-    }
-  })
+    fetchPayment();
+  }, []);
 
   return (
     <TitleBar title="주문 상세">
       <div>
-        <div
-          style={{
-            borderBottom: "1px solid #ccc",
-            marginBottom: 20,
-          }}
-        >
-          <p>주문 일자 : {datePart}</p>
-          <p>주문 번호 : {order.orderNumber}</p>
+        <div className={styles.orderDetailElement}>
+            <p>
+              <strong>주문 일자</strong>{datePart}
+            </p>
+            <p>
+              <strong>주문 번호</strong>{order.orderNumber}
+            </p>
         </div>
-        <div
-          style={{
-            borderBottom: "1px solid #ccc",
-            marginBottom: 20,
-          }}
-        >
-          <h4>주문자 정보</h4>
-          <p>수령인 : {order.recipientName}</p>
-          <p>전화번호 : {order.phoneNumber}</p>
-          <p>배송지 : {order.fullAddress}{order.addressDetail}</p>
+
+        <div className={styles.orderDetailElement}>
+          <h3>배송 정보</h3>
+          <p><strong>수령인</strong>{order.recipientName}</p>
+          <p><strong>전화번호</strong>{order.phoneNumber}</p>
+          <p>
+            <strong>배송지</strong>{order.fullAddress}
+            {order.addressDetail}
+          </p>
         </div>
-        <div
-          style={{
-            borderBottom: "1px solid #ccc",
-            marginBottom: 20,
-          }}
-        >
-          <h4>주문 상품</h4>
-          <div>
-            {order.orderDetails.map((detail: OrderDetailResponseDto) => {
-              return (
-                <div
-                  style={{
-                    backgroundColor: "rgba(0, 0, 0, 0.05)",
-                    height: 150,
-                    width: 900,
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "10px 10px",
-                    margin: 10,
-                    gap: 20,
-                  }}
-                  key={detail.orderDetailId}
-                >
-                  <div
-                    style={{
-                      border: "1px solid black",
-                      aspectRatio: "3.5/5",
-                      height: "90%",
-                    }}
-                  >
-                    <p>표지</p>
-                  </div>
-                  <div>
-                    <p>{detail.bookTitle}</p>
-                  </div>
-                  <div
-                    style={{
-                      marginLeft: "auto",
-                    }}
-                  >
-                    <p>도서 가격 : {detail.bookPrice}</p>
-                    <p>구매 수량 : {detail.quantity}</p>
-                    <p>총 금액 : {detail.totalPrice}</p>
-                  </div>
+        <div className={styles.orderDetailElement}>
+          <h3>주문 상품</h3>
+          {order.orderDetails.map((detail: OrderDetailResponseDto) => {
+            return (
+              <div
+                className={styles.orderDetailProductContainer}
+                style={{ width: 1000 }}
+                key={detail.orderDetailId}
+              >
+                <div className={styles.bookCover}>
+                  <p>표지</p>
                 </div>
-              );
-            })}
-          </div>
+
+                <div className={styles.content}>
+                  <p>{detail.bookTitle}</p>
+                  <span>도서 가격 : {detail.bookPrice}</span>
+                  <span>구매 수량 : {detail.quantity}</span>
+                </div>
+
+                <div className={styles.totalPrice}>
+                  <p>총 금액 : {detail.totalPrice}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
-        <div
-          style={{
-            borderBottom: "1px solid #ccc",
-            marginBottom: 20,
-          }}
-        >
-          <h4>결제 정보</h4>
-          <p>결제 수단 : {paymentMethod}</p>
-          <p>결제 상태 : {paymentStatus}</p>
-          <p>결제 금액 : {totalAmount}</p>
+        <div className={styles.orderDetailElement}>
+          <h3>결제 정보</h3>
+          <p><strong>결제 수단</strong>{paymentMethod}</p>
+          <p>
+            <strong>결제 상태</strong>{paymentStatus == "DONE" ? "결제 완료" : "결제 실패"}
+          </p>
+          <p><strong>결제 금액</strong>{totalAmount}</p>
         </div>
       </div>
     </TitleBar>

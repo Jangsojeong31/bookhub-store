@@ -12,4 +12,6 @@ public interface AddressService
     ResponseDto<Void> createDeliveryAddress(UserPrincipal user, CreateAddressRequestDto dto);
 
     ResponseDto<List<AddressListResponseDto>> getAllAddresses(UserPrincipal user);
+
+    ResponseDto<Void> deleteAddress(Long addressId);
 }

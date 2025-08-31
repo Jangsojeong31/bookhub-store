@@ -64,4 +64,14 @@ public class AddressServiceImpl implements AddressService {
 
         return ResponseDto.success("SU", "success", responseDtos);
     }
+
+    @Override
+    public ResponseDto<Void> deleteAddress(Long addressId) {
+        DeliveryAddress address = addressRepository.findById(addressId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        addressRepository.delete(address);
+
+        return ResponseDto.success("SU", "success");
+    }
 }

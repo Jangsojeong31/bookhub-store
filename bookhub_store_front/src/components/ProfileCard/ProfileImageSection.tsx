@@ -4,6 +4,7 @@ interface ProfileImgeSectionProps {
   nickname: string;
   profileImageUrl?: string;
 }
+import styles from "./ProfileCard.module.css";
 
 const ProfileImageSection: React.FC<ProfileImgeSectionProps> = ({
   nickname,
@@ -13,25 +14,14 @@ const ProfileImageSection: React.FC<ProfileImgeSectionProps> = ({
 
   return (
     <div
-      style={{
-        flex: "2",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 10,
-      }}
+      className={styles.profileImageSection}
     >
       <img
         src={`${BASE_URL}${encodeURI(profileImageUrl!)}` || defaultImage}
         alt="프로필 이미지"
-        style={{
-          width: 100,
-          height: 100,
-          borderRadius: "50%",
-          border: "1px solid #ccc",
-        }}
+        className={styles.profileImage}
       />
-      <p>닉네임: {nickname}</p>
+      <p>닉네임 : {nickname}</p>
     </div>
   );
 };

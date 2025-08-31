@@ -1,14 +1,15 @@
 import React from 'react'
+import styles from "./TitleBar.module.css";
 
 function TitleBar(props: { title: string, children: React.ReactNode }) {
   return (
-    <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-      <div style={{ borderBottom: "2px solid #ccc", width: "100%", height: 50, padding: 0}}>
-        <h2 style={{ margin: "10px auto", color: "#888686ff"}}>
+    <div className={styles.titleBarContainer}>
+      <div className={styles.titleBarTitle}>
+        <h2>
         {props.title}
         </h2>
       </div>
-      <div>
+      <div className={styles.titleBarChildren}>
         {props.children}
       </div>
     </div>

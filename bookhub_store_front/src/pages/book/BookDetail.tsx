@@ -3,7 +3,6 @@ import { getBookDetails } from "../../apis/book";
 import { useCookies } from "react-cookie";
 import { useLocation } from "react-router-dom";
 import type { BookDetailResponseDto } from "../../dtos/book/BookDetailResponse.dto";
-import Layout from "../../components/layouts/Layout";
 import AddCartItems from "../cart/AddCartItems";
 
 function BookDetail() {
@@ -81,7 +80,7 @@ function BookDetail() {
               borderBottom: "1px solid #ccc",
             }}
           >
-            리뷰
+            {bookDetail?.description}
           </div>
 
           <div style={{ flex: 1, border: "1px solid black" }}>표지</div>
@@ -125,7 +124,7 @@ function BookDetail() {
                 <button onClick={onIncreaseQuantity}>+</button>
               </div>
               <div>
-                <AddCartItems isbn={bookDetail?.isbn!} quantity={quantity} />
+                <AddCartItems isbn={bookDetail?.isbn!} quantity={quantity} resetQuantity={() => setQuantity(1)} />
               </div>
               <div>바로 구매</div>
             </div>

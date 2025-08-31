@@ -71,7 +71,7 @@ function Checkout(props: {
   return (
     <div>
       <div className="wrapper w-100">
-        <div className="max-w-540 w-100">
+        {/* <div className="max-w-540 w-100"> */}
           <div id="payment-method" className="w-100" />
           <div id="agreement" className="w-100" />
           <div className="btn-wrapper w-100">
@@ -84,7 +84,7 @@ function Checkout(props: {
             />
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 }

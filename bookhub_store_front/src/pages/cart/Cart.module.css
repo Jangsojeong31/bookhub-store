@@ -1,0 +1,113 @@
+.cartItemContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  height: 150px;
+  width: 100%;
+  background-color: #cccccc1c;
+  margin: 20px;
+  padding: 10px;
+}
+
+.cartItemContainer strong {
+  color: #106641;
+  margin-right: 10px;
+}
+
+.cartItemContainer button {
+  background: none;
+  color: #106641;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.bookCover {
+  border: 1px solid #ccc;
+  height: 90%;
+  aspect-ratio: 3.5/5;
+}
+
+.title {
+  flex: 1;
+}
+
+.totalPrice div {
+  border: 1px solid #10664121;
+  border-radius: 15px;
+  padding: 0px;
+  height: 40px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.totalPrice button {
+  padding: 10px;
+}
+
+.deleteButton {
+  margin-bottom: auto;
+}
+
+/* CartItemPage */
+
+.checkBoxContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  width: 100%;
+  background-color: #cccccc1c;
+  margin: 20px;
+  padding: 10px;
+}
+
+.cartItemListPageContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+/* StickyCartOverview */
+
+.cartOverview {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+
+  width: 250px;
+  height: 400px;
+  margin: 30px;
+  padding: 10px;
+
+  position: sticky;
+  top: 150px;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+}
+
+.cartOverviewContent {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+
+  margin: 15px;
+}
+
+.cartOverviewContent strong {
+  color: #106641;
+  margin-right: 10px;
+}
+
+.orderButton:hover {
+  background-color: #106641ce;
+  color: white;
+}

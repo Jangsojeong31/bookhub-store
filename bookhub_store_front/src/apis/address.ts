@@ -30,3 +30,16 @@ export const getAllAddresses = async (accessToken: string): Promise<ResponseDto<
     return responseErrorHandler(error as AxiosError<ResponseDto>);
   }
 }
+
+// 배송지 삭제
+export const deleteAddress = async (addressId: number, accessToken: string): Promise<ResponseDto<void>> => {
+  try {
+    const response = await axiosInstance.delete(
+      `${BASE_API}/address/${addressId}`,
+      bearerAuthorization(accessToken)
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+}

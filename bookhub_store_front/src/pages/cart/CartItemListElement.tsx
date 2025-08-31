@@ -1,31 +1,44 @@
 import React, { useState } from "react";
 import type { CartItemsResponseDto } from "../../dtos/cart/CartItemsResponse.dto";
-import { decreaseQuantity, increaseQuantity, removeCartItems } from "../../apis/cart";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeCartItems,
+} from "../../apis/cart";
 import { useCookies } from "react-cookie";
 import useToken from "../../hooks/useToken";
 import type { RemoveCartItemRequestDto } from "../../dtos/cart/RemoveCartItemRequest.dto";
+import styles from "./Cart.module.css";
 
 interface ElementProps {
   cartItemList: CartItemsResponseDto[];
   selectedItems: CartItemsResponseDto[];
   onSelectionChange: (selected: CartItemsResponseDto[]) => void;
   onRemoveItem: (id: number) => void;
+  onUpdateQuantity: (id: number, quantity: number) => void;
 }
 
 function CartItemListElement({
   cartItemList,
   selectedItems,
   onSelectionChange,
-  onRemoveItem
+  onRemoveItem,
+  onUpdateQuantity,
 }: ElementProps) {
   const token = useToken();
 
-  const onDecreseQuantity = async (id: number) => {
+  const onDecreseQuantity = async (id: number, quantity: number) => {
     await decreaseQuantity(id, token);
+
+    if (quantity > 1) {
+      // 0개 이하 방지
+      onUpdateQuantity(id, quantity - 1);
+    }
   };
 
-  const onIncreaseQuantity = async (id: number) => {
+  const onIncreaseQuantity = async (id: number, quantity: number) => {
     await increaseQuantity(id, token);
+    onUpdateQuantity(id, quantity + 1);
   };
 
   const handleCheckboxChange = (item: CartItemsResponseDto) => {
@@ -39,56 +52,53 @@ function CartItemListElement({
     onSelectionChange(updated);
   };
 
-  const handleRemoveCartItem = async(id: number) => {
-    const dto: RemoveCartItemRequestDto = { cartItemIds: [id] }
+  const handleRemoveCartItem = async (id: number) => {
+    if (!window.confirm("정말 삭제하시겠습니까?")) {
+      return;
+    }
+    const dto: RemoveCartItemRequestDto = { cartItemIds: [id] };
     await removeCartItems(dto, token);
     onRemoveItem(id);
-  }
+  };
 
   const cartItemListResult = cartItemList.map((item) => {
     return (
-      <div
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.05)",
-          height: 200,
-          width: 1100,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "10px 10px",
-          margin: 10,
-          gap: 12,
-        }}
-        key={item.id}
-      >
+      <div className={styles.cartItemContainer} key={item.id}>
         <input
           type="checkbox"
           checked={selectedItems.some((i) => i.id === item.id)}
           onChange={() => handleCheckboxChange(item)}
         />
 
-        <div
-          style={{
-            border: "1px solid black",
-            aspectRatio: "3.5/5",
-            height: "90%",
-          }}
-        >
+        <div className={styles.bookCover}>
           <p>표지</p>
         </div>
-        <div style={{ flex: 2 }}>
+
+        <div className={styles.title}>
           <p>{item.title}</p>
-          <p>{item.price}</p>
+          <p><strong>가격</strong>{item.price} 원</p>
         </div>
-        <div style={{ flex: 2 }}>
-          <p>총 가격 : {item.totalPrice}</p>
-          <button onClick={() => onDecreseQuantity(item.id)}>-</button>
-          {item.quantity}
-          <button onClick={() => onIncreaseQuantity(item.id)}>+</button>
+
+        <div className={styles.totalPrice}>
+          <p><strong>총 가격</strong>{item.totalPrice} 원</p>
+          <div>
+
+          <button onClick={() => onDecreseQuantity(item.id, item.quantity)}>
+            –
+          </button>
+          <p>{item.quantity}</p>
+          <button onClick={() => onIncreaseQuantity(item.id, item.quantity)}>
+            +
+          </button>
+          </div>
         </div>
-        <div style={{ marginBottom: "auto" }}>
-          <button onClick={() => handleRemoveCartItem(item.id)}>삭제</button>
-        </div>
+
+        <button
+          onClick={() => handleRemoveCartItem(item.id)}
+          className={styles.deleteButton}
+        >
+          ⨉
+        </button>
       </div>
     );
   });

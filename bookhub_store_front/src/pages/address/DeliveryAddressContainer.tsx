@@ -31,8 +31,8 @@ function DeliveryAddressContainer({
       {showAddressList && (
         <AddressListPage
           onSelect={(address) => {
-            setSelectedAddress(address); // 부모 상태 업데이트
-            setShowAddressList(false); // 선택 후 리스트 닫기
+            setSelectedAddress(address);
+            setShowAddressList(false);
           }}
         />
       )}

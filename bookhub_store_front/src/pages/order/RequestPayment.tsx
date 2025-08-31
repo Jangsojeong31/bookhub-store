@@ -96,7 +96,7 @@ function RequestPayment({
 
   return (
     <div>
-      <button className="btn primary w-100" onClick={handlePayment}>
+      <button className="btn primary" onClick={handlePayment}>
         결제하기
       </button>
     </div>

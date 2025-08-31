@@ -1,0 +1,31 @@
+.orderCheckContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.orderCheckContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  width: 800px;
+  margin: 20px;
+}
+
+.orderButton:hover {
+  background-color: #106641ce;
+  color: white;
+}
+
+/* DeliveryAddressInfo */
+.selectAddressButton {
+  background-color: #106641ce;
+  color: white;
+}
+
+.selectAddressButton:hover {
+  background-color: #1066415e;
+  color: white;
+}

@@ -1,0 +1,22 @@
+.titleBarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1200px;
+}
+
+.titleBarTitle {
+  height: 60px;
+  padding: 0px;
+  border-bottom: 2px solid #ccc;
+  width: 100%;
+}
+
+.titleBarTitle h2 {
+  color: #868686;
+}
+
+
+.titleBarChildren {
+  width: 100%;
+}

@@ -12,6 +12,7 @@ import defaultProfileImage from "../../assets/images/기본_프로필_이미지.
 import { BASE_API } from "../../apis/axiosConfig";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import styles from "./MyPage.module.css";
 
 function UpdateProfileImage() {
   const [profileImage, setProfileImage] = useState("");
@@ -19,7 +20,7 @@ function UpdateProfileImage() {
   const [file, setFile] = useState<File | null>(null);
 
   const token = useToken();
-  const {user} = useAuthStore();
+  const { user } = useAuthStore();
   const navigate = useNavigate();
 
   const BASE_URL = import.meta.env.VITE_API_DOMAIN;
@@ -56,44 +57,31 @@ function UpdateProfileImage() {
     setProfileImage(imageUrl);
     setPreview(null);
     setFile(null);
-    
+
     navigate(-1);
   };
 
   return (
     <ProfileCardFrame>
-      <div
-        style={{
-          marginBottom: "auto",
-          marginTop: "auto",
-
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 20,
-        }}
-      >
-        <p>프로필 이미지</p>
-        <img
-          src={
-            preview
-              ? preview
-              : profileImage
-              ? `${BASE_URL}${encodeURI(profileImage)}`
-              : defaultProfileImage
-          }
-          alt="프로필 이미지"
-          style={{
-            height: 100,
-            cursor: "pointer",
-            border: "1px solid #ccc",
-            borderRadius: "50px",
-          }}
-        />
-        <input type="file" accept="image/*" onChange={onFileChange} />
+      <div className={styles.formContainer}>
+        <h3>프로필 이미지 변경</h3>
+        <div className={styles.profileImageContainer}>
+          <img
+            src={
+              preview
+                ? preview
+                : profileImage
+                ? `${BASE_URL}${encodeURI(profileImage)}`
+                : defaultProfileImage
+            }
+            alt="프로필 이미지"
+          />
+          <input type="file" accept="image/*" onChange={onFileChange} />
+        </div>
+        <button onClick={onUpdateProfileImage} disabled={!file}>
+          저장
+        </button>
       </div>
-      <button onClick={onUpdateProfileImage} disabled={!file}>저장</button>
     </ProfileCardFrame>
   );
 }

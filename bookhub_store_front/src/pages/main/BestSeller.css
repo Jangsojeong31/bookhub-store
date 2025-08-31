@@ -1,0 +1,112 @@
+.best-seller-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.best-seller-title {
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgba(29, 66, 50, 0.747);
+  border-top: 2px solid rgba(29, 66, 50, 0.747);
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.best-seller-content {
+  display: flex;
+}
+
+.category-buttons {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-buttons button {
+  background: none;
+  background-color: rgba(29, 66, 50, 0.137);
+  border-radius: 0;
+}
+
+.category-buttons button.active {
+  background-color: rgba(29, 66, 50, 0.041);
+  box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.category-buttons button:hover {
+  color: #E07A5F;
+}
+
+.book-carousel-container {
+  background-color: rgba(29, 66, 50, 0.041);
+  height: 500px;
+  width: 1000px;
+}
+
+.book-carousel {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+.carousel-btn {
+  font-size: 24px;
+  background: none;
+  color: rgba(29, 66, 50, 0.274);
+}
+
+.book-info-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.book-rank {
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20;
+}
+
+.rank-badge {
+  font-weight: bold;
+  font-size: 30px;
+  color: white;
+  background-color: #1d42327c;
+  border-radius: 50%;
+  padding: 15px;
+}
+
+.book-main {
+  cursor: pointer;
+}
+
+
+.book-cover {
+  border: 1px solid black;
+  height: 400px;
+  aspect-ratio: 3.5 / 5;
+  margin: 0 auto;
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.book-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
+  cursor: pointer;
+}
+
+.book-title {
+  font-weight: bold;
+}

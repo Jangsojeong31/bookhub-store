@@ -7,6 +7,7 @@ import useToken from "../../hooks/useToken";
 import TitleBar from "../../components/TitleBar";
 import StickyCartOverview from "../../components/StickyCartOverview";
 import { useNavigate } from "react-router-dom";
+import styles from "./Cart.module.css";
 
 function CartItemsListPage() {
   const token = useToken();
@@ -66,26 +67,9 @@ function CartItemsListPage() {
 
   return (
     <TitleBar title="장바구니">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "90%",
-          padding: "30px 30px",
-          gap: 20,
-        }}
-      >
+      <div className={styles.cartItemListPageContainer}>
         <div>
-          <div
-            style={{
-              display: "flex",
-              backgroundColor: "rgba(0, 0, 0, 0.05)",
-              width: 1100,
-              padding: "10px 10px",
-              margin: 10,
-              gap: 12,
-            }}
-          >
+          <div className={styles.checkBoxContainer}>
             <input
               type="checkbox"
               checked={selectedItems.length === cartItemList.length}
@@ -101,6 +85,15 @@ function CartItemsListPage() {
               setCartItemList((prev) => prev.filter((item) => item.id !== id));
               setSelectedItems((prev) => prev.filter((item) => item.id !== id));
             }}
+            onUpdateQuantity={(id, quantity) => {
+              setCartItemList((prev) =>
+                prev.map((item) =>
+                  item.id === id
+                    ? { ...item, quantity, totalPrice: item.price * quantity }
+                    : item
+                )
+              );
+            }}
           />
         </div>
         <StickyCartOverview
@@ -108,9 +101,10 @@ function CartItemsListPage() {
           discount={discount}
           finalPrice={finalPrice}
           button={
-            <button
+            <button 
               disabled={selectedItems.length === 0}
               onClick={handleOrderPageNavi}
+              className={styles.orderButton}
             >
               주문하기
             </button>

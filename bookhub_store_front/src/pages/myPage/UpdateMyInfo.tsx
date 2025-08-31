@@ -5,7 +5,7 @@ import Layout from "../../components/layouts/Layout";
 import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
 import useToken from "../../hooks/useToken";
 import { getCustomerInfo, updateCustomerInfo } from "../../apis/customer";
-import "./MyPage.css";
+import styles from "./MyPage.module.css";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
@@ -36,50 +36,39 @@ function UpdateMyInfo() {
   };
 
   return (
-    
-      <ProfileCardFrame>
-        <div
-          style={{
-            marginBottom: "auto",
-            marginTop: "auto",
-
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 20,
-          }}
-        >
-          <div>
-            <p>이름 : </p>
-            <input
-              type="text"
-              value={name}
-              placeholder="변경할 이름을 입력해주세요"
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div>
-            <p>이메일 : </p>
-            <input
-              type="text"
-              value={email}
-              placeholder="변경할 이메일을 입력해주세요"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <p>전화번호 : </p>
-            <input
-              type="text"
-              value={phoneNumber}
-              placeholder="변경할 전화번호을 입력해주세요"
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-          </div>
+    <ProfileCardFrame>
+      <div className={styles.formContainer}>
+        <h3>회원 정보 수정</h3>
+        <div className={styles.formElement}>
+          <p>이름</p>
+          <input
+            type="text"
+            value={name}
+            placeholder="변경할 이름을 입력해주세요"
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className={styles.formElement}>
+          <p>이메일</p>
+          <input
+            type="text"
+            value={email}
+            placeholder="변경할 이메일을 입력해주세요"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className={styles.formElement}>
+          <p>전화번호</p>
+          <input
+            type="text"
+            value={phoneNumber}
+            placeholder="변경할 전화번호을 입력해주세요"
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
         </div>
         <button onClick={onUpdateMyInfo}>저장</button>
-      </ProfileCardFrame>
-    
+      </div>
+    </ProfileCardFrame>
   );
 }
 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Logo() {
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: 150, width: 300 }}>
       <Link to="/">
         <img
           src={logo}

@@ -1,5 +1,6 @@
 .w-100 {
-width: 100%;
+width: 90%;
+margin: 0 auto;
 }
 
 .h-100 {
@@ -42,6 +43,7 @@ cursor: pointer;
 .btn.primary {
 background-color: #3282f6;
 color: #f9fcff;
+width: 100%;
 }
 
 .text-center {

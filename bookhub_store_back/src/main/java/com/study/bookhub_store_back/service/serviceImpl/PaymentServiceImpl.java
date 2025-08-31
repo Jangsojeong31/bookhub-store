@@ -12,6 +12,7 @@ import com.study.bookhub_store_back.entity.Payment;
 import com.study.bookhub_store_back.repository.OrderRepository;
 import com.study.bookhub_store_back.repository.PaymentRepository;
 import com.study.bookhub_store_back.service.PaymentService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -125,5 +126,27 @@ public class PaymentServiceImpl implements PaymentService {
                 throw new RuntimeException("결제 승인 처리 중 오류", e);
             }
         }
+    }
+
+    @Override
+    public ResponseDto<PaymentResponseDto> getPaymentByOrderId(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        Payment payment = paymentRepository.findByOrderNumber(order.getOrderNumber());
+
+        PaymentResponseDto responseDto = PaymentResponseDto.builder()
+                .paymentId(payment.getPaymentId())
+                .paymentKey(payment.getPaymentKey())
+                .paymentMethod(payment.getPaymentMethod())
+                .amount(payment.getAmount())
+                .status(payment.getStatus())
+                .orderNumber(payment.getOrderNumber())
+                .orderName(payment.getOrder().getOrderName())
+                .requestedAt(payment.getRequestedAt())
+                .approvedAt(payment.getApprovedAt())
+                .build();
+
+        return ResponseDto.success("SU", "success", responseDto);
     }
 }

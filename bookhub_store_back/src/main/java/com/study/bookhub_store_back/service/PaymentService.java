@@ -6,4 +6,6 @@ import com.study.bookhub_store_back.dto.payment.response.PaymentResponseDto;
 
 public interface PaymentService {
     ResponseDto<PaymentResponseDto> confirmPayment(ConfirmPaymentRequestDto request);
+
+    ResponseDto<PaymentResponseDto> getPaymentByOrderId(Long orderId);
 }

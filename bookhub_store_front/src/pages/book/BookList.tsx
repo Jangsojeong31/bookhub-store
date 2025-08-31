@@ -1,45 +1,87 @@
 import React, { useEffect, useState } from "react";
-import { searchBooks } from "../../apis/book";
-import { useCookies } from "react-cookie";
 import type { BookSearchResponseDto } from "../../dtos/book/BookSearchResponse.dto";
-import BookListElement from "./BookListElement";
+import { Link, useNavigate } from "react-router-dom";
+import AddCartItems from "../cart/AddCartItems";
 
 interface BookListProps {
-  query: string;
+  bookList: BookSearchResponseDto[];
+  selectedIsbns: string[];
+  setSelectedIsbns: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function BookList({ query }: BookListProps) {
-  const [bookList, setBookList] = useState<BookSearchResponseDto[]>([]);
-  const [cookies] = useCookies(["accessToken"]);
+function BookList({
+  bookList,
+  selectedIsbns,
+  setSelectedIsbns,
+}: BookListProps) {
+  const navigate = useNavigate();
 
-  const fetchBookList = async () => {
-    const token = cookies.accessToken;
-    const res = await searchBooks(query, token);
-    const { code, message, data } = res;
-
-    if (code != "success") {
-      setBookList([]);
-      return;
-    }
-
-    if (Array.isArray(data)) {
-      setBookList(data);
-    } else {
-      setBookList([]);
-      alert("검색 결과가 없습니다.");
-    }
+  const handleCheckboxChange = (isbn: string) => {
+    setSelectedIsbns((prev) =>
+      prev.includes(isbn) ? prev.filter((i) => i !== isbn) : [...prev, isbn]
+    );
   };
 
-  useEffect(() => {
-    if (!query) return;
-    fetchBookList();
-  }, [query]);
+  const goDetail = (isbn: string) => {
+    navigate(`/books/details?isbn=${isbn}`);
+  };
 
-  return (
-    <div>
-      <BookListElement bookList={bookList} />
-    </div>
-  );
+  const bookListResult = bookList.map((book) => {
+    return (
+      <div
+        style={{
+          backgroundColor: "white",
+
+          height: 250,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "10px 10px",
+          margin: 10,
+          gap: 12,
+        }}
+      >
+        <input
+          type="checkbox"
+          checked={selectedIsbns.includes(book.isbn)}
+          onChange={() => handleCheckboxChange(book.isbn)}
+        />
+        <div
+          style={{
+            border: "1px solid black",
+            aspectRatio: "3.5/5",
+            height: "90%",
+          }}
+          onClick={() => goDetail(book.isbn)}
+        >
+          <p>표지</p>
+        </div>
+        <div style={{ flex: 2 }} onClick={() => goDetail(book.isbn)}>
+          <p>{book.title}</p>
+          <p>{book.authorName}</p>
+          <p>{book.publisherName}</p>
+          <p>{book.publishedDate}</p>
+          <p>{book.price}</p>
+          <p>{book.categoryName}</p>
+          {/* <p>{book.events.}</p> */}
+        </div>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
+          <AddCartItems isbn={book.isbn} resetQuantity={() => { return; }} />
+          <button>바로구매 버튼</button>
+        </div>
+      </div>
+    );
+  });
+  return <div>{bookListResult}</div>;
 }
 
 export default BookList;

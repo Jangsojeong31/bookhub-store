@@ -8,15 +8,15 @@ function OrderingItemList(props: { selectedItems: CartItemsResponseDto[] }) {
     return (
       <div
         style={{
-          backgroundColor: "rgba(199, 195, 195, 0.05)",
+          backgroundColor: "#cccccc1e",
           height: 150,
-          width: 1000,
+          width: "90%",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "10px 10px",
-          margin: 10,
-          gap: 12,
+          padding: "10px 20px",
+          margin: "20px auto",
+          gap: 20,
         }}
         key={item.id}
       >
@@ -30,11 +30,11 @@ function OrderingItemList(props: { selectedItems: CartItemsResponseDto[] }) {
           <p>표지</p>
         </div>
         <div style={{ flex: 2 }}>
-          <p>{item.title}</p>
+          <p><strong>{item.title}</strong></p>
           <p>가격 : {item.price}</p>
           <p>수량 : {item.quantity}</p>
         </div>
-        <div style={{ flex: 2 }}>
+        <div style={{ marginLeft: "auto"}}>
           <p>총 가격 : {item.totalPrice}</p>
         </div>
       </div>

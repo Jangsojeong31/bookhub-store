@@ -15,7 +15,7 @@ import OrderListPage from "./pages/order/OrderListPage";
 import Layout from "./components/layouts/Layout";
 import Success from "./pages/payment/Success";
 import OrderDetail from "./pages/order/OrderDetail";
-import AddressForm from "./pages/address/AddressForm";
+import AddressForm from "./pages/address/AddAddressForm";
 import MyPageAddressList from "./pages/address/MyPageAddressList";
 import SignUp from "./pages/auth/SignUp";
 import SnsSignUp from "./pages/auth/SnsSignUp";

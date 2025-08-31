@@ -36,7 +36,15 @@ public class AddressController {
         ResponseDto<List<AddressListResponseDto>> responseDto = addressService.getAllAddresses(user);
         return ResponseEntity.ok(responseDto);
     }
+
     // 배송지 삭제
+    @DeleteMapping("/{addressId}")
+    public ResponseEntity<ResponseDto<Void>> deleteAddress(
+            @PathVariable Long addressId
+    ) {
+        ResponseDto<Void> responseDto = addressService.deleteAddress(addressId);
+        return ResponseEntity.ok(responseDto);
+    }
     // 기본 배송지로 변경
 
 }

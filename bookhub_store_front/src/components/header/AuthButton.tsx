@@ -1,10 +1,10 @@
-import React, { use } from 'react'
-import { useAuthStore } from '../../stores/useAuthStore'
-import { Link, useNavigate } from 'react-router-dom';
-import { axiosInstance } from '../../apis/axiosConfig';
-import { logout } from '../../apis/auth';
-import { useCookies } from 'react-cookie';
-import "./Header.css";
+import React, { use } from "react";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../apis/auth";
+import { useCookies } from "react-cookie";
+import style from "../layouts/Layout.module.css";
+
 
 function AuthButton() {
   const setLogout = useAuthStore((state) => state.logout);
@@ -16,23 +16,29 @@ function AuthButton() {
     const res = await logout();
 
     if (res.code == "SU") {
-      removeCookie("accessToken", { path: "/"})
-      removeCookie("tokenExpiresAt", { path: "/"})
-      
+      removeCookie("accessToken", { path: "/" });
+      removeCookie("tokenExpiresAt", { path: "/" });
+
       setLogout();
       navigate("/");
     } else {
       alert("로그아웃에 실패했습니다.");
     }
-  }
+  };
+
+  const onNaviLogin = () => {
+    navigate("/login");
+  };
 
   return isLoggedIn ? (
-  <button className="auth-button" onClick={handleLogout}>로그아웃</button>
+    <button  className={style.naviButton} onClick={handleLogout}>
+      로그아웃
+    </button>
   ) : (
-    <Link to="/login">
-      <button className='auth-button'>로그인 / 회원가입</button>
-    </Link>
-  )
+    <button  className={style.naviButton} onClick={onNaviLogin}>
+      로그인 / 회원가입
+    </button>
+  );
 }
 
-export default AuthButton
+export default AuthButton;

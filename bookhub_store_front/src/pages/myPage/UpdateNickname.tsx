@@ -6,6 +6,8 @@ import { useCookies } from "react-cookie";
 import useToken from "../../hooks/useToken";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores/useAuthStore";
+import styles from "./MyPage.module.css";
+
 
 function UpdateNickname() {
   const [nickname, setNickname] = useState("");
@@ -33,16 +35,22 @@ function UpdateNickname() {
 
   return (
     <ProfileCardFrame>
-      <div style={{ marginBottom: "auto", marginTop: "auto" }}>
-        닉네임 :
+      <div className={styles.formContainer}>
+        <h3>닉네임 변경</h3>
+        <div className={styles.formElement}>
+<p>
+
+        닉네임
+</p>
         <input
           type="text"
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
           placeholder="변경할 닉네임을 입력해주세요"
-        ></input>
-      </div>
+          />
+          </div>
       <button onClick={onUpdateNickname}>저장</button>
+      </div>
     </ProfileCardFrame>
   );
 }
