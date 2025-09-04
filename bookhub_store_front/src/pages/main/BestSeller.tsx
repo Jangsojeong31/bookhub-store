@@ -50,13 +50,13 @@ function BestSeller() {
         <div className="category-buttons">
           <button
             onClick={() => setCategoryType(1)}
-            className={categoryType === 1 ? "active" : ""}
+            className={categoryType === 1 ? "active1" : ""}
           >
             국내도서
           </button>
           <button
             onClick={() => setCategoryType(2)}
-            className={categoryType === 2 ? "active" : ""}
+            className={categoryType === 2 ? "active2" : ""}
           >
             해외도서
           </button>
@@ -75,7 +75,7 @@ function BestSeller() {
                   <div>{currentBook.totalSales}권 판매</div>
                 </div>
 
-                  <div className="book-cover">
+                  <div className="book-cover" onClick={() => goDetail(currentBook.bookIsbn)}>
                     <img
                       src={currentBook.coverUrl}
                       alt={currentBook.bookTitle}

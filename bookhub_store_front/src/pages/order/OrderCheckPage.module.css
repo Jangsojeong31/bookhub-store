@@ -14,6 +14,11 @@
   margin: 20px;
 }
 
+.orderButton {
+  border: none;
+  background-color: #10664146;
+}
+
 .orderButton:hover {
   background-color: #106641ce;
   color: white;
@@ -21,6 +26,7 @@
 
 /* DeliveryAddressInfo */
 .selectAddressButton {
+  border: none;
   background-color: #106641ce;
   color: white;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { useCookies } from "react-cookie";
 import { addCartItems } from "../../apis/cart";
+import "../book/BookList.css"
 
 interface AddCartItemsProps {
   isbn: string;
@@ -26,7 +27,7 @@ function AddCartItems({ isbn, quantity, resetQuantity }: AddCartItemsProps) {
 
   return (
     <div>
-      <button onClick={onAddCartItems}>장바구니 담기</button>
+      <button onClick={onAddCartItems} className="addCartbutton">장바구니 담기</button>
     </div>
   );
 }

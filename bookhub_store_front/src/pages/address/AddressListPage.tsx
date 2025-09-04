@@ -44,7 +44,6 @@ function AddressListPage({ onSelect }: Props) {
 
           display: "flex",
           gap: 20,
-
         }}
       >
         <input

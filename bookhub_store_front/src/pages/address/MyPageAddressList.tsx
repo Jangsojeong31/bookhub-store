@@ -4,6 +4,8 @@ import { getAllAddresses } from "../../apis/address";
 import type { AddressListResponseDto } from "../../dtos/address/AddressListResponse.dto";
 import useToken from "../../hooks/useToken";
 import DeleteAddress from "./DeleteAddress";
+import TitleBar from "../../components/TitleBar";
+import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
 
 function MyPageAddressList() {
   const token = useToken();
@@ -33,37 +35,50 @@ function MyPageAddressList() {
       <div
         key={a.id}
         style={{
-          border: "1px solid black",
+          backgroundColor: "#dbf0a31e",
           borderRadius: 5,
-          padding: 15,
-          margin: 10,
+          marginBottom: 10,
+          padding: 20,
+          height: "100%",
           width: 500,
+
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
         }}
       >
-        <p>{a.recipientName}</p>
-        <span>{a.fullAddress}</span>
-        <span>{a.detailAddress}</span>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <p>
+            <strong>{a.recipientName}</strong>
+          </p>
+          <DeleteAddress addressId={a.id} onDelete={() => fetchAddresses()} />
+        </div>
+        <span>
+          [{a.postalCode}] {a.fullAddress} {a.detailAddress}
+        </span>
         <p>{a.phoneNumber}</p>
         {/* <p>{a.defaultAddress == true ? "기본 배송지" : ""}</p> */}
-        <DeleteAddress addressId={a.id} onDelete={() => fetchAddresses()} />
       </div>
     );
   });
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
-      <div
-        style={{
-          marginLeft: "auto",
-          backgroundColor: "aquamarine",
-          borderRadius: 5,
-          padding: 10,
-        }}
-      >
-        <Link to="/address-form">배송지 추가</Link>
+      <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
+        <div
+          style={{
+            marginRight: "auto",
+            borderRadius: 5,
+            padding: "10px 15px",
+            border: "1px solid #DCF073",
+            
+          }}
+        >
+          <Link to="/address-form" style={{ color: "black", }}>
+            배송지 추가
+          </Link>
+        </div>
+        <div>{addressList}</div>
       </div>
-      <div>{addressList}</div>
-    </div>
   );
 }
 

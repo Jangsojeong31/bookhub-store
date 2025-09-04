@@ -38,7 +38,7 @@
 }
 
 .postcode-button {
-  background-color: #ccc;
+  background-color: #dbf0a3af;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -54,5 +54,11 @@
 }
 
 .submit-button {
-  background-color: #10664148;
+  background-color: #dbf0a3af;
+  border: none;
 }
+
+.submit-button:hover {
+  background-color: #DCF073;
+}
+

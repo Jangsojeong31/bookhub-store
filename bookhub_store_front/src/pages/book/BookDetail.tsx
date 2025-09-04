@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import { useLocation } from "react-router-dom";
 import type { BookDetailResponseDto } from "../../dtos/book/BookDetailResponse.dto";
 import AddCartItems from "../cart/AddCartItems";
+import "./BookList.css"
 
 function BookDetail() {
   const [cookies] = useCookies(["accessToken"]);
@@ -50,7 +51,6 @@ function BookDetail() {
           width: "90%",
           maxWidth: 1300,
           height: "90%",
-          backgroundColor: "rgba(233, 245, 214, 0.5)",
         }}
       >
         <div style={{ height: 100, textAlign: "center" }}>
@@ -69,7 +69,7 @@ function BookDetail() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            gap: 30,
+            gap: 40,
             height: 500,
           }}
         >
@@ -78,12 +78,15 @@ function BookDetail() {
               flex: 1,
               borderTop: "1px solid #ccc",
               borderBottom: "1px solid #ccc",
+              padding: 10,
+              textAlign: "center",
+
             }}
           >
             {bookDetail?.description}
           </div>
 
-          <div style={{ flex: 1, border: "1px solid black" }}>표지</div>
+          <div style={{ flex: 1, border: "1px solid #ccc" }}>표지</div>
 
           <div
             style={{
@@ -91,12 +94,18 @@ function BookDetail() {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
+              gap: 20,
             }}
           >
             <div
               style={{
                 borderTop: "1px solid #ccc",
                 borderBottom: "1px solid #ccc",
+                flex: 1,
+
+                display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
               }}
             >
               <p>{bookDetail?.authorName}</p>
@@ -114,19 +123,19 @@ function BookDetail() {
                 marginBottom: 20,
               }}
             >
-              <div>
-                <button onClick={onDecreaseQuantity}>-</button>
+              <div className="buttonInputContainer">
+                <button onClick={onDecreaseQuantity} className="changQuantitybutton">-</button>
                 <input
                   type="number"
                   value={quantity}
                   onChange={(e) => setQuantity(Number(e.target.value))}
+                  className="quantityInput"
                 />
-                <button onClick={onIncreaseQuantity}>+</button>
+                <button onClick={onIncreaseQuantity} className="changQuantitybutton">+</button>
               </div>
               <div>
                 <AddCartItems isbn={bookDetail?.isbn!} quantity={quantity} resetQuantity={() => setQuantity(1)} />
               </div>
-              <div>바로 구매</div>
             </div>
           </div>
         </div>

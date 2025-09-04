@@ -31,14 +31,14 @@
   justify-content: center;
   gap: 15px;
 
-  border-bottom: 2px solid #106641f1;
+  border-bottom: 2px solid #106641;
   padding: 40px 70px;
 }
 
 .profileActionButton {
   display: inline-block;
 
-  background-color: #10664121;
+  background-color: #cccccc46;
   padding: 8px 16px;
   border-radius: 6px;
   color: black;
@@ -48,7 +48,7 @@
 }
 
 .profileActionButton:hover {
-  background-color: #10664177;
+  background-color: #106641;
   color: white;
 }
 
@@ -72,5 +72,5 @@
 }
 
 .profileMenuListContainter span:hover {
-  color: #106641b6;
+  color: #106641;
 }

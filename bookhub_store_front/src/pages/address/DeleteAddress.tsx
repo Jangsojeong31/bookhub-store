@@ -21,7 +21,7 @@ function DeleteAddress(props: {addressId: number, onDelete: () => void}) {
   }
 
   return (
-    <div><button onClick={onDeleteAddress}>삭제</button></div>
+    <div><button onClick={onDeleteAddress} style={{ background: "none", }}>삭제</button></div>
   )
 }
 

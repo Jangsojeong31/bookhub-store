@@ -1,5 +1,5 @@
 import React from "react";
-import defaultImage from "../../assets/images/북허브_로고_배경제거2.png";
+import defaultImage from "../../assets/images/bh_store_logo_4.png";
 interface ProfileImgeSectionProps {
   nickname: string;
   profileImageUrl?: string;

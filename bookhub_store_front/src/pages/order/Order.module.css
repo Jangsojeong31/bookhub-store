@@ -18,6 +18,7 @@
 .orderListElement1 button {
   height: 50px;
   background: none;
+  border: none;
   color: #106641e5;
 }
 
@@ -31,7 +32,7 @@
   align-items: center;
   gap: 20px;
 
-  background-color: #1066410c;
+  background-color: #dbf0a31e;
   padding: 20px;
 }
 

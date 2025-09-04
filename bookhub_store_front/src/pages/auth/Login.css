@@ -1,0 +1,79 @@
+.LoginInputEmail {
+  height: 10px;
+  border: 1px solid #aaa;
+  padding: 20px;
+  border-radius: 20px 20px 0px 0px;
+}
+
+.LoginInputPassword {
+  height: 10px;
+  border: 1px solid #aaa;
+  border-top: none;
+  padding: 20px;
+  border-radius: 0px 0px 20px 20px;
+}
+
+.LoginButton {
+  color: rgb(112, 112, 112);
+  font-weight: bold;
+  background-color: #dbf0a3af;
+  border: none;
+}
+  
+.LoginButton:hover{
+  background-color: #DCF073;
+  border: none;
+  transition: 0.5s;
+}
+
+/* SnsLogin */
+.SnsLoginCotainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.SnsLoginCotainer h4 {
+  color: rgb(112, 112, 112);
+}
+
+.SnsLoginIcons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.SnsLoginImage {
+  padding: 0px;
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  aspect-ratio: 1/1;
+}
+
+.SnsLoginButton {
+  height: 40px;
+  width: 40px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background-color: white;
+  outline: 1px solid #4285F4;
+
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+  align-items: center;
+}
+
+.SnsLoginLogo {
+  width: 25px;
+}

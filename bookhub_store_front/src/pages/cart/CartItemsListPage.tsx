@@ -68,7 +68,7 @@ function CartItemsListPage() {
   return (
     <TitleBar title="장바구니">
       <div className={styles.cartItemListPageContainer}>
-        <div>
+        <div style={{ marginRight: 20}}>
           <div className={styles.checkBoxContainer}>
             <input
               type="checkbox"

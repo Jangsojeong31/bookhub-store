@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
-import logo from "../../assets/images/북허브_로고_배경제거2.png";
+import logo from "../../assets/images/bh_store_logo_4.png";
 import useToken from "../../hooks/useToken";
 import {
   getMyProfileImage,

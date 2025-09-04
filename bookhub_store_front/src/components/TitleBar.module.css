@@ -1,8 +1,7 @@
 .titleBarContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 1200px;
+  align-items: center;  
 }
 
 .titleBarTitle {

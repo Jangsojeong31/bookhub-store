@@ -1,4 +1,8 @@
 import React from "react";
+import "./Login.css";
+import kakao from "../../assets/images/카카오_로그인_아이콘.webp";
+import googleLogo from "../../assets/images/google_logo.png";
+import naver from "../../assets/images/네이버_로그인_아이콘.png";
 
 function SnsLogin() {
   const handleSnsLogin = (provider: string) => {
@@ -6,25 +10,30 @@ function SnsLogin() {
   };
 
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: 20,
-        textAlign: "center",
-        width: 500,
-        height: 150,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 20,
-      }}
-    >
-      간편 로그인
-      <div style={{ display: "flex", gap: 20 }}>
-        <button onClick={() => handleSnsLogin("kakao")}>kakao 로그인</button>
-        <button onClick={() => handleSnsLogin("google")}>goole 로그인</button>
-        <button onClick={() => handleSnsLogin("naver")}>naver 로그인</button>
+    <div className="SnsLoginCotainer">
+      <h4>소셜 계정으로 간편 로그인</h4>
+      <div className="SnsLoginIcons">
+        <img
+          src={kakao}
+          alt="kakao"
+          className="SnsLoginImage"
+          onClick={() => handleSnsLogin("kakao")}
+        ></img>
+
+        <button
+          onClick={() => handleSnsLogin("google")}
+          className="SnsLoginButton"
+        >
+          <img src={googleLogo} alt="google" className="SnsLoginLogo" />
+          
+        </button>
+
+        <img
+          src={naver}
+          alt="naver"
+          className="SnsLoginImage"
+          onClick={() => handleSnsLogin("naver")}
+        ></img>
       </div>
     </div>
   );

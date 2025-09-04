@@ -49,7 +49,7 @@ function SnsLoginSuccess() {
     handleSnsLogin();
   }, [navigate, userId]);
 
-  return <div>로그인 처리중...</div>;
+  return <div style={{ borderBottom: "1px solid #ccc", padding: 20}}>로그인 처리중...</div>;
 }
 
 export default SnsLoginSuccess;

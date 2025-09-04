@@ -25,15 +25,14 @@
 }
 
 .formContainer button {
-  outline: none;
+  border: none;
   margin-top: auto;
-  background-color: #10664121;
+  background-color: #cccccc46;
 }
 
 .formContainer button:hover {
-  background-color: #10664177;
+  background-color: #106641;
   color: white;
-  border: 1px solid #106641d0
 }
 
 .profileImageContainer {
