@@ -1,6 +1,6 @@
 import type { AxiosError } from "axios";
 import type ResponseDto from "../dtos/Response.dto";
-import { axiosInstance, BASE_API, bearerAuthorization, responseSuccessHandler, responseErrorHandler } from "./axiosConfig";
+import { axiosInstance, BASE_API_USER, bearerAuthorization, responseSuccessHandler, responseErrorHandler } from "./axiosConfig";
 import type { CreateAddressRequestDto } from "../dtos/address/CreateAddressRequest.dto";
 import type { AddressListResponseDto } from "../dtos/address/AddressListResponse.dto";
 
@@ -8,7 +8,7 @@ import type { AddressListResponseDto } from "../dtos/address/AddressListResponse
 export const addDeliveryAddress = async (dto: CreateAddressRequestDto, accessToken: string): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.post(
-      `${BASE_API}/address`,
+      `${BASE_API_USER}/address`,
       dto,
       bearerAuthorization(accessToken)
     );
@@ -22,7 +22,7 @@ export const addDeliveryAddress = async (dto: CreateAddressRequestDto, accessTok
 export const getAllAddresses = async (accessToken: string): Promise<ResponseDto<AddressListResponseDto[]>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/address`,
+      `${BASE_API_USER}/address`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);
@@ -35,7 +35,7 @@ export const getAllAddresses = async (accessToken: string): Promise<ResponseDto<
 export const deleteAddress = async (addressId: number, accessToken: string): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.delete(
-      `${BASE_API}/address/${addressId}`,
+      `${BASE_API_USER}/address/${addressId}`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);

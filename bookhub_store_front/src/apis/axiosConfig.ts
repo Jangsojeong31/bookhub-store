@@ -6,7 +6,20 @@ export const axiosInstance = axios.create({
   timeout: 8000,
 })
 
-export const BASE_API = "/api/v1/customer";
+export const BASE_API_USER = "/api/v1/user";
+export const BASE_API_PUBLIC = "/api/v1/public";
+
+// 응답 인터셉터
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401){
+      alert("로그인이 필요합니다.");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+)
 
 // 응답 핸들러
 export const responseSuccessHandler = <T = any>(response: AxiosResponse<ResponseDto<T>>) => {

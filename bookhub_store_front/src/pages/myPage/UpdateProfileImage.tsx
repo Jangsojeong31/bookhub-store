@@ -9,7 +9,7 @@ import {
   uploadProfileImage,
 } from "../../apis/customer";
 import defaultProfileImage from "../../assets/images/기본_프로필_이미지.png";
-import { BASE_API } from "../../apis/axiosConfig";
+import { BASE_API_USER } from "../../apis/axiosConfig";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import styles from "./MyPage.module.css";

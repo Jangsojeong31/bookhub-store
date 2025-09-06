@@ -20,6 +20,7 @@ import MyPageAddressList from "./pages/address/MyPageAddressList";
 import SignUp from "./pages/auth/SignUp";
 import SnsSignUp from "./pages/auth/SnsSignUp";
 import ExistingEmail from "./pages/auth/ExistingEmail";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -34,28 +35,32 @@ function App() {
           <Route path="/login/success" element={<SnsLoginSuccess />} />
           <Route path="/sns-login/existing" element={<ExistingEmail />} />
 
-
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage/info" element={<UpdateMyInfo />} />
-          <Route path="/mypage/nickname" element={<UpdateNickname />} />
-          <Route
-            path="/mypage/profile-image"
-            element={<UpdateProfileImage />}
-          />
-
           <Route path="/search-books" element={<BookListPage />} />
           <Route path="/books/details" element={<BookDetail />} />
 
-          <Route path="/cart" element={<CartItemsListPage />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/mypage/info" element={<UpdateMyInfo />} />
+            <Route path="/mypage/nickname" element={<UpdateNickname />} />
+            <Route
+              path="/mypage/profile-image"
+              element={<UpdateProfileImage />}
+            />
 
-          <Route path="/order-check" element={<OrderCheckPage />} />
-          <Route path="/mypage/order-list" element={<OrderListPage />} />
-          <Route path="/mypage/order-list/detail" element={<OrderDetail />} />
+            <Route path="/cart" element={<CartItemsListPage />} />
 
-          <Route path="/payment/success" element={<Success />} />
+            <Route path="/order-check" element={<OrderCheckPage />} />
+            <Route path="/mypage/order-list" element={<OrderListPage />} />
+            <Route path="/mypage/order-list/detail" element={<OrderDetail />} />
 
-          <Route path="/address-form" element={<AddressForm />} />
-          <Route path="/mypage/address-list" element={<MyPageAddressList />} />
+            <Route path="/payment/success" element={<Success />} />
+
+            <Route path="/address-form" element={<AddressForm />} />
+            <Route
+              path="/mypage/address-list"
+              element={<MyPageAddressList />}
+            />
+          </Route>
         </Routes>
       </Layout>
     </>

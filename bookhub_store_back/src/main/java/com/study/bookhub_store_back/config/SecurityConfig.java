@@ -52,20 +52,18 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
+                .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(
                                 "/",
                                 "/login/**",
-                                "/api/v1/customer/**",
                                 "/files/**",
-                                "/api/v1/payments/confirm"
+                                "/api/v1/public/**"
                         ).permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(
+                                "/api/v1/user/**"
+                        ).authenticated()
                 )
-//                .formLogin(form -> form
-//                        .loginPage("/api/v1/customer/auth/login")
-//                        .permitAll())
                 .oauth2Login(oauth2 -> oauth2
                         .redirectionEndpoint(c -> c.baseUri("/oauth2/callback/*"))
                         .userInfoEndpoint(c -> c.userService(oAuth2Service))

@@ -86,7 +86,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
                     .nickname(nickname)
                     .profileImageUrl(profileImage)
                     .phoneNumber(phoneNumber)
-                    .role("ROLE_USER")
+                    .role("USER")
                     .socialProvider(provider)
                     .socialId(socialId)
                     .build();

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/v1/customer")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class ProfileImageController {
     private final ProfileImageService profileImageService;

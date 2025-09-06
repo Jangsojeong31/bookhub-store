@@ -1,6 +1,6 @@
 import type { AxiosError } from "axios";
 import type ResponseDto from "../dtos/Response.dto";
-import { axiosInstance, BASE_API, bearerAuthorization, responseSuccessHandler, responseErrorHandler } from "./axiosConfig";
+import { axiosInstance, BASE_API_USER, bearerAuthorization, responseSuccessHandler, responseErrorHandler } from "./axiosConfig";
 import type { ConfirmPaymentRequestDto } from "../dtos/payment/ConfirmPaymentRequest.dto";
 import type { PaymentResponseDto } from "../dtos/payment/PaymentResponse.dto";
 
@@ -10,7 +10,7 @@ export const confirmPayment = async (
 ): Promise<ResponseDto<PaymentResponseDto>> => {
   try {
     const response = await axiosInstance.post(
-      `${BASE_API}/payments/confirm`,
+      `${BASE_API_USER}/payments/confirm`,
       dto,
       bearerAuthorization(accessToken)
     );
@@ -26,7 +26,7 @@ export const getPaymentByOrderId = async (
 ): Promise<ResponseDto<PaymentResponseDto>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/payments/${orderId}`,
+      `${BASE_API_USER}/payments/${orderId}`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);

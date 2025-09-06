@@ -1,7 +1,7 @@
 import type { AxiosError } from "axios";
 import type { BookSearchResponseDto } from "../dtos/book/BookSearchResponse.dto";
 import type ResponseDto from "../dtos/Response.dto";
-import { axiosInstance, BASE_API, bearerAuthorization, responseSuccessHandler, responseErrorHandler } from "./axiosConfig";
+import { axiosInstance, BASE_API_USER, bearerAuthorization, responseSuccessHandler, responseErrorHandler } from "./axiosConfig";
 import type { AddCartItemRequestDto } from "../dtos/cart/AddCartItemRequest.dto";
 import type { CartItemsResponseDto } from "../dtos/cart/CartItemsResponse.dto";
 import type { CartItemIdRequestDto } from "../dtos/cart/CartItemIdRequest.dto";
@@ -11,7 +11,7 @@ import type { RemoveCartItemRequestDto } from "../dtos/cart/RemoveCartItemReques
 export const addCartItems = async (dto: AddCartItemRequestDto[], accessToken: string): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.post(
-      `${BASE_API}/cart/items`,
+      `${BASE_API_USER}/cart/items`,
       dto,
       bearerAuthorization(accessToken)
     );
@@ -25,7 +25,7 @@ export const addCartItems = async (dto: AddCartItemRequestDto[], accessToken: st
 export const getCartItems = async (accessToken: string): Promise<ResponseDto<CartItemsResponseDto[]>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/cart/items`,
+      `${BASE_API_USER}/cart/items`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);
@@ -38,7 +38,7 @@ export const getCartItems = async (accessToken: string): Promise<ResponseDto<Car
 // export const getCartItemsToOrder = async (dto: CartItemIdRequestDto[] ,accessToken: string): Promise<ResponseDto<CartItemsResponseDto[]>> => {
 //   try {
 //     const response = await axiosInstance.get(
-//       `${BASE_API}/cart/ordering-items`,
+//       `${BASE_API_USER}/cart/ordering-items`,
 //       dto,
 //       bearerAuthorization(accessToken)
 //     );
@@ -52,7 +52,7 @@ export const getCartItems = async (accessToken: string): Promise<ResponseDto<Car
 export const increaseQuantity = async (cartItemId: number, accessToken: string): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.put(
-      `${BASE_API}/cart/items/${cartItemId}/increase`,
+      `${BASE_API_USER}/cart/items/${cartItemId}/increase`,
       {},
       bearerAuthorization(accessToken)
     );
@@ -66,7 +66,7 @@ export const increaseQuantity = async (cartItemId: number, accessToken: string):
 export const decreaseQuantity = async (cartItemId: number, accessToken: string): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.put(
-      `${BASE_API}/cart/items/${cartItemId}/decrease`,
+      `${BASE_API_USER}/cart/items/${cartItemId}/decrease`,
       {},
       bearerAuthorization(accessToken)
     );
@@ -80,7 +80,7 @@ export const decreaseQuantity = async (cartItemId: number, accessToken: string):
 export const removeCartItems = async (dto: RemoveCartItemRequestDto, accessToken: string): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.post(
-      `${BASE_API}/cart/remove`,
+      `${BASE_API_USER}/cart/remove`,
       dto,
       bearerAuthorization(accessToken)
     );

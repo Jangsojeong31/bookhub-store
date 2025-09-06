@@ -1,7 +1,7 @@
 import type { AxiosError } from "axios";
 import type { BookSearchResponseDto } from "../dtos/book/BookSearchResponse.dto";
 import type ResponseDto from "../dtos/Response.dto";
-import { axiosInstance, BASE_API, bearerAuthorization, responseErrorHandler, responseSuccessHandler } from "./axiosConfig";
+import { axiosInstance, BASE_API_PUBLIC, bearerAuthorization, responseErrorHandler, responseSuccessHandler } from "./axiosConfig";
 import type { BookDetailResponseDto } from "../dtos/book/BookDetailResponse.dto";
 import type { BestSellerDto } from "../dtos/book/BestSeller.dto";
 
@@ -9,7 +9,7 @@ import type { BestSellerDto } from "../dtos/book/BestSeller.dto";
 export const searchBooks = async (query: string, accessToken: string): Promise<ResponseDto<BookSearchResponseDto[]>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/books?query=${encodeURIComponent(query)}`,
+      `${BASE_API_PUBLIC}/books?query=${encodeURIComponent(query)}`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);
@@ -22,7 +22,7 @@ export const searchBooks = async (query: string, accessToken: string): Promise<R
 export const getBookDetails = async (isbn: string, accessToken: string): Promise<ResponseDto<BookDetailResponseDto>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/books/${isbn}/details`,
+      `${BASE_API_PUBLIC}/books/${isbn}/details`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);
@@ -35,7 +35,7 @@ export const getBookDetails = async (isbn: string, accessToken: string): Promise
 export const getBestSellerByCategory = async (categoryType: number, accessToken: string): Promise<ResponseDto<BestSellerDto[]>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/books/best-seller/${categoryType}`,
+      `${BASE_API_PUBLIC}/books/best-seller/${categoryType}`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);

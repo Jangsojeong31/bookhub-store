@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .name(dto.getName())
                 .phoneNumber(dto.getPhone())
-                .role("ROLE_USER")
+                .role("USER")
                 .build();
 
         customerRepository.save(newCustomer);
@@ -107,6 +107,7 @@ public class AuthServiceImpl implements AuthService {
         return ResponseDto.success("SU", "success");
     }
 
+    // 추가 정보 입력 후 회원가입
     @Override
     public ResponseDto<LoginResponseDto> snsSignUp(Long userId, SnsSignUpRequestDto dto) {
         Customer customer = customerRepository.findById(userId)

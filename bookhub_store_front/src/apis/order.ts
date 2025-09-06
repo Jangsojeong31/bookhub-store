@@ -2,7 +2,7 @@ import type { AxiosError } from "axios";
 import type ResponseDto from "../dtos/Response.dto";
 import {
   axiosInstance,
-  BASE_API,
+  BASE_API_USER,
   bearerAuthorization,
   responseSuccessHandler,
   responseErrorHandler,
@@ -16,7 +16,7 @@ export const createOrder = async (
 ): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.post(
-      `${BASE_API}/orders`,
+      `${BASE_API_USER}/orders`,
       dto,
       bearerAuthorization(accessToken)
     );
@@ -31,7 +31,7 @@ export const getMyOrders = async (
 ): Promise<ResponseDto<OrderListResponseDto[]>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/orders`,
+      `${BASE_API_USER}/orders`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);

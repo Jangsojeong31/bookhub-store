@@ -3,7 +3,7 @@ import type { BookSearchResponseDto } from "../dtos/book/BookSearchResponse.dto"
 import type ResponseDto from "../dtos/Response.dto";
 import {
   axiosInstance,
-  BASE_API,
+  BASE_API_USER,
   bearerAuthorization,
   responseSuccessHandler,
   responseErrorHandler,
@@ -24,7 +24,7 @@ export const getUserInfoById = async (
 ): Promise<ResponseDto<CustomerResponseDto>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/${userId}`,
+      `${BASE_API_USER}/${userId}`,
     );
     return responseSuccessHandler(response);
   } catch (error) {
@@ -38,7 +38,7 @@ export const getCustomerInfo = async (
 ): Promise<ResponseDto<CustomerInfoResponseDto>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/me/info`,
+      `${BASE_API_USER}/me/info`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);
@@ -53,7 +53,7 @@ export const getMyNickname = async (
 ): Promise<ResponseDto<GetNicknameResponseDto>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/me/nickname`,
+      `${BASE_API_USER}/me/nickname`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);
@@ -68,7 +68,7 @@ export const getMyProfileImage = async (
 ): Promise<ResponseDto<GetProfileImageResponseDto>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API}/me/profile-image`,
+      `${BASE_API_USER}/me/profile-image`,
       bearerAuthorization(accessToken)
     );
     return responseSuccessHandler(response);
@@ -84,7 +84,7 @@ export const updateCustomerInfo = async (
 ): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.put(
-      `${BASE_API}/me/info`,
+      `${BASE_API_USER}/me/info`,
       dto,
       bearerAuthorization(accessToken)
     );
@@ -101,7 +101,7 @@ export const updatePassword = async (
 ): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.put(
-      `${BASE_API}/me/info/password`,
+      `${BASE_API_USER}/me/info/password`,
       dto,
       bearerAuthorization(accessToken)
     );
@@ -118,7 +118,7 @@ export const uploadProfileImage = async (
 ): Promise<ResponseDto<UploadProfileImageResponseDto>> => {
   try {
     const response = await axiosInstance.post(
-      `${BASE_API}/me/profile-image/upload`,
+      `${BASE_API_USER}/me/profile-image/upload`,
       formData,
       bearerAuthorization(accessToken)
     );
@@ -135,7 +135,7 @@ export const updateProfileImage = async (
 ): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.put(
-      `${BASE_API}/me/profile-image`,
+      `${BASE_API_USER}/me/profile-image`,
       dto,
       bearerAuthorization(accessToken)
     );
@@ -153,7 +153,7 @@ export const updateNickname = async (
 ): Promise<ResponseDto<void>> => {
   try {
     const response = await axiosInstance.put(
-      `${BASE_API}/me/nickname`,
+      `${BASE_API_USER}/me/nickname`,
       dto,
       bearerAuthorization(accessToken)
     );

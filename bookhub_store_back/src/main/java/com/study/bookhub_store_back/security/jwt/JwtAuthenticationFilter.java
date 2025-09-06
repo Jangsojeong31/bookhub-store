@@ -40,7 +40,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //            }
 
             String path = request.getRequestURI();
-            if (path.startsWith("/files")) {
+
+            if (path.startsWith("/files") || path.startsWith("/api/v1/public")) {
                 filterChain.doFilter(request,response);
                 return;
             }
@@ -53,7 +54,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (token == null || !jwtProvider.isValidToken(token)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                filterChain.doFilter(request, response);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write("{\"error\": \"Unauthorized\"}");
+                System.out.println(response);
+//                filterChain.doFilter(request, response);
                 return;
             }
 
