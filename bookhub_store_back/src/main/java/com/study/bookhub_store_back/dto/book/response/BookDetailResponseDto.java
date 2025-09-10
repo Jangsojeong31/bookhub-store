@@ -15,36 +15,39 @@ import java.util.List;
 public class BookDetailResponseDto {
     private String isbn;
     private String title;
-    private String bookCoverUrl;
+    private String coverUrl;
     private Long price;
+    private Long discountPercent;
     private LocalDate publishedDate;
     private String description;
 
     private String authorName;
-
     private String publisherName;
 
     private String categoryName;
     private CategoryType categoryType;
     private String parentCategoryName;
 
-    private List<BookEventDto> events;
+    private String language;
+    private Long pageCount;
 
-    public static BookDetailResponseDto toResponseDto(Book book, List<BookEventDto> events) {
+    public static BookDetailResponseDto toResponseDto(Book book) {
         return BookDetailResponseDto.builder()
-                .isbn(book.getBookIsbn())
+                .isbn(book.getIsbn())
                 .title(book.getBookTitle())
-                .bookCoverUrl(book.getCoverImage() != null ? "/files/" + book.getCoverImage().getFileName() : null)
+                .coverUrl(book.getCoverImageUrl() == null ? null : book.getCoverImageUrl())
                 .price(book.getBookPrice())
+                .discountPercent(book.getDiscountRate() == null ? null : book.getDiscountRate())
                 .publishedDate(book.getPublishedDate())
-                .description(book.getDescription())
-                .authorName(book.getAuthorId().getAuthorName())
-                .publisherName(book.getPublisherId().getPublisherName())
+                .description(book.getDescription() == null ? null : book.getDescription())
+                .authorName(book.getAuthor())
+                .publisherName(book.getPublisher())
                 .categoryName(book.getCategoryId().getCategoryName())
                 .categoryType(book.getCategoryId().getCategoryType())
                 .parentCategoryName(book.getCategoryId().getParentCategoryId() == null
                         ? null : book.getCategoryId().getParentCategoryId().getCategoryName())
-                .events(events)
+                .language(book.getLanguage() == null ? null : book.getLanguage())
+                .pageCount(book.getPageCount() == null ? null : book.getPageCount())
                 .build();
     }
 }

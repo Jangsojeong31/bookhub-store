@@ -71,10 +71,10 @@ public class CartServiceImpl implements CartService {
 
                     return CartItemsResponseDto.builder()
                             .id(item.getCartItemId())
-                            .isbn(book.getBookIsbn())
+                            .isbn(book.getIsbn())
                             .title(book.getBookTitle())
                             .price(book.getBookPrice())
-                            .coverImageUrl(book.getCoverImage() == null ? null : book.getCoverImage().getFilePath())
+                            .coverImageUrl(book.getCoverImageUrl() == null ? null : book.getCoverImageUrl())
                             .quantity(item.getQuantity())
                             .totalPrice(item.getQuantity() * book.getBookPrice())
                             .build();
@@ -139,7 +139,7 @@ public class CartServiceImpl implements CartService {
                             .id(item.getCartItemId())
                             .title(book.getBookTitle())
                             .price(book.getBookPrice())
-                            .coverImageUrl(book.getCoverImage() == null ? null : book.getCoverImage().getFilePath())
+                            .coverImageUrl(book.getCoverImageUrl() == null ? null : book.getCoverImageUrl())
                             .quantity(item.getQuantity())
                             .totalPrice(item.getQuantity() * book.getBookPrice())
                             .build();

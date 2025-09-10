@@ -27,9 +27,9 @@ function OrderList(props: { orderList: OrderListResponseDto[] }) {
               <span>
                 <strong>{datePart}</strong>
               </span>
-              <span>{item.status == "PAID" ? "결제 완료" : "결제 실패"}</span>
-              <p>{item.orderName}</p>
-              <p>결제 금액 : {item.totalAmount}</p>
+              <span style={{ color: "#a0a0a0", fontWeight: "bold"}}>{item.status == "PAID" ? "결제 완료" : "결제 실패"}</span>
+              <p className={styles.orderName}>{item.orderName}</p>
+              <p><strong>결제 금액</strong>{item.totalAmount}원</p>
             </div>
             <button onClick={() => onNaviOrderDetail(item)}>주문 상세</button>
           </div>
@@ -45,13 +45,13 @@ function OrderList(props: { orderList: OrderListResponseDto[] }) {
                 </div>
 
                 <div className={styles.content}>
-                  <p>{detail.bookTitle}</p>
-                  <span>가격 {detail.bookPrice}</span>
-                  <span>구매 수량 : {detail.quantity}</span>
+                  <p style={{padding: 0, margin: "0px 0px 10px 0px"}}>{detail.bookTitle}</p>
+                  <span><strong>가격</strong>{detail.bookPrice}원</span>
+                  <span><strong>구매 수량</strong>{detail.quantity}</span>
                 </div>
 
                 <div className={styles.totalPrice}>
-                  <p>총 금액 : {detail.totalPrice}</p>
+                  <p><strong>총 금액</strong>{detail.totalPrice}</p>
                 </div>
               </div>
             );

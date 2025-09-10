@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
 import { getMyNickname, updateNickname } from "../../apis/customer";
-import { useCookies } from "react-cookie";
 import useToken from "../../hooks/useToken";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores/useAuthStore";

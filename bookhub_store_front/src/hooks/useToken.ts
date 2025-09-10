@@ -3,8 +3,7 @@ import { useCookies } from 'react-cookie'
 
 function useToken() {
   const [cookies] = useCookies(["accessToken"]);
-  const token = cookies.accessToken;
-  return token;
+  return cookies.accessToken ?? null;
 }
 
 export default useToken

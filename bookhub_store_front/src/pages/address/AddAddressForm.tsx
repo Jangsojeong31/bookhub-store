@@ -58,7 +58,6 @@ function AddressForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(zonecode);
 
     const dto: CreateAddressRequestDto = {
       recipientName,

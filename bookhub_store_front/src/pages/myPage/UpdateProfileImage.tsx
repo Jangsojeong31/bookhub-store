@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./MyPage.module.css";
 
 function UpdateProfileImage() {
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState<string | null>("");
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
@@ -26,7 +26,7 @@ function UpdateProfileImage() {
   const BASE_URL = import.meta.env.VITE_API_DOMAIN;
 
   useEffect(() => {
-    setProfileImage(user?.profileImageUrl ?? "");
+    setProfileImage(user?.profileImageUrl ?? null);
   }, []);
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +70,7 @@ function UpdateProfileImage() {
             src={
               preview
                 ? preview
-                : profileImage
+                : profileImage != null
                 ? `${BASE_URL}${encodeURI(profileImage)}`
                 : defaultProfileImage
             }

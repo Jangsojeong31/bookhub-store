@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import style from "../layouts/Layout.module.css";
 import { useAuthStore } from "../../stores/useAuthStore";
 import AuthButton from "./AuthButton";
+import defaultImage from "../../assets/images/기본_프로필_이미지.png";
 
 function Nav() {
   const user = useAuthStore((state) => state.user);
@@ -35,7 +36,10 @@ function Nav() {
       {user ? (
         <div className={style.profileImageAndNickname}>
           <img
-            src={`${BASE_URL}${encodeURI(profileImage!)}`}
+            src={profileImage != null 
+          ?
+          `${BASE_URL}${encodeURI(profileImage!)}` 
+          : defaultImage}
             className={style.naviProfileImage}
           />
           <span className={style.naviNickname}>{user?.nickname ?? "user"}</span>

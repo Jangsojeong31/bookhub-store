@@ -8,9 +8,11 @@ import TitleBar from "../../components/TitleBar";
 import StickyCartOverview from "../../components/StickyCartOverview";
 import { useNavigate } from "react-router-dom";
 import styles from "./Cart.module.css";
+import { useCookies } from "react-cookie";
 
 function CartItemsListPage() {
   const token = useToken();
+  const [cookies] = useCookies(["tokenExpiresAt"])
   const navigation = useNavigate();
   const [selectedItems, setSelectedItems] = useState<CartItemsResponseDto[]>(
     []

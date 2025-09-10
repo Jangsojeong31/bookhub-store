@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "book_categories")
+@Table(name = "categories")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,6 +20,10 @@ public class BookCategory {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long categoryId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category_type", nullable = false)
+    private CategoryType categoryType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_category_id")
@@ -32,21 +36,4 @@ public class BookCategory {
 
     @Column(name = "category_name", nullable = false)
     private String categoryName;
-
-    @Column(name = "category_level", nullable = false)
-    private int categoryLevel = 1;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category_type", nullable = false)
-    private CategoryType categoryType;
-
-    @Column(name = "category_order")
-    private int categoryOrder = 0;
-
-    @Column(name = "is_active")
-    private Boolean isActive = true;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "discount_policy_id")
-    private DiscountPolicy discountPolicyId;
 }

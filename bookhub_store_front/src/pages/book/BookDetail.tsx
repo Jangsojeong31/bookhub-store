@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import { useLocation } from "react-router-dom";
 import type { BookDetailResponseDto } from "../../dtos/book/BookDetailResponse.dto";
 import AddCartItems from "../cart/AddCartItems";
-import "./BookList.css"
+import "./BookList.css";
 
 function BookDetail() {
   const [cookies] = useCookies(["accessToken"]);
@@ -12,6 +12,7 @@ function BookDetail() {
   const params = new URLSearchParams(location.search);
 
   const [bookDetail, setBookDetail] = useState<BookDetailResponseDto>();
+  const [publishedDate, setPublishedDate] = useState("");
   const [quantity, setQuantity] = useState<number>(1);
 
   const onGetBookDetail = async () => {
@@ -22,12 +23,16 @@ function BookDetail() {
 
     const { code, message, data } = res;
 
-    if (code != "success") {
+    if (code != "success" && data) {
       return;
     } else {
       setBookDetail(data);
+      setPublishedDate(data?.publishedDate!);
     }
   };
+
+  const [year, month, day] = publishedDate.split("-");
+  const formattedPublishedDate = `${year}년 ${month}월 ${day}일`;
 
   const onDecreaseQuantity = () => {
     if (quantity == 1) return;
@@ -43,104 +48,85 @@ function BookDetail() {
   }, [location.search]);
 
   return (
-    
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "90%",
-          maxWidth: 1300,
-          height: "90%",
-        }}
-      >
-        <div style={{ height: 100, textAlign: "center" }}>
+    <div className="detailContainer">
+      <div className="title">
+        <p>
+          <strong>{bookDetail?.title}</strong>
+        </p>
+        <p className="category">
+          {bookDetail?.categoryType == "DOMESTIC" ? "국내도서" : "해외도서"} {" > "}{" "}
+          {bookDetail?.parentCategoryName
+            ? bookDetail.parentCategoryName + " > "
+            : ""}
+          {bookDetail?.categoryName}
+        </p>
+      </div>
+      <div className="detailElementContainer1">
+        <div className="authorPublisher">
           <p>
-            <strong>{bookDetail?.title}</strong>
+            <strong>{bookDetail?.authorName} 저자</strong>
           </p>
-          <p>
-            {bookDetail?.categoryType} {">"}{" "}
-            {bookDetail?.parentCategoryName
-              ? bookDetail.parentCategoryName + ">"
-              : ""}
-            {bookDetail?.categoryName}
+          <p style={{ color: "#888888" }}>
+            {bookDetail?.publisherName} · {formattedPublishedDate}
           </p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 40,
-            height: 500,
-          }}
-        >
-          <div
-            style={{
-              flex: 1,
-              borderTop: "1px solid #ccc",
-              borderBottom: "1px solid #ccc",
-              padding: 10,
-              textAlign: "center",
-
-            }}
-          >
-            {bookDetail?.description}
-          </div>
-
-          <div style={{ flex: 1, border: "1px solid #ccc" }}>표지</div>
-
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              gap: 20,
-            }}
-          >
-            <div
-              style={{
-                borderTop: "1px solid #ccc",
-                borderBottom: "1px solid #ccc",
-                flex: 1,
-
-                display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              }}
-            >
-              <p>{bookDetail?.authorName}</p>
+          {bookDetail?.discountPercent != null ? (
+            <div className="priceContainer">
+              <p className="discountPercent">{bookDetail?.discountPercent}%</p>
               <p>
-                {bookDetail?.publisherName} {bookDetail?.publishedDate}
+                {(bookDetail?.price! * (100 - bookDetail.discountPercent)) /
+                  100}
+                원
               </p>
-              <p>랭킹</p>
-              <p>{bookDetail?.price}원</p>
+              <p className="originalPrice">{bookDetail?.price}원</p>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                marginBottom: 20,
-              }}
+          ) : (
+            <p>{bookDetail?.price}원</p>
+          )}
+        </div>
+        <div className="cover">
+          <img src={bookDetail?.coverUrl} alt={bookDetail?.title} />
+        </div>
+
+        <div className="buttonAddCartContainer">
+          <div className="buttonInputContainer">
+            <button
+              onClick={onDecreaseQuantity}
+              className="changQuantitybutton"
             >
-              <div className="buttonInputContainer">
-                <button onClick={onDecreaseQuantity} className="changQuantitybutton">-</button>
-                <input
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => setQuantity(Number(e.target.value))}
-                  className="quantityInput"
-                />
-                <button onClick={onIncreaseQuantity} className="changQuantitybutton">+</button>
-              </div>
-              <div>
-                <AddCartItems isbn={bookDetail?.isbn!} quantity={quantity} resetQuantity={() => setQuantity(1)} />
-              </div>
-            </div>
+              -
+            </button>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              className="quantityInput"
+            />
+            <button
+              onClick={onIncreaseQuantity}
+              className="changQuantitybutton"
+            >
+              +
+            </button>
+          </div>
+          <div style={{ width: "200px"}}>
+            <AddCartItems
+              isbn={bookDetail?.isbn!}
+              quantity={quantity}
+              resetQuantity={() => setQuantity(1)}
+            />
           </div>
         </div>
       </div>
-    
+      <div className="detailElementContainer2">
+        <div className="description">{bookDetail?.description}</div>
+        <div className="crossLine"></div>
+        <div className="bookInfo">
+          <p><strong>ISBN</strong>{bookDetail?.isbn}</p>
+          <p><strong>쪽수</strong>{bookDetail?.pageCount} 쪽</p>
+          <p><strong>언어</strong>{bookDetail?.language == "Korean" ? "한국어" : "외국어"}</p>
+        </div>
+      </div>
+    </div>
   );
 }
 

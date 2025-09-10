@@ -55,8 +55,6 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/",
-                                "/login/**",
                                 "/files/**",
                                 "/api/v1/public/**"
                         ).permitAll()

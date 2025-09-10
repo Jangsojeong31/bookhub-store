@@ -75,7 +75,7 @@ function BestSeller() {
                   <div>{currentBook.totalSales}권 판매</div>
                 </div>
 
-                  <div className="book-cover" onClick={() => goDetail(currentBook.bookIsbn)}>
+                  <div className="book-cover" onClick={() => goDetail(currentBook.isbn)}>
                     <img
                       src={currentBook.coverUrl}
                       alt={currentBook.bookTitle}
@@ -84,7 +84,7 @@ function BestSeller() {
 
                 <div
                   className="book-meta"
-                  onClick={() => goDetail(currentBook.bookIsbn)}
+                  onClick={() => goDetail(currentBook.isbn)}
                 >
                   <div className="book-title">{currentBook.bookTitle}</div>
                   <div>{currentBook.authorName}</div>

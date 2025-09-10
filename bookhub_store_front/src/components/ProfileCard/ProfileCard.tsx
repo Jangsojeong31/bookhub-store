@@ -6,7 +6,7 @@ import ProfileCardFrame from "./ProfileCardFrame";
 
 interface ProfileCardProps {
   nickname: string;
-  profileImageUrl?: string;
+  profileImageUrl?: string | null;
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({

@@ -52,12 +52,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     ? jwtProvider.removeBearer(authorizationHeader)
                     : null;
 
+            System.out.println("authorizationHeader: " + authorizationHeader);
+            System.out.println("token class: " + (token != null ? token.getClass() : "null"));
+            System.out.println("token value: " + token);
+
             if (token == null || !jwtProvider.isValidToken(token)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write("{\"error\": \"Unauthorized\"}");
                 System.out.println(response);
-//                filterChain.doFilter(request, response);
                 return;
             }
 

@@ -9,7 +9,7 @@ function SnsLoginSuccess() {
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("userId");
 
-  const [, setCookie] = useCookies(["accessToken", "tokenExpriresAt"]);
+  const [, setCookie] = useCookies(["accessToken", "tokenExpiresAt"]);
   const setLogIn= useAuthStore((state) => state.login);
   
   useEffect(() => {
@@ -33,7 +33,7 @@ function SnsLoginSuccess() {
           sameSite: "strict",
         });
 
-        setCookie("tokenExpriresAt", exprDate.toISOString(), {
+        setCookie("tokenExpiresAt", exprDate.toISOString(), {
           path: "/",
           sameSite: "strict",
         });

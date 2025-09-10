@@ -23,7 +23,7 @@ main .container {
   width: 100%;
   max-width: 1700px;
   height: 100%;
-  margin: 20px;
+  margin: 20px 20px auto 20px;
 
   display: flex;
   justify-content: center;

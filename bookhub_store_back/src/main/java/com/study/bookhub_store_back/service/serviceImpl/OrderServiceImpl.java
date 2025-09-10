@@ -93,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
                             .map(detail -> OrderDetailResponseDto.builder()
                                     .orderDetailId(detail.getOrderDetailId())
                                     .bookTitle(detail.getBook().getBookTitle())
-                                    .coverUrl(detail.getBook().getCoverImage() != null ? detail.getBook().getCoverImage().getFilePath() : null)
+                                    .coverUrl(detail.getBook().getCoverImageUrl() != null ? detail.getBook().getCoverImageUrl() : null)
                                     .bookPrice(detail.getBookPrice())
                                     .quantity(detail.getQuantity())
                                     .totalPrice(detail.getTotalPrice())

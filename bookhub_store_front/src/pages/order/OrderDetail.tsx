@@ -61,21 +61,20 @@ function OrderDetail() {
             return (
               <div
                 className={styles.orderDetailProductContainer}
-                style={{ width: 1000 }}
-                key={detail.orderDetailId}
+                                key={detail.orderDetailId}
               >
                 <div className={styles.bookCover}>
                   <p>표지</p>
                 </div>
 
                 <div className={styles.content}>
-                  <p>{detail.bookTitle}</p>
-                  <span>도서 가격 : {detail.bookPrice}</span>
-                  <span>구매 수량 : {detail.quantity}</span>
+                  <p style={{padding: 0, margin: "0px 0px 10px 0px"}}>{detail.bookTitle}</p>
+                  <span><strong>가격</strong>{detail.bookPrice}</span>
+                  <span><strong>구매 수량</strong>{detail.quantity}</span>
                 </div>
 
                 <div className={styles.totalPrice}>
-                  <p>총 금액 : {detail.totalPrice}</p>
+                  <p><strong>총 금액</strong>{detail.totalPrice}</p>
                 </div>
               </div>
             );

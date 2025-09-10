@@ -27,4 +27,23 @@ ADD COLUMN	phone_number VARCHAR(50) NOT NULL,
 ADD COLUMN    postal_code VARCHAR(50) NOT NULL, -- 우편 주소
  ADD COLUMN   full_address VARCHAR(255) NOT NULL, -- 도로명 주소 | 지번 주소
  ADD COLUMN   address_detail VARCHAR(255); -- 상세 주소
+ 
+ALTER TABLE books
+DROP FOREIGN KEY fk_books_upload_file,
+DROP COLUMN cover_image_id;
+
+ALTER TABLE books
+ADD COLUMN cover_image_url VARCHAR(255) NULL;
+
+DROP TABLE IF EXISTS upload_files;
+
+ALTER TABLE books
+DROP FOREIGN KEY books_ibfk_4,
+DROP COLUMN discount_policy_id;
+
+ALTER TABLE books
+ADD COLUMN discount_rate BIGINT NULL;
+
+SHOW INDEX FROM customers;
+
 

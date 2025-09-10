@@ -69,13 +69,14 @@ function BookListPage() {
   return (
     <div className="bookListContainer">
       <div className="topContainer">
-        <div>
-          '{query}'에 대한 검색 결과 : {bookList.length}건
+        <div className="queryResult">
+          ' {query} '에 대한 검색 결과 : {bookList.length}건
         </div>
         <button onClick={handleAddSelectedToCart}>
           선택한 상품 장바구니 담기
         </button>
       </div>
+      <div style={{ border: "1px solid #ccc", marginTop: 20}}></div>
 
       <div className="resultContainer">
           <BookList

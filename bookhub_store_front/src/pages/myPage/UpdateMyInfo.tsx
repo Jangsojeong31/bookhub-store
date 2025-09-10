@@ -1,7 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import Layout from "../../components/layouts/Layout";
 import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
 import useToken from "../../hooks/useToken";
 import { getCustomerInfo, updateCustomerInfo } from "../../apis/customer";

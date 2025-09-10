@@ -19,26 +19,26 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query (
             value = """
         SELECT 
-            b.book_isbn,
+            b.isbn,
             b.book_title,
-            a.author_name,
-            p.publisher_name,
+            b.author AS authorName,
+            b.publisher AS publisher,
+            b.published_date,
+            b.book_price,
+            b.discount_rate,
+            b.cover_image_url AS coverUrl,
+            b.description,
             bc.category_name,
-            CONCAT('/files/', up.file_name) AS coverUrl,
             SUM(od.quantity) AS totalSales
         FROM order_details od
                  JOIN orders o ON od.order_id = o.order_id
-                 JOIN books b ON od.isbn = b.book_isbn
-                 JOIN authors a ON b.author_id = a.author_id
-                 JOIN publishers p ON b.publisher_id = p.publisher_id
-                 JOIN book_categories bc ON b.category_id = bc.category_id
-                 LEFT JOIN upload_files up ON b.cover_image_id = up.upload_file_id
+                 JOIN books b ON od.isbn = b.isbn
+                 JOIN categories bc ON b.category_id = bc.category_id
         WHERE o.order_date >= DATE_SUB(NOW(), INTERVAL 30 DAY)
           AND bc.category_type = :categoryType
-        GROUP BY b.book_isbn, b.book_title, a.author_name,
-                 p.publisher_name, bc.category_name, up.file_name
+        GROUP BY b.isbn, b.book_title, b.author, b.publisher, b.published_date, b.book_price, b.discount_rate, b.cover_image_url, b.description, bc.category_name
          ORDER BY totalSales DESC
-                    LIMIT 20;
+                    LIMIT 10;
 
 """,
 nativeQuery = true)

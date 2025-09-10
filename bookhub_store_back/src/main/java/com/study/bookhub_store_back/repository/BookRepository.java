@@ -12,10 +12,10 @@ public interface BookRepository extends JpaRepository<Book, String> {
     SELECT b FROM Book b
     WHERE
         b.bookStatus != com.study.bookhub_store_back.common.enums.BookStatus.HIDDEN AND (
-            b.bookIsbn = :keyword OR
+            b.isbn = :keyword OR
             LOWER(b.bookTitle) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
-            LOWER(b.authorId.authorName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
-            LOWER(b.publisherId.publisherName) LIKE LOWER(CONCAT('%', :keyword, '%'))
+            LOWER(b.author) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+            LOWER(b.publisher) LIKE LOWER(CONCAT('%', :keyword, '%'))
         )
 """)
     List<Book> findAllByKeywordContaining(@Param("keyword") String keyword);

@@ -1,6 +1,7 @@
 .bookListContainer {
-  width: 80%;
+  width: 70%;
   margin: 20px;
+  margin-bottom: auto;
   padding: 20px;
 }
 
@@ -8,38 +9,87 @@
 .topContainer {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   
-  margin: 20px;
+  width: 100%;
+}
+
+.topContainer .queryResult {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.topContainer button {
+  background: none;
+  border: 2px solid #106641;
+}
+
+.topContainer button:hover {
+  background: #1066412c;
 }
 
 .resultContainer {
-  margin: 20px;
+  width: 95%;
+  margin: 0px auto;
 }
+
+/* BookList */
 
 .bookListElement {
   display: flex;
   align-items: center;
   gap: 30px;
 
-  background-color: #cccccc18;
-  width: 1300px;
-  margin-bottom: 20px;
-  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  padding: 30px 0px;
 }
 
 .cover {
-  border: 1px solid #ccc;
   height: 200px;
   aspect-ratio: 3.5/5;
+  cursor: pointer;
+}
+
+.cover img {
+  /* width: 100%; */
+  height: 100%;
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
 
+.content .publisher {
+  color: #888888;
+  margin: 0px;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  font-size: large;
+}
+
+.priceContainer .discountPercent {
+  color: #b1d400;
+  font-weight: bold;
+}
+
+.priceContainer .originalPrice {
+  font-size: 15px;
+  color: #aaa;
+  text-decoration: line-through;
+  text-decoration-color: #b1d400; 
 }
 
 .buttons {
   margin-left: auto;
-  margin-right: 20px;
+  width: 150px;
 
   display: flex;
   flex-direction: column;
@@ -47,13 +97,22 @@
 }
 
 .addCartbutton {
-  background-color: #ccc;
+  background-color: #106641d2;
+  border: none;
+  color: white;
   margin-top: 20px;
+  width: 100%;
+  /* width: 150px; */
+}
+
+.addCartbutton:hover {
+  background-color: #106641;
 }
 
 /* BookDetail */
+
 .detailContainer {
-  width: 80%;
+  width: 70%;
 
   display: flex;
   flex-direction: column;
@@ -62,22 +121,82 @@
 .title {
   height: 100px;
   text-align: center;
+  gap: 10px;
+}
+
+.title strong {
+  font-size: 20px;
+}
+
+.title .category {
+  color: #888888d7;
+  font-size: 15px;
+}
+
+.title p {
+  margin: 10px;
+}
+
+.detailElementContainer1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.authorPublisher {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
+  padding: 10px 10px;
+  width: 300px;
+  height: 300px;
+}
+
+.detailContainer .cover {
+  flex: 1;
+  height: 620px;
+  margin-left: 50px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.detailContainer .cover img {
+  width: 100%;
+}
+
+.buttonAddCartContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 350px;
+  height: 300px;
 }
 
 .buttonInputContainer {
-  /* background-color: #ccc;
-  border-radius: 10px; */
-
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 200px;
 }
 
 .changQuantitybutton {
-  font-size: 20px;
-  padding: 10px;
+  font-size: 25px;
+  padding: 5px 35px;
   font-weight: bold;
   background: none;
+  color: #aaa;
+}
+
+.quantityInput::-webkit-inner-spin-button, 
+.quantityInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .quantityInput {
@@ -86,5 +205,32 @@
   background: none;
   text-align: center;
   font-size: 15px;
-  width: 70px;
+  width: 30px;
+}
+
+.detailElementContainer2 {
+  margin: 30px 20px;
+  padding: 30px;
+  background-color: #cccccc3a;
+}
+
+.detailElementContainer2 .description {
+  margin: 10px;
+  line-height: 2;
+  font-size: 15px;
+}
+
+.detailElementContainer2 .crossLine {
+  border: 2px solid #ccc;
+  margin: 30px auto;
+}
+
+.detailElementContainer2 .bookInfo {
+  font-size: 15px;
+  margin: 10px;
+}
+
+.bookInfo strong {
+  color: #888888;
+  margin-right: 10px;
 }
