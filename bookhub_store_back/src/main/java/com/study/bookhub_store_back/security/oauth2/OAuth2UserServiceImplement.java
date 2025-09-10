@@ -81,7 +81,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
             }
 
             Customer customer = Customer.builder()
-                    .email(email)
+                    .email(email == null ? "example@bookhub.com" : email)
                     .name(name)
                     .nickname(nickname)
                     .profileImageUrl(profileImage)

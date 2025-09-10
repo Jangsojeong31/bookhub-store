@@ -4,8 +4,10 @@ import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.auth.request.LoginRequestDto;
 import com.study.bookhub_store_back.dto.auth.request.SignUpRequestDto;
 import com.study.bookhub_store_back.dto.auth.request.SnsSignUpRequestDto;
+import com.study.bookhub_store_back.dto.auth.response.CustomerResponseDto;
 import com.study.bookhub_store_back.dto.auth.response.LoginResponseDto;
 import com.study.bookhub_store_back.service.AuthService;
+import com.study.bookhub_store_back.service.CustomerService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+    private final CustomerService customerService;
 
     // 일반 회원가입
     @PostMapping("/sign-up")
@@ -42,6 +45,16 @@ public class AuthController {
             @RequestBody SnsSignUpRequestDto dto
     ) {
         ResponseDto<LoginResponseDto> responseDto = authService.snsSignUp(userId, dto);
+        return ResponseEntity.ok(responseDto);
+    }
+
+
+    // Id로 회원 정보 불러오기
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ResponseDto<CustomerResponseDto>> getUserInfoById(
+            @PathVariable Long userId
+    ) {
+        ResponseDto<CustomerResponseDto> responseDto = customerService.getUserInfoById(userId);
         return ResponseEntity.ok(responseDto);
     }
 

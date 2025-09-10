@@ -56,7 +56,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/files/**",
-                                "/api/v1/public/**"
+                                "/api/v1/public/**",
+                                "/oauth2/**",
+                                "/login/**"
                         ).permitAll()
                         .requestMatchers(
                                 "/api/v1/user/**"

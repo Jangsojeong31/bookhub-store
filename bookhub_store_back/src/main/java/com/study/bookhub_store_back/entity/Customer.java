@@ -28,9 +28,9 @@ public class Customer extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String role;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "default_address_id")
-    private DeliveryAddress defaultAddress;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "default_address_id")
+//    private DeliveryAddress defaultAddress;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;

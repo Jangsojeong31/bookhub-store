@@ -70,8 +70,10 @@ function UpdateProfileImage() {
             src={
               preview
                 ? preview
-                : profileImage != null
-                ? `${BASE_URL}${encodeURI(profileImage)}`
+                : profileImage && profileImage.startsWith("/files")
+                ? `${BASE_URL}${encodeURI(profileImage!)}`
+                : profileImage
+                ? profileImage
                 : defaultProfileImage
             }
             alt="프로필 이미지"

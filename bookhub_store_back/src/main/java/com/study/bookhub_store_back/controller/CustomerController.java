@@ -22,14 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
     private final CustomerService customerService;
 
-    // Id로 회원 정보 불러오기
-    @GetMapping("/{userId}")
-    public ResponseEntity<ResponseDto<CustomerResponseDto>> getUserInfoById(
-            @PathVariable Long userId
-    ) {
-        ResponseDto<CustomerResponseDto> responseDto = customerService.getUserInfoById(userId);
-        return ResponseEntity.ok(responseDto);
-    }
 
     // 회원 정보 불러오기 (이메일, 전화번호)
     @GetMapping("/me/info")

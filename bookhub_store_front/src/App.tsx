@@ -20,7 +20,7 @@ import MyPageAddressList from "./pages/address/MyPageAddressList";
 import SignUp from "./pages/auth/SignUp";
 import SnsSignUp from "./pages/auth/SnsSignUp";
 import ExistingEmail from "./pages/auth/ExistingEmail";
-import PrivateRoute from "./components/PrivateRoute";
+// import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -38,7 +38,7 @@ function App() {
           <Route path="/search-books" element={<BookListPage />} />
           <Route path="/books/details" element={<BookDetail />} />
 
-          <Route element={<PrivateRoute />}>
+          {/* <Route element={<PrivateRoute />}> */}
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/mypage/info" element={<UpdateMyInfo />} />
             <Route path="/mypage/nickname" element={<UpdateNickname />} />
@@ -60,7 +60,7 @@ function App() {
               path="/mypage/address-list"
               element={<MyPageAddressList />}
             />
-          </Route>
+          {/* </Route> */}
         </Routes>
       </Layout>
     </>

@@ -36,10 +36,13 @@ function Nav() {
       {user ? (
         <div className={style.profileImageAndNickname}>
           <img
-            src={profileImage != null 
-          ?
-          `${BASE_URL}${encodeURI(profileImage!)}` 
-          : defaultImage}
+            src={
+              profileImage && profileImage.startsWith("/files")
+                ? `${BASE_URL}${encodeURI(profileImage!)}`
+                : profileImage
+                ? profileImage
+                : defaultImage
+            }
             className={style.naviProfileImage}
           />
           <span className={style.naviNickname}>{user?.nickname ?? "user"}</span>

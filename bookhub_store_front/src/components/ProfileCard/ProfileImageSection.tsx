@@ -4,29 +4,32 @@ interface ProfileImgeSectionProps {
   nickname: string;
   profileImageUrl?: string | null;
 }
-import styles from "./ProfileCard.module.css";  
+import styles from "./ProfileCard.module.css";
 
 const ProfileImageSection: React.FC<ProfileImgeSectionProps> = ({
   nickname,
   profileImageUrl,
 }) => {
-    const BASE_URL = import.meta.env.VITE_API_DOMAIN;  // http://localhost:8080
-    console.log(profileImageUrl);
+  const BASE_URL = import.meta.env.VITE_API_DOMAIN; // http://localhost:8080
+  console.log(profileImageUrl);
 
   return (
-    <div
-      className={styles.profileImageSection}
-    >
+    <div className={styles.profileImageSection}>
       <img
         src={
-          profileImageUrl
-          ?
-          `${BASE_URL}${encodeURI(profileImageUrl!)}` 
-          : defaultImage}
+          profileImageUrl && profileImageUrl.startsWith("/files")
+            ? `${BASE_URL}${encodeURI(profileImageUrl!)}`
+            : profileImageUrl
+            ? profileImageUrl
+            : defaultImage
+        }
         alt="프로필 이미지"
         className={styles.profileImage}
       />
-      <p><strong style={{marginRight: 10}}>닉네임</strong>{nickname}</p>
+      <p>
+        <strong style={{ marginRight: 10 }}>닉네임</strong>
+        {nickname}
+      </p>
     </div>
   );
 };

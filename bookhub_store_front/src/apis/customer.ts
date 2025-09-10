@@ -7,6 +7,7 @@ import {
   bearerAuthorization,
   responseSuccessHandler,
   responseErrorHandler,
+  BASE_API_PUBLIC,
 } from "./axiosConfig";
 import type { CustomerInfoResponseDto } from "../dtos/customer/CustomerInfoResponse.dto";
 import type { UpdateNicknameRequestDto } from "../dtos/customer/UpdateNicknameRequest.dto";
@@ -24,7 +25,7 @@ export const getUserInfoById = async (
 ): Promise<ResponseDto<CustomerResponseDto>> => {
   try {
     const response = await axiosInstance.get(
-      `${BASE_API_USER}/${userId}`,
+      `${BASE_API_PUBLIC}/auth/user/${userId}`,
     );
     return responseSuccessHandler(response);
   } catch (error) {
