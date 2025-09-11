@@ -1,0 +1,58 @@
+https://product.kyobobook.co.kr/detail/S000217279536
+https://product.kyobobook.co.kr/detail/S000217446719
+https://product.kyobobook.co.kr/detail/S000217446653
+https://product.kyobobook.co.kr/detail/S000217502453
+https://product.kyobobook.co.kr/detail/S000217473365
+https://product.kyobobook.co.kr/detail/S000217279536
+https://product.kyobobook.co.kr/detail/S000217446719
+https://product.kyobobook.co.kr/detail/S000217446653
+https://product.kyobobook.co.kr/detail/S000217502453
+https://product.kyobobook.co.kr/detail/S000217473365
+https://product.kyobobook.co.kr/detail/S000217279536
+https://product.kyobobook.co.kr/detail/S000217446719
+https://product.kyobobook.co.kr/detail/S000217446653
+https://product.kyobobook.co.kr/detail/S000217502453
+https://product.kyobobook.co.kr/detail/S000217473365
+Traceback (most recent call last):
+  File "C:\장소정\북허브_스토어\kyobo_crawler\crawling_script\kyobo_books_update.py", line 18, in <module>
+    driver.get(url)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\82104\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 483, in get
+    self.execute(Command.GET, {"url": url})
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\82104\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\82104\AppData\Local\Programs\Python\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: target frame detached
+  (failed to check if window was closed: disconnected: Unable to receive message from renderer)
+  (Session info: chrome=140.0.7339.81)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff64dacfc95+79861]
+	GetHandleVerifier [0x0x7ff64dacfcf0+79952]
+	(No symbol) [0x0x7ff64d84c8fc]
+	(No symbol) [0x0x7ff64d839d0c]
+	(No symbol) [0x0x7ff64d838b9f]
+	(No symbol) [0x0x7ff64d85dbda]
+	(No symbol) [0x0x7ff64d85ced6]
+	(No symbol) [0x0x7ff64d8f52f7]
+	(No symbol) [0x0x7ff64d8cc8b3]
+	(No symbol) [0x0x7ff64d895272]
+	(No symbol) [0x0x7ff64d896043]
+	GetHandleVerifier [0x0x7ff64dd8b9cd+2946349]
+	GetHandleVerifier [0x0x7ff64dd85c4a+2922410]
+	GetHandleVerifier [0x0x7ff64dda59d7+3052855]
+	GetHandleVerifier [0x0x7ff64daeaa7e+189918]
+	GetHandleVerifier [0x0x7ff64daf2a1f+222591]
+	GetHandleVerifier [0x0x7ff64dad8ab4+116244]
+	GetHandleVerifier [0x0x7ff64dad8c69+116681]
+	GetHandleVerifier [0x0x7ff64dabf048+11176]
+	BaseThreadInitThunk [0x0x7ff902637374+20]
+	RtlUserThreadStart [0x0x7ff902cfcc91+33]
+
+https://product.kyobobook.co.kr/detail/S000217279536
+https://product.kyobobook.co.kr/detail/S000217446719
+https://product.kyobobook.co.kr/detail/S000217446653
+https://product.kyobobook.co.kr/detail/S000217502453
+https://product.kyobobook.co.kr/detail/S000217473365

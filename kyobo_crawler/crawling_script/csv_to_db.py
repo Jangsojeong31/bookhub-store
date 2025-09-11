@@ -46,7 +46,7 @@ def get_or_create_category(category_type, parent_name, category_name):
 
 
 # CSV 읽기
-csv_file = open('./kyobo_books_2.csv', 'r', encoding='cp949')
+csv_file = open('./kyobo_books.csv', 'r', encoding='cp949')
 fReader = csv.DictReader(csv_file)
 
 for line in fReader:
@@ -99,7 +99,7 @@ for line in fReader:
         int(price) if price else 0,
         line['discount_percent'] if line['discount_percent'] else None,
         line['pub_date'],
-        "Active", 
+        "ACTIVE", 
         None if line['page_count'] in ('준비중', None) else line['page_count'],
         "Korean",
         line['description'] if line['description'] else None,

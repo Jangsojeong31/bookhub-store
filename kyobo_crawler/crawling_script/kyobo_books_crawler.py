@@ -1,6 +1,6 @@
+from datetime import datetime
 import os
 import re
-import sqlite3
 import time
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -30,19 +30,17 @@ for page in range(1, 2):
     for book in book_elements:
         try:
             link_elem = book.find_element(By.CSS_SELECTOR, 'div.relative.flex-shrink-0 a.prod_link')
-            # 설명
-            description_elem = book.find_element(By.CSS_SELECTOR, 'p.prod_introduction')
-            description = description_elem.text if description_elem else None
+
             # 상세 페이지 url
             detail_url = link_elem.get_attribute('href')
             print(detail_url)
 
-            book_links.append((detail_url, description))
+            book_links.append(detail_url)
         except Exception as e:
-            print("책 링크/설명 수집 실패:", e)
+            print("책 링크 수집 실패:", e)
             continue
 
-    for detail_url, description in book_links:
+    for detail_url in book_links:
         # 상세 페이지 이동
         driver.get(detail_url)
         time.sleep(3)
@@ -104,7 +102,15 @@ for page in range(1, 2):
         except Exception as e:
             print("카테고리 수집 실패:", e)
 
+        # 설명
+        description_tag = soup.select('div.intro_bottom div.info_text')
+        description = description_tag[0].get_text(strip=True).replace('"', "") if len(description_tag) >= 1 else None
+        if len(description_tag) >= 2:
+            description = description_tag[1].get_text(strip=True).replace('"', "")
+        print(description)
+
         data.append({
+            "crawled_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "isbn": isbn,
             "title": title,
             "cover": cover_url,
@@ -123,15 +129,15 @@ for page in range(1, 2):
 # DataFrame 생성 후 CSV 저장
 df = pd.DataFrame(data)
 
-file_path = 'kyobo_books_2.csv'
+file_path = 'kyobo_books.csv'
 
 # 파일이 이미 있는지 확인
 if not os.path.isfile(file_path):
     # 없으면 헤더 포함 덮어쓰기
-    df.to_csv(file_path, index=False, encoding='utf-8-sig', mode='w')
+    df.to_csv(file_path, index=False, encoding='cp949', mode='w')
 else:
     # 이미 있으면 헤더 제외하고 추가하기
-    df.to_csv(file_path, index=False, encoding='utf-8-sig', mode='a', header=False)
+    df.to_csv(file_path, index=False, encoding='cp949', mode='a', header=False)
 
 # # SQLite 연결
 # conn = sqlite3.connect('books.db')
