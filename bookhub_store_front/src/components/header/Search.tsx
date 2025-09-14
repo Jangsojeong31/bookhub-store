@@ -18,7 +18,7 @@ function Search() {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="검색어를 입력하세요"
+        placeholder="검색어를 입력하세요 ( 도서 제목 / 저자 / 출판사 )"
         className={styles.input}
       />
       <button type="submit" className={styles.button}>

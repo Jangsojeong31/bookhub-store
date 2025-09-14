@@ -78,6 +78,8 @@ header .navigation {
   justify-content: space-between;
   align-items: center;  
   gap: 8px;
+
+  cursor: pointer;
 }
 
 .naviButtonContainer {
@@ -97,8 +99,13 @@ header .navigation {
   color: #7a7a7a;
   background: none;
   border-radius: 0;
+  border: none;
 
   padding: 0px 10px;
+}
+
+.naviButton:hover {
+  color: #3d3d3d;
 }
 
 footer {

@@ -1,6 +1,6 @@
 import React from "react";
 import type { AddressListResponseDto } from "../../dtos/address/AddressListResponse.dto";
-import styles from "../order/OrderCheckPage.module.css";
+import styles from "../order/orderCheck/OrderCheckPage.module.css";
 
 interface Props {
   address: AddressListResponseDto | null;
@@ -27,9 +27,11 @@ function DeliveryAddressInfo({ address, onOpenAddressList }: Props) {
           <p>
             <strong>{address.recipientName}</strong>
           </p>
-          <span style={{ marginRight: "10px" }}>{address.postalCode}</span>
+          <span style={{ marginRight: "10px" }}>[{address.postalCode}]</span>
+          <span style={{marginRight: 5}}>
+            {address.fullAddress} 
+          </span>
           <span>
-            {address.fullAddress}
             {address.detailAddress}
           </span>
           <p>{address.phoneNumber}</p>

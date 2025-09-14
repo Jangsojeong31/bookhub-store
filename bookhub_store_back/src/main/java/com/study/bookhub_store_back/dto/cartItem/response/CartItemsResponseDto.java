@@ -13,6 +13,8 @@ public class CartItemsResponseDto {
     private String title;
     private String coverImageUrl;
     private Long price;
+    private Long discountRate;
+    private Long discountedPrice;
 
     private int quantity;
 

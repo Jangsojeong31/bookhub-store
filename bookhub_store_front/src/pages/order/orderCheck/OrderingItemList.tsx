@@ -1,5 +1,6 @@
 import React from "react";
-import type { CartItemsResponseDto } from "../../dtos/cart/CartItemsResponse.dto";
+import type { CartItemsResponseDto } from "../../../dtos/cart/CartItemsResponse.dto";
+import styles from "./OrderCheckPage.module.css"
 
 function OrderingItemList(props: { selectedItems: CartItemsResponseDto[] }) {
   const orderingItems = props.selectedItems;
@@ -21,21 +22,19 @@ function OrderingItemList(props: { selectedItems: CartItemsResponseDto[] }) {
         key={item.id}
       >
         <div
-          style={{
-            border: "1px solid black",
-            aspectRatio: "3.5/5",
-            height: "90%",
-          }}
+          className={styles.cover}
         >
-          <p>표지</p>
+          <img src={item.coverImageUrl} alt={item.title}/>
         </div>
         <div style={{ flex: 2 }}>
           <p><strong>{item.title}</strong></p>
-          <p>가격 : {item.price}</p>
-          <p>수량 : {item.quantity}</p>
+          <span style={{marginRight: 5, color: "#0b492ece"}}><strong>가격</strong></span>
+          <span className={styles.orginalPrice}>{item.price}원</span>
+          <span>{item.discountedPrice}원</span>
+          <p ><strong style={{marginRight: 5, color: "#0b492ece"}}>수량 </strong>{item.quantity}</p>
         </div>
         <div style={{ marginLeft: "auto"}}>
-          <p>총 가격 : {item.totalPrice}</p>
+          <p><strong style={{marginRight: 5, color: "#0b492ece"}}>총 가격</strong>{item.totalPrice}원</p>
         </div>
       </div>
     );

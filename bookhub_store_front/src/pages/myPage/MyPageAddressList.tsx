@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAllAddresses } from "../../apis/address";
 import type { AddressListResponseDto } from "../../dtos/address/AddressListResponse.dto";
 import useToken from "../../hooks/useToken";
-import DeleteAddress from "./DeleteAddress";
+import DeleteAddress from "../address/DeleteAddress";
 import TitleBar from "../../components/TitleBar";
 import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
 

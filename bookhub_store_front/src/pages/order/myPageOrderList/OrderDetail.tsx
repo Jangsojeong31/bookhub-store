@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import TitleBar from "../../components/TitleBar";
-import type { OrderDetailResponseDto } from "../../dtos/order/OrderListResponse.dto";
+import TitleBar from "../../../components/TitleBar";
+import type { OrderDetailResponseDto } from "../../../dtos/order/OrderListResponse.dto";
 import { useLocation } from "react-router-dom";
-import useToken from "../../hooks/useToken";
-import { getPaymentByOrderId } from "../../apis/payment";
+import useToken from "../../../hooks/useToken";
+import { getPaymentByOrderId } from "../../../apis/payment";
 import styles from "./Order.module.css";
 
 function OrderDetail() {
@@ -51,7 +51,7 @@ function OrderDetail() {
           <p><strong>수령인</strong>{order.recipientName}</p>
           <p><strong>전화번호</strong>{order.phoneNumber}</p>
           <p>
-            <strong>배송지</strong>{order.fullAddress}
+            <strong>배송지</strong>{order.fullAddress} 
             {order.addressDetail}
           </p>
         </div>
@@ -64,17 +64,18 @@ function OrderDetail() {
                                 key={detail.orderDetailId}
               >
                 <div className={styles.bookCover}>
-                  <p>표지</p>
+                  <img src={detail.coverUrl} alt={detail.bookTitle}/>
                 </div>
 
                 <div className={styles.content}>
                   <p style={{padding: 0, margin: "0px 0px 10px 0px"}}>{detail.bookTitle}</p>
-                  <span><strong>가격</strong>{detail.bookPrice}</span>
+                  <span><strong>가격</strong>{detail.bookPrice}원</span>
                   <span><strong>구매 수량</strong>{detail.quantity}</span>
                 </div>
 
                 <div className={styles.totalPrice}>
-                  <p><strong>총 금액</strong>{detail.totalPrice}</p>
+                  <p><strong>할인 금액</strong>{detail.bookPrice * detail.quantity - detail.totalPrice}원</p>
+                  <p><strong>총 금액</strong>{detail.totalPrice}원</p>
                 </div>
               </div>
             );
@@ -86,7 +87,7 @@ function OrderDetail() {
           <p>
             <strong>결제 상태</strong>{paymentStatus == "DONE" ? "결제 완료" : "결제 실패"}
           </p>
-          <p><strong>결제 금액</strong>{totalAmount}</p>
+          <p><strong>결제 금액</strong>{totalAmount}원</p>
         </div>
       </div>
     </TitleBar>

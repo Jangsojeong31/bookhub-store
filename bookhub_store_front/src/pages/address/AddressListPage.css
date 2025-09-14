@@ -40,9 +40,16 @@
 .postcode-button {
   background-color: #dbf0a3af;
   text-align: center;
+  border: none;
+
   display: flex;
   justify-content: center;
   align-items: center;     
+}
+
+.postcode-button:hover {
+  background-color: #DCF073;
+  border: none;
 }
 
 .postcode-input {
@@ -62,3 +69,23 @@
   background-color: #DCF073;
 }
 
+/* AddressListPage */
+.address-select-button {
+  background-color: #dbf0a3af;
+  border: none;
+}
+
+.address-select-button:hover {
+  background-color: #DCF073;
+}
+
+/* DeleteAddress */
+.deleteButton {
+  border: none;
+  background: none;
+  color: #015f09;
+}
+
+.deleteButton:hover {
+  color: #003805;
+}

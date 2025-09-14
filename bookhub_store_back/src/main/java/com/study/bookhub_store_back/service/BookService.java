@@ -1,6 +1,7 @@
 package com.study.bookhub_store_back.service;
 
 import com.study.bookhub_store_back.dto.ResponseDto;
+import com.study.bookhub_store_back.dto.bestSeller.response.BestSellerProjection;
 import com.study.bookhub_store_back.dto.book.response.BookDetailResponseDto;
 import com.study.bookhub_store_back.dto.book.response.BookSearchResponseDto;
 
@@ -10,4 +11,6 @@ public interface BookService {
     ResponseDto<List<BookSearchResponseDto>> searchBook(String keyword);
 
     ResponseDto<BookDetailResponseDto> getBookDetails(String isbn);
+
+    ResponseDto<List<BookSearchResponseDto>> getNewBooks();
 }

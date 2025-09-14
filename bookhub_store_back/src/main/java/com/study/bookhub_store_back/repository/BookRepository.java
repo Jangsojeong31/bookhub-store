@@ -19,4 +19,6 @@ public interface BookRepository extends JpaRepository<Book, String> {
         )
 """)
     List<Book> findAllByKeywordContaining(@Param("keyword") String keyword);
+
+    List<Book> findTop5ByOrderByPublishedDateDesc();
 }

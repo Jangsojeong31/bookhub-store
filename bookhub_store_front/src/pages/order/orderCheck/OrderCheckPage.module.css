@@ -32,6 +32,23 @@
 }
 
 .selectAddressButton:hover {
-  background-color: #1066415e;
+  background-color:#0b492ece;
   color: white;
+}
+
+/* OrderingItemList */
+.cover {
+  aspect-ratio: 3.5/5;
+  height: 90%;
+}
+
+.cover img {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.orginalPrice {
+  color: #a1a1a1;
+  text-decoration: line-through;
+  margin-right: 5px;
 }

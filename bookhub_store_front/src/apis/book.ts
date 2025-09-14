@@ -43,3 +43,15 @@ export const getBestSellerByCategory = async (categoryType: number, accessToken:
     return responseErrorHandler(error as AxiosError<ResponseDto>);
   }
 }
+
+// 신작
+export const getNewBooks = async (): Promise<ResponseDto<BookSearchResponseDto[]>> => {
+  try {
+    const response = await axiosInstance.get(
+      `${BASE_API_PUBLIC}/books/new-release`,
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+}

@@ -46,7 +46,8 @@ def get_or_create_category(category_type, parent_name, category_name):
 
 
 # CSV 읽기
-csv_file = open('./kyobo_books.csv', 'r', encoding='cp949')
+file_path = 'C:/장소정/북허브_스토어/kyobo_crawler/crawled_data/kyobo_books.csv'
+csv_file = open(file_path, 'r', encoding='cp949')
 fReader = csv.DictReader(csv_file)
 
 for line in fReader:
@@ -88,7 +89,6 @@ for line in fReader:
 # 지수형으로 들어온 경우 처리
     if 'E' in isbn or 'e' in isbn:
         isbn = '{:.0f}'.format(float(isbn))  # 9791170612759 형태로 변환
-    print(line['isbn'])
     price = str(line['price']).strip()
 
     values = (

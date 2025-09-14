@@ -11,7 +11,6 @@ import type { TossPaymentsWidgets } from "@tosspayments/tosspayments-sdk";
 
 interface props {
   totalAmount: number;
-  address: string;
   orderingItems: CartItemsResponseDto[];
   widgets?: TossPaymentsWidgets | null;
   addressId: number;
@@ -52,10 +51,18 @@ function RequestPayment({
   const orderName = generateOrderName(orderingItems);
 
   const handlePayment = async () => {
-    if (addressId == null) {
+    console.log(addressId);
+    console.log(orderingItems);
+    if (addressId == null || addressId == 0) {
       alert("배송지를 선택해주세요")
       return;
     }
+
+    if (orderingItems == null) {
+      alert("주문건을 선택해주세요.")
+      return;
+    }  
+  
 
     const orderingItemList: OrderItems[] = orderingItems.map((item) => ({
       isbn: item.isbn,

@@ -132,3 +132,14 @@ text-align: right;
 .color-grey {
 color: #b0b8c1;
 }
+
+.navi-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.navi-button-container button:hover{
+  border: none;
+  background-color: #ccc;
+}

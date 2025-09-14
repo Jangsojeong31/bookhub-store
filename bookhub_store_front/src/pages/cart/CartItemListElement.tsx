@@ -5,7 +5,6 @@ import {
   increaseQuantity,
   removeCartItems,
 } from "../../apis/cart";
-import { useCookies } from "react-cookie";
 import useToken from "../../hooks/useToken";
 import type { RemoveCartItemRequestDto } from "../../dtos/cart/RemoveCartItemRequest.dto";
 import styles from "./Cart.module.css";
@@ -71,12 +70,14 @@ function CartItemListElement({
         />
 
         <div className={styles.bookCover}>
-          <p>표지</p>
+          <img src={item.coverImageUrl} alt={item.title} />
         </div>
 
         <div className={styles.title}>
-          <p>{item.title}</p>
-          <p><strong>가격</strong>{item.price} 원</p>
+          <p><strong style={{color: "black"}}>{item.title}</strong></p>
+          <span><strong>가격</strong></span>
+          <span className={styles.originalPrice}>{item.price}원</span>
+          <span>{item.discountedPrice}원</span>
         </div>
 
         <div className={styles.totalPrice}>

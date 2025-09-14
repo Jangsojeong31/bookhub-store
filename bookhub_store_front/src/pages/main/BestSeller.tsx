@@ -44,7 +44,7 @@ function BestSeller() {
 
   return (
     <div className="best-seller-container">
-      <h2 className="best-seller-title">이 달의 베스트셀러</h2>
+      <h3 className="best-seller-title">이 달의 베스트셀러</h3>
 
       <div className="best-seller-content">
         <div className="category-buttons">
@@ -72,24 +72,51 @@ function BestSeller() {
               <div className="book-info-wrapper">
                 <div className="book-rank">
                   <span className="rank-badge">{currentIndex + 1}위</span>
-                  <div>{currentBook.totalSales}권 판매</div>
+                  <div className="totalsales">{currentBook.totalSales}권 판매</div>
                 </div>
 
-                  <div className="book-cover" onClick={() => goDetail(currentBook.isbn)}>
-                    <img
-                      src={currentBook.coverUrl}
-                      alt={currentBook.bookTitle}
-                    />
-                  </div>
-
                 <div
-                  className="book-meta"
+                  className="book-cover"
                   onClick={() => goDetail(currentBook.isbn)}
                 >
-                  <div className="book-title">{currentBook.bookTitle}</div>
-                  <div>{currentBook.authorName}</div>
-                  <div>{currentBook.categoryName}</div>
-                  <div>{currentBook.publisherName}</div>
+                  <img
+                    src={currentBook.coverImageUrl}
+                    alt={currentBook.bookTitle}
+                  />
+                </div>
+
+                <div className="book-meta">
+                  <div className="title-category">
+                    <div
+                      className="book-title"
+                      onClick={() => goDetail(currentBook.isbn)}
+                    >
+                      {currentBook.bookTitle}
+                    </div>
+                    <div className="category">{currentBook.categoryName}</div>
+                  </div>
+                  <div>{currentBook.author} 저자</div>
+                  <div className="publisher">
+                    <span>{currentBook.publisher} ·</span>
+                    <span>{currentBook.publishedDate}</span>
+                  </div>
+                  <div>
+                    <span className="discount-rate">
+                      {currentBook.discountRate}%
+                    </span>
+                    <span className="original-price">
+                      {currentBook.bookPrice}원
+                    </span>
+                    <span className="discounted-price">
+                      {(currentBook.bookPrice *
+                        (100 - currentBook.discountRate)) /
+                        100}
+                      원
+                    </span>
+                  </div>
+                  {/* <div>
+                    {currentBook.description}
+                  </div> */}
                 </div>
               </div>
 

@@ -1,6 +1,6 @@
 import type { Address } from "cluster";
 import React, { useState } from "react";
-import "./AddressForm.css";
+import "./AddressListPage";
 import useToken from "../../hooks/useToken";
 import { addDeliveryAddress } from "../../apis/address";
 import type { CreateAddressRequestDto } from "../../dtos/address/CreateAddressRequest.dto";

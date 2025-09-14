@@ -2,8 +2,10 @@ export interface CartItemsResponseDto {
   id: number;
   isbn: string;
   title: string;
-  coverImageURL: string;
+  coverImageUrl: string;
   price: number;
+  discountRate: number;
+  discountedPrice: number;
   quantity: number;
   totalPrice: number;
 }

@@ -68,15 +68,21 @@ public class CartServiceImpl implements CartService {
         List<CartItemsResponseDto> responseDtos = items.stream()
                 .map(item -> {
                     Book book = item.getBook();
-
+                    Long discountedPrice = null;
+                    if (book.getDiscountRate() != null) {
+                        discountedPrice = book.getBookPrice() * (100 - book.getDiscountRate()) / 100;
+                    }
                     return CartItemsResponseDto.builder()
                             .id(item.getCartItemId())
                             .isbn(book.getIsbn())
                             .title(book.getBookTitle())
                             .price(book.getBookPrice())
+                            .discountRate(book.getDiscountRate() == null ? null : book.getDiscountRate())
+                            .discountedPrice(book.getDiscountRate() == null ? book.getBookPrice() : discountedPrice)
                             .coverImageUrl(book.getCoverImageUrl() == null ? null : book.getCoverImageUrl())
                             .quantity(item.getQuantity())
-                            .totalPrice(item.getQuantity() * book.getBookPrice())
+                            .totalPrice(book.getDiscountRate() == null ? item.getQuantity() * book.getBookPrice()
+                                    : discountedPrice * item.getQuantity())
                             .build();
                 })
                 .toList();
@@ -139,6 +145,7 @@ public class CartServiceImpl implements CartService {
                             .id(item.getCartItemId())
                             .title(book.getBookTitle())
                             .price(book.getBookPrice())
+                            .discountRate(book.getDiscountRate() == null ? null : book.getDiscountRate())
                             .coverImageUrl(book.getCoverImageUrl() == null ? null : book.getCoverImageUrl())
                             .quantity(item.getQuantity())
                             .totalPrice(item.getQuantity() * book.getBookPrice())

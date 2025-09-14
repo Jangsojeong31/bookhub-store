@@ -9,7 +9,7 @@ import { createOrder } from "../../apis/order";
 import useToken from "../../hooks/useToken";
 import type { CartItemsResponseDto } from "../../dtos/cart/CartItemsResponse.dto";
 import type { OrderItems } from "../../dtos/order/request/CreateOrderRequest.dto";
-import RequestPayment from "../order/RequestPayment";
+import RequestPayment from "./RequestPayment";
 
 function Checkout(props: {
   orderingItems: CartItemsResponseDto[];
@@ -77,7 +77,6 @@ function Checkout(props: {
           <div className="btn-wrapper w-100">
             <RequestPayment
               totalAmount={totalAmount}
-              address="당리푸르지오"
               orderingItems={orderingItems}
               addressId={addressId}
               widgets={widgets !== null ? widgets : null}

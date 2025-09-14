@@ -14,7 +14,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401){
-      alert("401에러 발생");
+      alert("로그인이 필요합니다 (401에러)");
       window.location.href = "/login";
     }
     return Promise.reject(error);

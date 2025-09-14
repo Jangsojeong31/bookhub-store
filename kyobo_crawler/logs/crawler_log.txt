@@ -56,3 +56,51 @@ https://product.kyobobook.co.kr/detail/S000217446719
 https://product.kyobobook.co.kr/detail/S000217446653
 https://product.kyobobook.co.kr/detail/S000217502453
 https://product.kyobobook.co.kr/detail/S000217473365
+[2025-09-12 14:19:16.51] 배치 실행 시작 
+Traceback (most recent call last):
+  File "C:\장소정\북허브_스토어\kyobo_crawler\crawling_script\csv_to_db.py", line 49, in <module>
+    csv_file = open('./kyobo_books.csv', 'r', encoding='cp949')
+FileNotFoundError: [Errno 2] No such file or directory: './kyobo_books.csv'
+[2025-09-12 14:19:18.02] 배치 실행 종료 
+[2025-09-12 14:22:39.99] 배치 실행 시작 
+Traceback (most recent call last):
+  File "C:\장소정\북허브_스토어\kyobo_crawler\crawling_script\csv_to_db.py", line 49, in <module>
+    csv_file = open('../crawled_data/kyobo_books.csv', 'r', encoding='cp949')
+FileNotFoundError: [Errno 2] No such file or directory: '../crawled_data/kyobo_books.csv'
+[2025-09-12 14:22:40.71] 배치 실행 종료 
+[2025-09-12 14:28:16.47] 배치 실행 시작 
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79E+12
+9.79117E+12
+9.79119E+12
+9.79119E+12
+9.7912E+12
+20052340
+[2025-09-12 14:28:17.16] 배치 실행 종료 

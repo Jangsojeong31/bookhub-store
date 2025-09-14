@@ -22,7 +22,8 @@ function StickyCartOverview({
         className={styles.cartOverviewContent}
       >
         <div><strong>상품 금액</strong>{totalPrice}원</div>
-        <div><strong>할인</strong>{discount}원</div>
+        <div><strong>할인 금액</strong>{discount}원</div>
+        <div className={styles.crossLine} ></div>
         <div><strong>결제 금액</strong>{finalPrice}원</div>
       </div>
       {button}

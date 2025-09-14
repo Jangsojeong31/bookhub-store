@@ -2,6 +2,7 @@ package com.study.bookhub_store_back.controller;
 
 import com.study.bookhub_store_back.dto.ResponseDto;
 import com.study.bookhub_store_back.dto.bestSeller.response.BestSellerDto;
+import com.study.bookhub_store_back.dto.bestSeller.response.BestSellerProjection;
 import com.study.bookhub_store_back.dto.book.response.BookDetailResponseDto;
 import com.study.bookhub_store_back.dto.book.response.BookSearchResponseDto;
 import com.study.bookhub_store_back.service.BestSellerService;
@@ -40,10 +41,18 @@ public class BookController {
 
     // 베스트셀러
     @GetMapping("/books/best-seller/{categoryType}")
-    public ResponseEntity<ResponseDto<List<BestSellerDto>>> getBestSellersByCategory(
+    public ResponseEntity<ResponseDto<List<BestSellerProjection>>> getBestSellersByCategory(
             @PathVariable Long categoryType
     ) {
-        ResponseDto<List<BestSellerDto>> response = bestSellerService.getBestSellersByCategory(categoryType);
+        ResponseDto<List<BestSellerProjection>> response = bestSellerService.getBestSellersByCategory(categoryType);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    // 화제의 신작
+    @GetMapping("/books/new-release")
+    public ResponseEntity<ResponseDto<List<BookSearchResponseDto>>> getNewBooks(
+    ) {
+        ResponseDto<List<BookSearchResponseDto>> response = bookService.getNewBooks();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

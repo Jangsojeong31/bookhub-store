@@ -34,7 +34,7 @@ function Nav() {
       </div>
 
       {user ? (
-        <div className={style.profileImageAndNickname}>
+        <div className={style.profileImageAndNickname} onClick={onNaviMypage}>
           <img
             src={
               profileImage && profileImage.startsWith("/files")

@@ -121,6 +121,8 @@ for detail_url in book_links:
         "description": description
     })
 
+    print(isbn, "\t", title)
+
 # DataFrame 생성 후 CSV 저장
 df = pd.DataFrame(data)
 

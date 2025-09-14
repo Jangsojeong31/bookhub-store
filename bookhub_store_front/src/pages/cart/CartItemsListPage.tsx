@@ -12,7 +12,6 @@ import { useCookies } from "react-cookie";
 
 function CartItemsListPage() {
   const token = useToken();
-  const [cookies] = useCookies(["tokenExpiresAt"])
   const navigation = useNavigate();
   const [selectedItems, setSelectedItems] = useState<CartItemsResponseDto[]>(
     []
@@ -20,10 +19,14 @@ function CartItemsListPage() {
   const [cartItemList, setCartItemList] = useState<CartItemsResponseDto[]>([]);
 
   const totalPrice = selectedItems.reduce(
-    (sum, item) => sum + item.totalPrice,
+    (sum, item) => sum + (item.price * item.quantity),
     0
   );
-  const discount = 0;
+  const discount = selectedItems.reduce(
+    (sum, item) => sum + ((item.price - item.discountedPrice) * item.quantity),
+    0
+  );
+
   const finalPrice = totalPrice - discount;
 
   const toggleSelectAll = () => {
@@ -91,7 +94,7 @@ function CartItemsListPage() {
               setCartItemList((prev) =>
                 prev.map((item) =>
                   item.id === id
-                    ? { ...item, quantity, totalPrice: item.price * quantity }
+                    ? { ...item, quantity, totalPrice: item.price * (100 - (item.discountRate ?? 0)) / 100 * quantity }
                     : item
                 )
               );

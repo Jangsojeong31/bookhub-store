@@ -139,12 +139,5 @@ else:
     # 이미 있으면 헤더 제외하고 추가하기
     df.to_csv(file_path, index=False, encoding='cp949', mode='a', header=False)
 
-# # SQLite 연결
-# conn = sqlite3.connect('books.db')
-
-# df.to_sql('books', conn, if_exists='replace', index=False)
-
-# print(pd.read_sql('SELECT * FROM books', conn))
-
 # 드라이버 종료
 driver.quit()

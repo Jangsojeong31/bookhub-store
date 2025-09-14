@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useNavigation, useSearchParams } from 'react-router-dom';
 import "./Checkout.css";
 import useToken from '../../hooks/useToken';
 import type { ConfirmPaymentRequestDto } from '../../dtos/payment/ConfirmPaymentRequest.dto';
@@ -17,6 +17,7 @@ function Success() {
   const [orderName, setOrderName] = useState("");
   
   const token = useToken();
+  const navigate = useNavigate();
 
   const handleConfirmPayment = async() => {
     const dto: ConfirmPaymentRequestDto = {
@@ -28,6 +29,7 @@ function Success() {
     const res = await confirmPayment(dto, token);
 
     const { code, message, data } = res;
+    console.log(res);
 
     if (code == "SU" && data) {
       alert("결제 성공")
@@ -44,10 +46,22 @@ function Success() {
       await removeCartItems(dto, token);
     
     } else {
-      alert("결제 실패. 다시 시도해주세요")
+      console.log(code, message, data);
+      if (message) {
+        alert(message);
+      } else {
+        alert("결제 실패. 다시 시도해주세요")
+      }
       return;
     }
-  
+  }
+
+  const handleNaviToMain = () => {
+    navigate("/main");
+  }
+
+  const handleNaviToCart = () => {
+    navigate("/cart");
   }
   return (
     <div className="wrapper w-100">
@@ -80,15 +94,15 @@ function Success() {
             <div className="flex justify-between">
               <span className="response-label">결제 금액</span>
               <span id="amount" className="response-text">
-                {amount}
+                {amount}원
               </span>
             </div>
           </div>
 
           <div className="w-100 button-group">
-            <div className="flex" style={{ gap: "16px" }}>
-              <button>메인 화면으로 가기</button>
-              <button>장바구니로 돌아가기</button>
+            <div className="navi-button-container">
+              <button onClick={handleNaviToMain}>메인 화면으로 가기</button>
+              <button onClick={handleNaviToCart}>장바구니로 돌아가기</button>
             </div>
           </div>
         </div>

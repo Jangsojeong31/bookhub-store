@@ -1,6 +1,7 @@
 package com.study.bookhub_store_back.service.serviceImpl;
 
 import com.study.bookhub_store_back.dto.ResponseDto;
+import com.study.bookhub_store_back.dto.bestSeller.response.BestSellerProjection;
 import com.study.bookhub_store_back.dto.book.response.BookDetailResponseDto;
 import com.study.bookhub_store_back.dto.book.response.BookSearchResponseDto;
 import com.study.bookhub_store_back.entity.product.Book;
@@ -39,6 +40,17 @@ public class BookServiceImpl implements BookService {
         BookDetailResponseDto responseDto = BookDetailResponseDto.toResponseDto(book);
 
         return ResponseDto.success("success", "success", responseDto);
+    }
+
+    @Override
+    public ResponseDto<List<BookSearchResponseDto>> getNewBooks() {
+        List<Book> books = bookRepository.findTop5ByOrderByPublishedDateDesc();
+
+        List<BookSearchResponseDto> responseDtos = books.stream()
+                .map(BookSearchResponseDto::toResponseDto)
+                .toList();
+
+        return ResponseDto.success("SU", "success", responseDtos);
     }
 
 }

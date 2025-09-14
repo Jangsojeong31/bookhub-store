@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import Layout from "../../components/layouts/Layout";
-import TitleBar from "../../components/TitleBar";
-import StickyCartOverview from "../../components/StickyCartOverview";
+import Layout from "../../../components/layouts/Layout";
+import TitleBar from "../../../components/TitleBar";
+import StickyCartOverview from "../../../components/StickyCartOverview";
 import { CiDeliveryTruck } from "react-icons/ci";
-import DeliveryAddressInfo from "../address/DeliveryAddressContainer";
+import DeliveryAddressInfo from "../../address/DeliveryAddressContainer";
 import OrderingItemList from "./OrderingItemList";
-import SelectPayment from "../payment/SelectPayment";
+import SelectPayment from "../../payment/SelectPayment";
 import { useLocation } from "react-router-dom";
-import DeliveryAddressContainer from "../address/DeliveryAddressContainer";
-import type { AddressListResponseDto } from "../../dtos/address/AddressListResponse.dto";
+import DeliveryAddressContainer from "../../address/DeliveryAddressContainer";
+import type { AddressListResponseDto } from "../../../dtos/address/AddressListResponse.dto";
 import styles from "./OrderCheckPage.module.css";
 
 function OrderCheckPage() {

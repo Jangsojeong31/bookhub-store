@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/layouts/Layout";
-import TitleBar from "../../components/TitleBar";
+import Layout from "../../../components/layouts/Layout";
+import TitleBar from "../../../components/TitleBar";
 import OrderList from "./OrderList";
-import useToken from "../../hooks/useToken";
-import type { OrderListResponseDto } from "../../dtos/order/OrderListResponse.dto";
-import { getMyOrders } from "../../apis/order";
+import useToken from "../../../hooks/useToken";
+import type { OrderListResponseDto } from "../../../dtos/order/OrderListResponse.dto";
+import { getMyOrders } from "../../../apis/order";
 
 function OrderListPage() {
   const [orderList, setOrderList] = useState<OrderListResponseDto[]>([]);

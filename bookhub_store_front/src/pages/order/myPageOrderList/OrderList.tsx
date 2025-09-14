@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import useToken from "../../hooks/useToken";
-import type { OrderListResponseDto } from "../../dtos/order/OrderListResponse.dto";
+import useToken from "../../../hooks/useToken";
+import type { OrderListResponseDto } from "../../../dtos/order/OrderListResponse.dto";
 import { useNavigate } from "react-router-dom";
 import styles from "./Order.module.css";
 
@@ -41,7 +41,7 @@ function OrderList(props: { orderList: OrderListResponseDto[] }) {
                 key={detail.orderDetailId}
               >
                 <div className={styles.bookCover}>
-                  <p>표지</p>
+                  <img src={detail.coverUrl} alt={detail.bookTitle}/>
                 </div>
 
                 <div className={styles.content}>
@@ -51,7 +51,8 @@ function OrderList(props: { orderList: OrderListResponseDto[] }) {
                 </div>
 
                 <div className={styles.totalPrice}>
-                  <p><strong>총 금액</strong>{detail.totalPrice}</p>
+                  <p><strong>할인 금액</strong>{detail.bookPrice * detail.quantity - detail.totalPrice}원</p>
+                  <p><strong>총 금액</strong>{detail.totalPrice}원</p>
                 </div>
               </div>
             );

@@ -16,31 +16,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByCustomer_CustomerIdOrderByOrderDateDesc(Long customerCustomerId);
 
-    @Query (
-            value = """
-        SELECT 
-            b.isbn,
-            b.book_title,
-            b.author AS authorName,
-            b.publisher AS publisher,
-            b.published_date,
-            b.book_price,
-            b.discount_rate,
-            b.cover_image_url AS coverUrl,
-            b.description,
-            bc.category_name,
-            SUM(od.quantity) AS totalSales
-        FROM order_details od
-                 JOIN orders o ON od.order_id = o.order_id
-                 JOIN books b ON od.isbn = b.isbn
-                 JOIN categories bc ON b.category_id = bc.category_id
-        WHERE o.order_date >= DATE_SUB(NOW(), INTERVAL 30 DAY)
-          AND bc.category_type = :categoryType
-        GROUP BY b.isbn, b.book_title, b.author, b.publisher, b.published_date, b.book_price, b.discount_rate, b.cover_image_url, b.description, bc.category_name
-         ORDER BY totalSales DESC
-                    LIMIT 10;
-
-""",
-nativeQuery = true)
-    List<BestSellerDto> findBestSellersByCategory(@Param("categoryType") String catType);
 }

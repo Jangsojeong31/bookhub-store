@@ -3,9 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 import { getAllAddresses } from "../../apis/address";
 import type { AddressListResponseDto } from "../../dtos/address/AddressListResponse.dto";
+import "./AddressListPage.css"
 
 interface Props {
-  onSelect: (address: AddressListResponseDto) => void;
+  onSelect: (address: AddressListResponseDto | null) => void;
 }
 
 function AddressListPage({ onSelect }: Props) {
@@ -37,7 +38,7 @@ function AddressListPage({ onSelect }: Props) {
       <div
         key={a.id}
         style={{
-          backgroundColor: "#cccccc5b",
+          backgroundColor: "#cccccc23",
           borderRadius: 5,
           marginBottom: 10,
           padding: 10,
@@ -56,12 +57,11 @@ function AddressListPage({ onSelect }: Props) {
         <div>
 
         <p><strong>{a.recipientName}</strong></p>
-        <span style={{ marginRight: "10px"}}>{a.postalCode}</span>
-        <span>{a.fullAddress}</span>
+        <p style={{ marginRight: "10px"}}>[{a.postalCode}]</p>
+        <span>{a.fullAddress} </span>
         <span>{a.detailAddress}</span>
         <p>{a.phoneNumber}</p>
         </div>
-        {/* <p>{a.defaultAddress == true ? "기본 배송지" : ""}</p> */}
       </div>
     );
   });
@@ -69,7 +69,7 @@ function AddressListPage({ onSelect }: Props) {
   const handleSelect = () => {
     const selected = addresses.find((a) => a.id === selectedAddressId);
     if (selected) onSelect(selected);
-    else alert("배송지를 선택해주세요");
+    else onSelect(null);
   };
 
   return (
@@ -85,7 +85,7 @@ function AddressListPage({ onSelect }: Props) {
         </div>
 
         <div>{addressList}</div>
-        <button onClick={handleSelect}>선택 완료</button>
+        <button className="address-select-button" onClick={handleSelect}>선택 완료</button>
       </div>
     </div>
   );

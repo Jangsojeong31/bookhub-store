@@ -16,6 +16,7 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
+    // 결제 승인
     @PostMapping("/confirm")
     public ResponseEntity<ResponseDto<PaymentResponseDto>> confirmPayment(
             @RequestBody ConfirmPaymentRequestDto request
@@ -24,6 +25,7 @@ public class PaymentController {
         return ResponseEntity.ok(response);
     }
 
+    // 결제 내역 확인
     @GetMapping("/{orderId}")
     public ResponseEntity<ResponseDto<PaymentResponseDto>> getPaymentByOrderId(
             @PathVariable Long orderId

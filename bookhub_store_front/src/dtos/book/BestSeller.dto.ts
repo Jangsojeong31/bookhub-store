@@ -1,13 +1,13 @@
 export interface BestSellerDto {
   isbn: string;
   bookTitle: string;
-  authorName: string;
+  author: string;
   categoryName: string;
-  publisherName: string;
+  publisher: string;
   publishedDate: string;
   bookPrice: number;
   discountRate: number;
-  coverUrl: string;
+  coverImageUrl: string;
   description: string;
   totalSales: string;
 }
