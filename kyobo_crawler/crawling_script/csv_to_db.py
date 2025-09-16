@@ -53,9 +53,19 @@ fReader = csv.DictReader(csv_file)
 for line in fReader:
     if all(cell.strip() == '' for cell in line):
         continue
+    
+    # category_type 변환
+    raw_type = line['category_type'].strip()
+    if raw_type == '국내도서':
+        category_type = 'DOMESTIC'
+    elif raw_type == '외국도서':
+        category_type = 'FOREIGN'
+    else:
+        category_type = None  # 혹은 기본값 설정
+
     # 1. 카테고리 먼저 처리
     category_id = None
-    if line['category_type'] and line['category_name']:
+    if category_type and line['category_name']:
         category_id = get_or_create_category(
             line['category_type'],
             line['parent_category'],

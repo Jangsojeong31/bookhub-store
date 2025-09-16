@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `order_details` (
     order_id BIGINT NOT NULL,
     isbn VARCHAR(255) NOT NULL,
     book_price BIGINT NOT NULL,
-    quantity BIGINT NOT NULL,
+    quantity INT NOT NULL,
     total_price BIGINT NOT NULL, -- book_price * quantity
     
     CONSTRAINT fk_order_details_orders FOREIGN KEY (order_id)

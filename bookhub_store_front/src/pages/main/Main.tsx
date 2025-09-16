@@ -10,11 +10,10 @@ function Main() {
   return (
     <div>
       <div>
-    <NewRelease />
+        <NewRelease />
       </div>
       <div>
-      <BestSeller />
-        
+        <BestSeller />
       </div>
     </div>
   );
