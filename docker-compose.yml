@@ -6,20 +6,21 @@ services:
     image: mysql:8.0
     container_name: bh-store-db
     environment:
-      MYSQL_ROOT_PASSWORD: susan429@   # 원하는 root 비밀번호
+      MYSQL_ROOT_PASSWORD: susan429@
       MYSQL_DATABASE: bookhub_store_db    # 생성할 DB 이름
     ports:
       - "3307:3306"                      # 외부 접근용 포트
     networks:
       - bh-network
     volumes:
-      - db_data:/var/lib/mysql            # 데이터 지속성
+      - /home/ec2-user/bh-store/db/data:/var/lib/mysql            # 데이터 영속성
+      - /home/ec2-user/bh-store/db/init:/docker-entrypoint-initdb.d        # 초기 데이터 주입
 
   backend:
     image: sojung301/bookhub-store-backend                       # 백엔드 Dockerfile 위치
     container_name: bh-store-app
     environment:
-      DB_HOST: bh-store-db                         # 여기서 db = 위 db 서비스 이름
+      DB_HOST: bh-store-db
       DB_PORT: 3306
       DB_USER: root
       DB_PASSWORD: susan429@
@@ -35,7 +36,7 @@ services:
       - /home/ec2-user/bh-store/images:/data/images
 
   front:
-    image: sojung301/bookhub-store-front:v2 # 이미지 빌드할 때 환경변수 설정
+    image: sojung301/bookhub-store-front:v2
     container_name: bh-store-front
     environment:
       API_BASE_URL: http://EC2_PUBLIC_IP:8080
@@ -50,5 +51,3 @@ networks:
   bh-network:
     driver: bridge
 
-volumes:
-  db_data:
