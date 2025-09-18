@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/layouts/Layout";
 import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
-import logo from "../../assets/images/bh_store_logo_4.png";
 import useToken from "../../hooks/useToken";
 import {
-  getMyProfileImage,
-  updateProfileImage,
   uploadProfileImage,
 } from "../../apis/customer";
 import defaultProfileImage from "../../assets/images/기본_프로필_이미지.png";
-import { BASE_API_USER } from "../../apis/axiosConfig";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import styles from "./MyPage.module.css";
+import { API_BASE } from "../../config/runtimeConfig";
 
 function UpdateProfileImage() {
   const [profileImage, setProfileImage] = useState<string | null>("");
@@ -22,8 +18,6 @@ function UpdateProfileImage() {
   const token = useToken();
   const { user } = useAuthStore();
   const navigate = useNavigate();
-
-  const BASE_URL = import.meta.env.VITE_API_DOMAIN;
 
   useEffect(() => {
     setProfileImage(user?.profileImageUrl ?? null);
@@ -71,7 +65,7 @@ function UpdateProfileImage() {
               preview
                 ? preview
                 : profileImage && profileImage.startsWith("/files")
-                ? `${BASE_URL}${encodeURI(profileImage!)}`
+                ? `${API_BASE}${encodeURI(profileImage!)}`
                 : profileImage
                 ? profileImage
                 : defaultProfileImage

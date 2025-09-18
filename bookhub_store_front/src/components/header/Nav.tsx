@@ -4,12 +4,12 @@ import style from "../layouts/Layout.module.css";
 import { useAuthStore } from "../../stores/useAuthStore";
 import AuthButton from "./AuthButton";
 import defaultImage from "../../assets/images/기본_프로필_이미지.png";
+import { API_BASE } from "../../config/runtimeConfig";
 
 function Nav() {
   const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
   const profileImage = user?.profileImageUrl;
-  const BASE_URL = import.meta.env.VITE_API_DOMAIN;
 
   const onNaviMypage = () => {
     navigate("/mypage");
@@ -38,7 +38,7 @@ function Nav() {
           <img
             src={
               profileImage && profileImage.startsWith("/files")
-                ? `${BASE_URL}${encodeURI(profileImage!)}`
+                ? `${API_BASE}${encodeURI(profileImage!)}`
                 : profileImage
                 ? profileImage
                 : defaultImage

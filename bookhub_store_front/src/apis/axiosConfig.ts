@@ -1,8 +1,9 @@
 import axios, { AxiosError, type AxiosResponse } from "axios";
+import { API_BASE } from "../config/runtimeConfig";
 import type ResponseDto from "../dtos/Response.dto";
 
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_DOMAIN || "http://localhost:8080",
+  baseURL: API_BASE,
   timeout: 8000,
 })
 
