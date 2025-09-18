@@ -24,12 +24,15 @@ services:
       DB_USER: root
       DB_PASSWORD: susan429@
       DB_NAME: bookhub_store_db
+      FILE_UPLOAD_PATH: /data/images
     depends_on:
       - db
     networks:
       - bh-network
     ports:
       - "8080:8080"                      # 백엔드 포트
+    volumes:
+      - /home/ec2-user/bh-store/images:/data/images
 
   front:
     image: sojung301/bookhub-store-front:v2 # 이미지 빌드할 때 환경변수 설정
