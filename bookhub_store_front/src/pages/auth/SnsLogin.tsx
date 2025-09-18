@@ -3,10 +3,12 @@ import "./Login.css";
 import kakao from "../../assets/images/카카오_로그인_아이콘.webp";
 import googleLogo from "../../assets/images/google_logo.png";
 import naver from "../../assets/images/네이버_로그인_아이콘.png";
+import { API_BASE } from "../../config/runtimeConfig"
 
 function SnsLogin() {
   const handleSnsLogin = (provider: string) => {
-    window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
+    window.location.href = `${API_BASE}/oauth2/authorization/${provider}`;
+    console.log(API_BASE);
   };
 
   return (

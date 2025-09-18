@@ -10,6 +10,7 @@ import com.study.bookhub_store_back.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -25,6 +26,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
@@ -33,16 +37,16 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         if (userPrincipal.isNewUser()) {
             // 회원가입 추가 정보 입력 페이지로 이동
-            response.sendRedirect("http://localhost:5173/sns-sign-up?userId=" + userId);
+            response.sendRedirect(frontendUrl + "/sns-sign-up?userId=" + userId);
             System.out.println(1);
 
         } else if (userPrincipal.isExistingEmail()){
-            response.sendRedirect("http://localhost:5173/sns-login/existing?email=" + customer.getEmail() + "&provider=" + customer.getSocialProvider());
+            response.sendRedirect( frontendUrl + "/sns-login/existing?email=" + customer.getEmail() + "&provider=" + customer.getSocialProvider());
             System.out.println(2);
 
         }else {
             // 로그인
-            response.sendRedirect("http://localhost:5173/login/success?userId=" + userId);
+            response.sendRedirect(frontendUrl + "/login/success?userId=" + userId);
             System.out.println("sns 로그인 성공");
         }
     }

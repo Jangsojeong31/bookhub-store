@@ -26,6 +26,8 @@ services:
       DB_PASSWORD: susan429@
       DB_NAME: bookhub_store_db
       FILE_UPLOAD_PATH: /data/images
+      FRONTEND_URL: "http://3.39.230.65:3000"
+      EC2_IP: 3.39.230.65
     depends_on:
       - db
     networks:
@@ -36,10 +38,10 @@ services:
       - /home/ec2-user/bh-store/images:/data/images
 
   front:
-    image: sojung301/bookhub-store-front:v2
+    image: sojung301/bookhub-store-frontend
     container_name: bh-store-front
     environment:
-      API_BASE_URL: http://EC2_PUBLIC_IP:8080
+      API_BASE_URL: "http://3.39.230.65:8080"
     depends_on:
       - backend
     networks:
