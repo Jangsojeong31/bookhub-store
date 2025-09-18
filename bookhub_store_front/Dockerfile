@@ -10,6 +10,9 @@ RUN npm run build
 # Nginx + 런타임 환경변수 주입
 FROM nginx:alpine
 
+# envsubst 설치
+RUN apk add --no-cache gettext
+
 # 빌드 결과 복사
 COPY --from=build /app/dist /usr/share/nginx/html
 
