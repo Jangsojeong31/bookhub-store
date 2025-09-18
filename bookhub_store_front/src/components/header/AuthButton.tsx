@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../apis/auth";
 import { useCookies } from "react-cookie";
 import style from "../layouts/Layout.module.css";
+import { useUserStore } from "../../stores/useUserStore";
 
 
 function AuthButton() {
   const setLogout = useAuthStore((state) => state.logout);
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const { clearUser } = useUserStore();
   const navigate = useNavigate();
   const [, removeCookie] = useCookies();
 
@@ -20,6 +22,7 @@ function AuthButton() {
       removeCookie("tokenExpiresAt", { path: "/" });
 
       setLogout();
+      clearUser();
       navigate("/");
     } else {
       alert("로그아웃에 실패했습니다.");

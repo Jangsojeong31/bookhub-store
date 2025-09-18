@@ -6,13 +6,14 @@ import { getCustomerInfo, updateCustomerInfo } from "../../apis/customer";
 import styles from "./MyPage.module.css";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../stores/useUserStore";
 
 function UpdateMyInfo() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const token = useToken();
-  const { user } = useAuthStore();
+  const { user, setUser } = useUserStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +29,10 @@ function UpdateMyInfo() {
     if (code != "success") {
       alert("실패");
     } else {
+      if (user) {
+        setUser({...user, email, name, phoneNumber})
+      }
+
       alert("성공");
       navigate(-1);
     }

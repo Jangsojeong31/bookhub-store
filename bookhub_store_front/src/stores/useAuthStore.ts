@@ -1,22 +1,11 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-interface User {
-  id: number;
-  email: string;
-  name: string;
-  nickname: string;
-  phoneNumber: string;
-  profileImageUrl: string;
-  socialProvider: string;
-}
-
 interface AuthState {
   isLoggedIn: boolean;
   accessToken?: string;
   exprTime?: number;
-  user?: User;
-  login: (token: string, exprTime: number, user: User) => void;
+  login: (token: string, exprTime: number) => void;
   logout: () => void;
 }
 
@@ -26,10 +15,9 @@ export const useAuthStore = create(
       isLoggedIn: false,
       accessToken: undefined,
       exprTime: undefined,
-      user: undefined,
 
-      login: (token, exprTime, user) => {
-        set({ isLoggedIn: true, accessToken: token, exprTime, user });
+      login: (token, exprTime) => {
+        set({ isLoggedIn: true, accessToken: token, exprTime,});
       },
 
       logout: () => {
@@ -37,12 +25,11 @@ export const useAuthStore = create(
           isLoggedIn: false,
           accessToken: undefined,
           exprTime: undefined,
-          user: undefined,
         });
       },
     }),
     {
-      name: "user-storage",
+      name: "auth-storage",
       storage: createJSONStorage(() => localStorage),
     }
   )

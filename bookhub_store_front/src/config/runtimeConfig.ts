@@ -8,7 +8,7 @@ export function getRuntimeConfig(): RuntimeConfig {
   }
 
   return {
-    API_BASE_URL: import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080'
+    API_BASE_URL: import.meta.env.VITE_API_BASE_URL ?? 'http://3.39.230.65:8080'
   }
 }
 

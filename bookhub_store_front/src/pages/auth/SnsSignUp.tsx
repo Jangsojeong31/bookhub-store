@@ -8,6 +8,7 @@ import { useCookies } from "react-cookie";
 import { useAuthStore } from "../../stores/useAuthStore";
 import "./SignUp.css";
 import logo from "../../assets/images/bh_store_logo_4.png";
+import { useUserStore } from "../../stores/useUserStore";
 
 
 interface SnsSignUpFormInputs {
@@ -30,6 +31,7 @@ function SnsSignUp() {
 
   const [, setCookie] = useCookies(["accessToken", "tokenExpiresAt"]);
   const { login: setLogin } = useAuthStore();
+  const { setUser } = useUserStore();
 
   const fetchUserInfo = async () => {
     const res = await getUserInfoById(Number(userId));
@@ -66,7 +68,8 @@ function SnsSignUp() {
       const exprTime = result.exprTime;
       const user = result.user;
 
-      setLogin(token, exprTime, user);
+      setLogin(token, exprTime);
+      setUser(user);
 
       const exprDate = new Date(Date.now() + Number(exprTime));
 

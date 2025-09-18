@@ -5,9 +5,10 @@ import { useAuthStore } from "../../stores/useAuthStore";
 import AuthButton from "./AuthButton";
 import defaultImage from "../../assets/images/기본_프로필_이미지.png";
 import { API_BASE } from "../../config/runtimeConfig";
+import { useUserStore } from "../../stores/useUserStore";
 
 function Nav() {
-  const user = useAuthStore((state) => state.user);
+  const {user} = useUserStore();
   const navigate = useNavigate();
   const profileImage = user?.profileImageUrl;
 

@@ -4,14 +4,14 @@ import ProfileCardFrame from "../../components/ProfileCard/ProfileCardFrame";
 import { getMyNickname, updateNickname } from "../../apis/customer";
 import useToken from "../../hooks/useToken";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../stores/useAuthStore";
 import styles from "./MyPage.module.css";
+import { useUserStore } from "../../stores/useUserStore";
 
 
 function UpdateNickname() {
   const [nickname, setNickname] = useState("");
   const token = useToken();
-  const { user } = useAuthStore();
+  const { user, setNickname: changeNickname } = useUserStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +27,7 @@ function UpdateNickname() {
     if (code != "success") {
       return;
     } else {
+      changeNickname(nickname);
       alert("닉네임이 변경되었습니다.");
       navigate(-1);
     }

@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { snsLogin } from "../../apis/auth";
 import { useAuthStore } from "../../stores/useAuthStore";
+import { useUserStore } from "../../stores/useUserStore";
 
 function SnsLoginSuccess() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ function SnsLoginSuccess() {
 
   const [, setCookie] = useCookies(["accessToken", "tokenExpiresAt"]);
   const setLogIn= useAuthStore((state) => state.login);
+  const { setUser } = useUserStore();
   
   useEffect(() => {
     const handleSnsLogin = async () => {
@@ -23,7 +25,8 @@ function SnsLoginSuccess() {
         const exprTime = data.exprTime;
         const user = data.user;
 
-        setLogIn(token, exprTime, user);
+        setLogIn(token, exprTime);
+        setUser(user);
 
         const exprDate = new Date(Date.now() + Number(exprTime));
 

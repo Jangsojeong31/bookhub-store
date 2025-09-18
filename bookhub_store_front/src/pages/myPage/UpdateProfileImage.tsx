@@ -9,6 +9,7 @@ import { useAuthStore } from "../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import styles from "./MyPage.module.css";
 import { API_BASE } from "../../config/runtimeConfig";
+import { useUserStore } from "../../stores/useUserStore";
 
 function UpdateProfileImage() {
   const [profileImage, setProfileImage] = useState<string | null>("");
@@ -16,7 +17,7 @@ function UpdateProfileImage() {
   const [file, setFile] = useState<File | null>(null);
 
   const token = useToken();
-  const { user } = useAuthStore();
+  const { user, setProfileImageUrl } = useUserStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,6 +50,7 @@ function UpdateProfileImage() {
     const imageUrl = data.profileImageUrl;
 
     setProfileImage(imageUrl);
+    setProfileImageUrl(imageUrl);
     setPreview(null);
     setFile(null);
 

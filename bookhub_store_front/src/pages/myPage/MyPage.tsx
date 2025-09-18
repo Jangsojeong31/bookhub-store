@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
-import { useAuthStore } from "../../stores/useAuthStore";
+import { useUserStore } from "../../stores/useUserStore";
 
 function MyPage() {
   const [nickname, setNickname] = useState("");
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>("");
-  const { user } = useAuthStore();
+  const { user } = useUserStore();
 
   useEffect(() => {
     setNickname(user?.nickname ?? "user");
