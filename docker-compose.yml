@@ -1,0 +1,49 @@
+# docker-compose.yml
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: bh-store-db
+    environment:
+      MYSQL_ROOT_PASSWORD: susan429@   # 원하는 root 비밀번호
+      MYSQL_DATABASE: bookhub_store_db    # 생성할 DB 이름
+    ports:
+      - "3307:3306"                      # 외부 접근용 포트
+    networks:
+      - bh-network
+    volumes:
+      - db_data:/var/lib/mysql            # 데이터 지속성
+
+  backend:
+    image: sojung301/bookhub-store-backend                       # 백엔드 Dockerfile 위치
+    container_name: bh-store-app
+    environment:
+      DB_HOST: bh-store-db                         # 여기서 db = 위 db 서비스 이름
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: susan429@
+      DB_NAME: bookhub_store_db
+    depends_on:
+      - db
+    networks:
+      - bh-network
+    ports:
+      - "8080:8080"                      # 백엔드 포트
+
+  front:
+    image: sojung301/bookhub-store-front:v2 # 이미지 빌드할 때 환경변수 설정
+    container_name: bh-store-front
+    depends_on:
+      - backend
+    networks:
+      - bh-network
+    ports:
+      - "3000:80"
+
+networks:
+  bh-network:
+    driver: bridge
+
+volumes:
+  db_data:
