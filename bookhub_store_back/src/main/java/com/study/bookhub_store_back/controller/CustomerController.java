@@ -91,4 +91,11 @@ public class CustomerController {
     }
 
     // 회원 탈퇴
+    @PutMapping("/me/withdraw")
+    public ResponseEntity<ResponseDto<Void>> withdrawUser(
+            @AuthenticationPrincipal UserPrincipal user
+    ) {
+        ResponseDto<Void> responseDto = customerService.withdrawUser(user);
+        return ResponseEntity.ok(responseDto);
+    }
 }

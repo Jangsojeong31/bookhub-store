@@ -63,49 +63,59 @@ function Login() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        gap: 20,
-      }}
-    >
-      <div style={{ margin: "0 auto", height: 200 }}>
-      <Link to="/">
-        <img
-          src={logo}
-          alt="북허브_로고"
-          style={{ height: "100%", cursor: "pointer" }}
-        />
-      </Link>
-      </div>
+    <div
+    style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          gap: 20,
+        }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          gap: 20,
+        }}
+      >
+        <div style={{ margin: "0 auto", height: 200 }}>
+          <Link to="/">
+            <img
+              src={logo}
+              alt="북허브_로고"
+              style={{ height: "100%", cursor: "pointer" }}
+            />
+          </Link>
+        </div>
 
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <input
-          type="text"
-          name="email"
-          value={formData.email}
-          placeholder="이메일"
-          onChange={handleChange}
-          className="LoginInputEmail"
-        />
-        <input
-          type="text"
-          name="password"
-          value={formData.password}
-          placeholder="비밀번호"
-          onChange={handleChange}
-          className="LoginInputPassword"
-        />
-      </div>
-      <button type="submit" className="LoginButton">로그인</button>
-
-      <SnsLogin />
-
-      <button onClick={handleNaviSignUp} className="LoginButton">회원가입</button>
-    </form>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <input
+            type="text"
+            name="email"
+            value={formData.email}
+            placeholder="이메일"
+            onChange={handleChange}
+            className="LoginInputEmail"
+          />
+          <input
+            type="text"
+            name="password"
+            value={formData.password}
+            placeholder="비밀번호"
+            onChange={handleChange}
+            className="LoginInputPassword"
+          />
+        </div>
+        <button type="submit" className="LoginButton">
+          로그인
+        </button>
+        <SnsLogin />
+      </form>
+      <button onClick={handleNaviSignUp} className="LoginButton">
+        회원가입
+      </button>
+    </div>
   );
 }
 

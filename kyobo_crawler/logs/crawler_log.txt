@@ -118,3 +118,15 @@ https://product.kyobobook.co.kr/detail/S000217532533
 [2025-09-15 15:01:55.67] 배치 실행 종료 
 [2025-09-15 15:30:01.83] 배치 실행 시작 
 [2025-09-15 15:30:03.68] 배치 실행 종료 
+[2025-09-22 15:00:01.56] 배치 실행 시작 
+https://product.kyobobook.co.kr/detail/S000217583480
+https://product.kyobobook.co.kr/detail/S000217569406
+https://product.kyobobook.co.kr/detail/S000217596948
+https://product.kyobobook.co.kr/detail/S000217296572
+https://product.kyobobook.co.kr/detail/S000217566926
+9788960909540 	 이타미 준 나의 건축
+9791188554867 	 무민 손뜨개 양말
+9791158365479 	 오늘이 내일을 데려올 거야
+9791194409991 	 기술을 숭배하지 말라
+12285943 	 EBS 라디오 이지 잉글리시 Easy English 초급 영어회화 (2025년 10월)
+[2025-09-22 15:01:25.19] 배치 실행 종료 

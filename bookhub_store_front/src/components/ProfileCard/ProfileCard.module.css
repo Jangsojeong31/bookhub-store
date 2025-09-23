@@ -54,7 +54,8 @@
 
 .profileMenuListContainter {
   padding: 25px;
-  margin-right: 50px;
+  display: flex;
+  gap: 15px;
 }
 
 .profileMenuListContainter ul {
@@ -73,4 +74,8 @@
 
 .profileMenuListContainter span:hover {
   color: #106641;
+}
+
+.withdrawButtonContainer {
+  margin-top: auto;
 }

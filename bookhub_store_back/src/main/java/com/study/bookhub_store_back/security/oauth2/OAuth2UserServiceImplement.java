@@ -50,7 +50,6 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 
                     nickname = (String) profile.get("nickname");
                     profileImage = (String) profile.get("profile_image_url");
-                    break;
                 }
 
                 case "naver" -> {
@@ -61,7 +60,6 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
                     email = (String) response.get("email");
                     phoneNumber = (String) response.get("mobile");
                     name = (String) response.get("name");
-                    break;
                 }
 
                 case "google" -> {
@@ -69,7 +67,6 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
                     email = (String) attributes.get("email");
                     name = (String) attributes.get("name");
                     profileImage = (String) attributes.get("picture");
-                    break;
                 }
             }
 

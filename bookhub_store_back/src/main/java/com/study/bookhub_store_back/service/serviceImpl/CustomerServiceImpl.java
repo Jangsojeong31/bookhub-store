@@ -45,6 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer.setEmail(email);
         customer.setPhoneNumber(phoneNumber);
+        customer.setName(name);
 
         customerRepository.save(customer);
 
@@ -120,5 +121,16 @@ public class CustomerServiceImpl implements CustomerService {
                 .build();
 
         return ResponseDto.success("SU", "success", responseDto);
+    }
+
+    @Override
+    public ResponseDto<Void> withdrawUser(UserPrincipal user) {
+        Customer customer = customerRepository.findByEmail(user.getUsername());
+
+        customer.setDeleted(true);
+
+        customerRepository.save(customer);
+
+        return ResponseDto.success("SU", "success");
     }
 }

@@ -38,11 +38,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         if (userPrincipal.isNewUser()) {
             // 회원가입 추가 정보 입력 페이지로 이동
             response.sendRedirect(frontendUrl + "/sns-sign-up?userId=" + userId);
-            System.out.println(1);
-
+            // 이미 가입된 이메일
         } else if (userPrincipal.isExistingEmail()){
             response.sendRedirect( frontendUrl + "/sns-login/existing?email=" + customer.getEmail() + "&provider=" + customer.getSocialProvider());
-            System.out.println(2);
 
         }else {
             // 로그인

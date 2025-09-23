@@ -163,3 +163,19 @@ export const updateNickname = async (
     return responseErrorHandler(error as AxiosError<ResponseDto>);
   }
 };
+
+// 회원 탈퇴
+export const withdrawUser = async (
+  accessToken: string
+): Promise<ResponseDto<void>> => {
+  try {
+    const response = await axiosInstance.put(
+      `${BASE_API_USER}/me/withdraw`,
+      {},
+      bearerAuthorization(accessToken)
+    );
+    return responseSuccessHandler(response);
+  } catch (error) {
+    return responseErrorHandler(error as AxiosError<ResponseDto>);
+  }
+};

@@ -28,6 +28,8 @@ public class Customer extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String role;
+    @Column(nullable = false)
+    private boolean isDeleted;
 //    @OneToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "default_address_id")
 //    private DeliveryAddress defaultAddress;

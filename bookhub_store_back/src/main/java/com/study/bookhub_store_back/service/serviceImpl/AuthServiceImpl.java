@@ -34,10 +34,8 @@ public class AuthServiceImpl implements AuthService {
     // 회원가입
     @Override
     public ResponseDto<Void> signUp(SignUpRequestDto dto) {
-        customerRepository.findByEmailOrPhoneNumber(dto.getEmail(), dto.getPhone())
-                .ifPresent(customer -> {
-                    throw new IllegalArgumentException("이미 존재하는 회원입니다.");
-                });
+        Customer existingCustomer = customerRepository.findByEmail(dto.getEmail());
+        if (existingCustomer != null) throw new IllegalArgumentException("이미 존재하는 회원입니다.");
 
         Customer newCustomer = Customer.builder()
                 .email(dto.getEmail())
@@ -45,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
                 .name(dto.getName())
                 .phoneNumber(dto.getPhone())
                 .role("USER")
+                .isDeleted(false)
                 .build();
 
         customerRepository.save(newCustomer);
@@ -59,6 +58,11 @@ public class AuthServiceImpl implements AuthService {
         String password = dto.getPassword();
         System.out.println(password);
 
+        // 탈퇴 유무 확인
+        Customer customer = customerRepository.findByEmail(email);
+        if (customer.isDeleted()) throw new IllegalArgumentException("탈퇴한 회원입니다.");
+
+        // 로그인 인증
         Authentication authentication;
 
         try {
@@ -107,7 +111,7 @@ public class AuthServiceImpl implements AuthService {
         return ResponseDto.success("SU", "success");
     }
 
-    // 추가 정보 입력 후 회원가입
+    // 추가 정보 입력 후 회원가입 -> 로그인
     @Override
     public ResponseDto<LoginResponseDto> snsSignUp(Long userId, SnsSignUpRequestDto dto) {
         Customer customer = customerRepository.findById(userId)
@@ -126,6 +130,7 @@ public class AuthServiceImpl implements AuthService {
         return ResponseDto.success("SU", "success", responseDto);
     }
 
+    // 소셜 로그인
     @Override
     public ResponseDto<LoginResponseDto> snsLoginSuccess(Long userId) {
         Customer customer = customerRepository.findById(userId)
@@ -138,6 +143,7 @@ public class AuthServiceImpl implements AuthService {
         return ResponseDto.success("SU", "success", responseDto);
     }
 
+    // 소셜 로그인 토큰 발급 메서드
     public LoginResponseDto generateTokenForSnsLogin(UserPrincipal userPrincipal, Customer customer) {
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 userPrincipal,

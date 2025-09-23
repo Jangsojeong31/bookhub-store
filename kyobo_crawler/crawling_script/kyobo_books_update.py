@@ -29,7 +29,6 @@ for book in book_elements:
 
         # 상세 페이지 url
         detail_url = link_elem.get_attribute('href')
-        print(detail_url)
 
         book_links.append(detail_url)
     except Exception as e:

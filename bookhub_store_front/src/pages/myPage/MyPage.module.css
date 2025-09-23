@@ -50,4 +50,16 @@
   height: 200px;
 }
 
+.withdrawButton {
+  border: 1px solid #7a7a7a83;
+  background: none;
+  padding: 5px 10px;
+  font-size: 13px;
+  color: #7a7a7a;
+}
+
+.withdrawButton:hover {
+  border: 1px solid #7a7a7ac0;
+  background-color: #7a7a7a1f;
+}
 

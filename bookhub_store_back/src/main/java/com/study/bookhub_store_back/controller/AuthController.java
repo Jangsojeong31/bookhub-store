@@ -73,4 +73,5 @@ public class AuthController {
         ResponseDto<Void> responseDto = authService.logout(response);
         return ResponseEntity.ok(responseDto);
     }
+
 }
