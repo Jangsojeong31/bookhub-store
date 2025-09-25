@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
     phone_number VARCHAR(20) NULL,
     profile_image_url VARCHAR(500) NULL,
     role VARCHAR(20) NOT NULL DEFAULT 'USER',
+    is_deleted BOOLEAN NOT NULL DEFAULT false,
     -- default_address_id BIGINT NULL, -- 기본 배송지
     
     social_provider VARCHAR(50) NULL,
@@ -24,6 +25,13 @@ CREATE TABLE IF NOT EXISTS `customers` (
 	-- CONSTRAINT fk_default_address FOREIGN KEY (default_address_id)
 	-- REFERENCES delivery_addresses(delivery_address_id) ON DELETE SET NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- 인증 번호 임시 저장 테이블
+CREATE TABLE email_verification (
+	email VARCHAR(255) PRIMARY KEY,
+    code VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
 
 -- 소셜 계정 연동
 -- CREATE TABLE IF NOT EXISTS `customer_socials` (

@@ -74,4 +74,13 @@ public class AuthController {
         return ResponseEntity.ok(responseDto);
     }
 
+    // 이메일 중복 체크
+    @GetMapping("/check-duplicatedEmail")
+    public ResponseEntity<ResponseDto<Void>> checkDuplicatedEmail (
+            @RequestParam String email
+    ) {
+        ResponseDto<Void> responseDto = authService.checkDuplicatedEmail(email);
+        return ResponseEntity.ok(responseDto);
+    }
+
 }

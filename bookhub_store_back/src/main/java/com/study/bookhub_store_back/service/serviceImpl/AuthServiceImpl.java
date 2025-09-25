@@ -143,6 +143,17 @@ public class AuthServiceImpl implements AuthService {
         return ResponseDto.success("SU", "success", responseDto);
     }
 
+    // 이메일 중복 체크
+    @Override
+    public ResponseDto<Void> checkDuplicatedEmail(String email) {
+        Customer customer = customerRepository.findByEmail(email);
+        if (customer != null) {
+            throw new IllegalArgumentException("이미 가입된 이메일입니다.");
+        }
+
+        return ResponseDto.success("SU", "사용 가능한 이메일입니다.");
+    }
+
     // 소셜 로그인 토큰 발급 메서드
     public LoginResponseDto generateTokenForSnsLogin(UserPrincipal userPrincipal, Customer customer) {
         Authentication authentication = new UsernamePasswordAuthenticationToken(

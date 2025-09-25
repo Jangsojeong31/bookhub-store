@@ -14,8 +14,22 @@ ADD CONSTRAINT fk_default_address FOREIGN KEY (default_address_id)
 REFERENCES delivery_addresses(delivery_address_id)
 ON DELETE SET NULL;
 
+ALTER TABLE customers
+MODIFY COLUMN is_deleted BOOLEAN NOT NULL DEFAULT false;
+
 ALTER TABLE orders
 MODIFY delivery_address_id BIGINT NULL;
+
+ALTER TABLE delivery_addresses
+DROP FOREIGN KEY fk_addresses_customers;
+
+ALTER TABLE delivery_addresses
+ADD CONSTRAINT fk_addresses_customers
+FOREIGN KEY (customer_id)
+REFERENCES customers(customer_id)
+ON DELETE CASCADE;
+
+SHOW CREATE TABLE delivery_addresses;
 
 ALTER TABLE orders
 ADD CONSTRAINT fk_orders_delivery_addresses FOREIGN KEY (delivery_address_id)

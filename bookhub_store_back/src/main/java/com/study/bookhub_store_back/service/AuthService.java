@@ -19,4 +19,6 @@ public interface AuthService {
     ResponseDto<LoginResponseDto> snsSignUp(Long userId, SnsSignUpRequestDto dto);
 
     ResponseDto<LoginResponseDto> snsLoginSuccess(Long userId);
+
+    ResponseDto<Void> checkDuplicatedEmail(String email);
 }
