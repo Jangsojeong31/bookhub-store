@@ -75,7 +75,7 @@ public class AuthController {
     }
 
     // 이메일 중복 체크
-    @GetMapping("/check-duplicatedEmail")
+    @GetMapping("/check-duplicated-email")
     public ResponseEntity<ResponseDto<Void>> checkDuplicatedEmail (
             @RequestParam String email
     ) {

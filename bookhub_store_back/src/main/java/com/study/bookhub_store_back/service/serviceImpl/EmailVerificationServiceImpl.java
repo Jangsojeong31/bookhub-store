@@ -20,7 +20,6 @@ import java.util.Random;
 public class EmailVerificationServiceImpl implements EmailVerificationService {
 
     private final EmailVerificationRepository emailVerificationRepository;
-    private final CustomerRepository customerRepository;
 
     // 인증번호 생성 메서드
     private String createCode() {
